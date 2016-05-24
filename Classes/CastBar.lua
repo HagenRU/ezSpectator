@@ -90,75 +90,24 @@ end
 --noinspection UnusedDef
 function ezSpectator_CastBar:SetCastType(Spell, Time, SpellName)
 	self:SetMaxValue(Time)
-	local r, g, b = 1, 1, 1
-	local IsProgressMode = false
 
-	if Time == 99995 then -- range
-		--noinspection UnusedDef
-		r = 1.0
-		--noinspection UnusedDef
-		g = 1.0
-		--noinspection UnusedDef
-		b = 0.0
-		
-		self:SetValue(Time)
-		self:SetText('Отменено')
-	elseif Time == 99996 then -- los
-		--noinspection UnusedDef
-		r = 1.0
-		--noinspection UnusedDef
-		g = 1.0
-		--noinspection UnusedDef
-		b = 0.0
-		
-		self:SetValue(Time)
-		self:SetText('Отменено')
-	elseif Time == 99997 then -- success
-		--noinspection UnusedDef
-		r = 0.0
-		--noinspection UnusedDef
-		g = 1.0
-		--noinspection UnusedDef
-		b = 0.0
-		
-		self:SetValue(Time)
-		self:SetText('Успешно')
-	elseif Time == 99998 then -- canceled
-		--noinspection UnusedDef
-		r = 1.0
-		--noinspection UnusedDef
-		g = 1.0
-		--noinspection UnusedDef
-		b = 0.0
-		
-		self:SetValue(Time)
-		self:SetText('Отменено')
-	elseif Time == 99999 then -- interrupt
-		--noinspection UnusedDef
-		r = 1.0
-		--noinspection UnusedDef
-		g = 0.0
-		--noinspection UnusedDef
-		b = 0.0
-		
-		self:SetValue(Time)
-		self:SetText('Прерван!')
-	else --casting
-		r = 0.0
-		g = 1.0
-		b = 1.0
-		
-		self:SetValue(0)
-		self:SetText(SpellName)
-		
-		IsProgressMode = true
+	local CastInfo = self.Parent.Data.CastInfo[Time]
+	if not CastInfo then
+		CastInfo = self.Parent.Data.CastInfo[100000]
 	end
+
+	self:SetText(CastInfo.Text or SpellName)
+	if CastInfo.IsProgressMode then
+		self:SetValue(0)
+	else
+		self:SetValue(Time)
+	end
+
+	self.Backdrop.texture:SetVertexColor(CastInfo.r, CastInfo.g, CastInfo.b)
+	self.ProgressBar.texture:SetVertexColor(CastInfo.r, CastInfo.g, CastInfo.b)
+	self.Spark.texture:SetVertexColor(CastInfo.r, CastInfo.g, CastInfo.b)
 	
-	self.Backdrop.texture:SetVertexColor(r, g, b)
-	self.ProgressBar.texture:SetVertexColor(r, g, b)
-	self.Spark.texture:SetVertexColor(r, g, b)
-	
-	return IsProgressMode
+	return CastInfo.IsProgressMode
 end
 
 

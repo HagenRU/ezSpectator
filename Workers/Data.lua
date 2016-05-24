@@ -87,6 +87,21 @@ function ezSpectator_DataWorker:Create()
         ['poison'] = {r = 0.00, g = 0.60, b = 0},
     }
 
+    self.CastInfo = {
+        --range
+        [99995] = {r = 1, g = 1, b = 0, Text = 'Отменено', IsProgressMode = false},
+        --los
+        [99996] = {r = 1, g = 1, b = 0, Text = 'Отменено', IsProgressMode = false},
+        --success
+        [99997] = {r = 0, g = 1, b = 0, Text = 'Успешно', IsProgressMode = false},
+        --canceled
+        [99998] = {r = 1, g = 1, b = 0, Text = 'Отменено', IsProgressMode = false},
+        --interrupt
+        [99999] = {r = 1, g = 0, b = 0, Text = 'Прерван!', IsProgressMode = false},
+        --casting
+        [100000] = {r = 0, g = 1, b = 1, Text = nil, IsProgressMode = true}
+    }
+
     self.ControlList = {
         -- Death Knight
         [47481] = self.AuraStunEffect,			-- Gnaw (Ghoul)
