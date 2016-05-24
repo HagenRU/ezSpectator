@@ -104,7 +104,7 @@ function ezSpectator_CastFrame:ShowCast(Spell, Time)
 		self.UpdateFrame.ElapsedTotal = 0
 		
 		self.UpdateFrame.IsEnabled = true
-		self.UpdateFrame.IsProgressMode = self.CastBar:SetCastType(Spell, Time, SpellName)
+		self.UpdateFrame.IsProgressMode = self.CastBar:SetCastType(Time, SpellName)
 		if not self.UpdateFrame.IsProgressMode then
 			local r, g, b = self.CastBar.ProgressBar.texture:GetVertexColor()
 			
