@@ -36,5 +36,6 @@ Workers\Control.lua
 Workers\Spec.lua
 Workers\Interface.lua
 Workers\Player.lua
+Workers\Data.lua
 
 IsengardSpectator.lua
