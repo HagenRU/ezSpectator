@@ -1,15 +1,13 @@
 ezSpectator_InterfaceWorker = {}
 ezSpectator_InterfaceWorker.__index = ezSpectator_InterfaceWorker
 
-function ezSpectator_InterfaceWorker:Create(Parent, Teams, Players)
+function ezSpectator_InterfaceWorker:Create(Parent)
 	local self = {}
 	setmetatable(self, ezSpectator_InterfaceWorker)
 	
 	WorldStateScoreFrame:SetParent(nil)
 	
 	self.Parent = Parent
-	self.Teams = Teams
-	self.Players = Players
 	
 	self.TopFrame = ezSpectator_TopFrame:Create(self)
 	

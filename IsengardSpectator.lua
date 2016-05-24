@@ -7,8 +7,8 @@ function ezSpectator:Create()
 	local self = {}
 	setmetatable(self, ezSpectator)
 	
-	self.Interface = ezSpectator_InterfaceWorker:Create(self, self.Teams, self.Players)
-	self.Handler = ezSpectator_MessageHandler:Create(self.Interface)
+	self.Interface = ezSpectator_InterfaceWorker:Create(self)
+	self.Handler = ezSpectator_MessageHandler:Create(self)
 	
 	return self
 end

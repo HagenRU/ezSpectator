@@ -5,5 +5,7 @@ function ezSpectator_DataWorker:Create()
     local self = {}
     setmetatable(self, ezSpectator_DataWorker)
 
+
+
     return self
 end
