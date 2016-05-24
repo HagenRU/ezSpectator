@@ -238,40 +238,19 @@ end
 
 function ezSpectator_PowerBar:SetPowerType(Value)
 	local r, g, b = 1, 1, 1
-	
-	if Value == 0 then -- mana
-		r = 0.0
-		g = 0.5
-		b = 1.0
 
-		self.AnimationStartSpeed = 0
-		self.AnimationProgress = 10
-	elseif Value == 1 then -- rage
-		r = 1.0
-		g = 0.0
-		b = 0.0
-		
-		self.AnimationStartSpeed = 5
-		self.AnimationProgress = 1
-	elseif Value == 3 then -- energy
-		r = 1.0
-		g = 1.0
-		b = 0.0
-		
-		self.AnimationStartSpeed = 5
-		self.AnimationProgress = 1
-	elseif Value == 6 then -- runic power
-		r = 0.0
-		g = 1.0
-		b = 1.0
-		
-		self.AnimationStartSpeed = 5
-		self.AnimationProgress = 1
+	local PowerInfo = self.Parent.Data.PowerInfo[Value]
+	if not PowerInfo then
+		--noinspection ArrayElementZero
+		PowerInfo = self.Parent.Data.CastInfo[0]
 	end
-	
-	self.Backdrop.texture:SetVertexColor(r, g, b)
-	self.ProgressBar.texture:SetVertexColor(r, g, b)
-	self.Spark.texture:SetVertexColor(r, g, b)
+
+	self.AnimationStartSpeed = PowerInfo.AnimationStartSpeed
+	self.AnimationProgress = PowerInfo.AnimationProgress
+
+	self.Backdrop.texture:SetVertexColor(PowerInfo.r, PowerInfo.g, PowerInfo.b)
+	self.ProgressBar.texture:SetVertexColor(PowerInfo.r, PowerInfo.g, PowerInfo.b)
+	self.Spark.texture:SetVertexColor(PowerInfo.r, PowerInfo.g, PowerInfo.b)
 	
 	self.PowerType = Value
 	if self.CurrentValue then

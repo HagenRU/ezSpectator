@@ -102,6 +102,17 @@ function ezSpectator_DataWorker:Create()
         [100000] = {r = 0, g = 1, b = 1, Text = nil, IsProgressMode = true}
     }
 
+    self.PowerInfo = {
+        -- mana
+        [0] = {r = 0, g = 0.5, b = 1, AnimationStartSpeed = 0, AnimationProgress = 10},
+        -- rage
+        [1] = {r = 1, g = 0, b = 0, AnimationStartSpeed = 5, AnimationProgress = 1},
+        -- energy
+        [3] = {r = 1, g = 1, b = 0, AnimationStartSpeed = 5, AnimationProgress = 1},
+        -- runic power
+        [6] = {r = 1, g = 1, b = 0, AnimationStartSpeed = 5, AnimationProgress = 1},
+    }
+
     self.ControlList = {
         -- Death Knight
         [47481] = self.AuraStunEffect,			-- Gnaw (Ghoul)
