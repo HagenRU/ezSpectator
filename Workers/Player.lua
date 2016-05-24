@@ -15,28 +15,28 @@ function ezSpectator_PlayerWorker:Create(Parent)
 	
 	self.Parent = Parent
 	
-	self.SpecWorker = ezSpectator_SpecWorker:Create()
+	self.SpecWorker = ezSpectator_SpecWorker:Create(self.Parent)
 	
-	self.SmallFrame = ezSpectator_SmallFrame:Create(self)
+	self.SmallFrame = ezSpectator_SmallFrame:Create(self, self.Parent)
 	self.SmallFrame:Hide()
 	
-	self.SmallControlWorker = ezSpectator_ControlWorker:Create()
+	self.SmallControlWorker = ezSpectator_ControlWorker:Create(self.Parent)
 	self.SmallControlWorker:BindIcon(self.SmallFrame.ControlIcon)
 	
-	self.PlayerFrame = ezSpectator_BindFrame:Create()
+	self.PlayerFrame = ezSpectator_BindFrame:Create(self.Parent)
 	self.PlayerFrame:SetPoint('BOTTOMRIGHT', UIParent, 'BOTTOM', -10, 20)
-	self.PlayerFrame.SpellFrame = ezSpectator_SpellFrame:Create(false, 'TOPRIGHT', self.PlayerFrame.Normal, 'TOPLEFT', 0, -19)
+	self.PlayerFrame.SpellFrame = ezSpectator_SpellFrame:Create(self.Parent, false, 'TOPRIGHT', self.PlayerFrame.Normal, 'TOPLEFT', 0, -19)
 	self.PlayerFrame:Hide()
 	
-	self.PlayerControlWorker = ezSpectator_ControlWorker:Create()
+	self.PlayerControlWorker = ezSpectator_ControlWorker:Create(self.Parent)
 	self.PlayerControlWorker:BindIcon(self.PlayerFrame.ControlIcon)
 	
-	self.VictimFrame = ezSpectator_BindFrame:Create()
+	self.VictimFrame = ezSpectator_BindFrame:Create(self.Parent)
 	self.VictimFrame:SetPoint('BOTTOMLEFT', UIParent, 'BOTTOM', 10, 20)
-	self.VictimFrame.SpellFrame = ezSpectator_SpellFrame:Create(true, 'TOPLEFT', self.VictimFrame.Normal, 'TOPRIGHT', 0, -19)
+	self.VictimFrame.SpellFrame = ezSpectator_SpellFrame:Create(self.Parent, true, 'TOPLEFT', self.VictimFrame.Normal, 'TOPRIGHT', 0, -19)
 	self.VictimFrame:Hide()
 	
-	self.VictimControlWorker = ezSpectator_ControlWorker:Create()
+	self.VictimControlWorker = ezSpectator_ControlWorker:Create(self.Parent)
 	self.VictimControlWorker:BindIcon(self.VictimFrame.ControlIcon)
 	
 	self.CurrentTarget = nil
@@ -265,11 +265,11 @@ function ezSpectator_PlayerWorker:SetPosition(Team, Position)
 	self.SmallFrame:ClearAllPoints()
 	if Team == 1 then
 		self.SmallFrame:SetPoint('TOPLEFT', UIParent, 'TOPLEFT', 0, FramePosition)
-		self.SmallFrame.SpellFrame = ezSpectator_SpellFrame:Create(true, 'TOPLEFT', self.SmallFrame.Normal, 'TOPRIGHT', 0, -19)
+		self.SmallFrame.SpellFrame = ezSpectator_SpellFrame:Create(self.Parent, true, 'TOPLEFT', self.SmallFrame.Normal, 'TOPRIGHT', 0, -19)
 	end
 	
 	if Team == 2 then
-		self.SmallFrame.SpellFrame = ezSpectator_SpellFrame:Create(false, 'TOPRIGHT', self.SmallFrame.Normal, 'TOPLEFT', 0, -19)
+		self.SmallFrame.SpellFrame = ezSpectator_SpellFrame:Create(self.Parent, false, 'TOPRIGHT', self.SmallFrame.Normal, 'TOPLEFT', 0, -19)
 		self.SmallFrame:SetPoint('TOPRIGHT', UIParent, 'TOPRIGHT', 0, FramePosition)
 	end
 end

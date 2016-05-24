@@ -1,10 +1,12 @@
 ezSpectator_TeamFrame = {}
 ezSpectator_TeamFrame.__index = ezSpectator_TeamFrame
 
-function ezSpectator_TeamFrame:Create(IsLeft, ...)
+function ezSpectator_TeamFrame:Create(Parent, IsLeft, ...)
 	local self = {}
 	setmetatable(self, ezSpectator_TeamFrame)
-	
+
+	self.Parent = Parent
+
 	self.Textures = ezSpectator_Textures:Create()
 	
 	self.Normal = CreateFrame('Frame', nil, nil)

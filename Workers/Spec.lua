@@ -1,10 +1,12 @@
 ezSpectator_SpecWorker = {}
 ezSpectator_SpecWorker.__index = ezSpectator_SpecWorker
 
-function ezSpectator_SpecWorker:Create()
+function ezSpectator_SpecWorker:Create(Parent)
 	local self = {}
 	setmetatable(self, ezSpectator_SpecWorker)
-	
+
+	self.Parent = Parent
+
 	self.ClassTree = {
 		--Воин
 		{{'Оружие', '2098'}, {'Неистовство', '41368'}, {'Защита', '71'}},

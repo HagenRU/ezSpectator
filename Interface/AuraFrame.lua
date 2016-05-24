@@ -1,10 +1,12 @@
 ezSpectator_AuraFrame = {}
 ezSpectator_AuraFrame.__index = ezSpectator_AuraFrame
 
-function ezSpectator_AuraFrame:Create(IsUpfilling, ...)
+function ezSpectator_AuraFrame:Create(Parent, IsUpfilling, ...)
 	local self = {}
 	setmetatable(self, ezSpectator_AuraFrame)
-	
+
+	self.Parent = Parent
+
 	self.IsUpfilling = IsUpfilling
 	
 	self.BuffLines = 2

@@ -2,10 +2,12 @@ ezSpectator_CastFrame = {}
 ezSpectator_CastFrame.__index = ezSpectator_CastFrame
 
 --noinspection LuaOverlyLongMethod
-function ezSpectator_CastFrame:Create(...)
+function ezSpectator_CastFrame:Create(Parent, ...)
 	local self = {}
 	setmetatable(self, ezSpectator_CastFrame)
-	
+
+	self.Parent = Parent
+
 	self.Textures = ezSpectator_Textures:Create()
 	
 	self.Backdrop = CreateFrame('Frame', nil, nil)

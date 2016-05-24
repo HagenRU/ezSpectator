@@ -2,10 +2,12 @@ ezSpectator_BindFrame = {}
 ezSpectator_BindFrame.__index = ezSpectator_BindFrame
 
 --noinspection LuaOverlyLongMethod
-function ezSpectator_BindFrame:Create()
+function ezSpectator_BindFrame:Create(Parent)
 	local self = {}
 	setmetatable(self, ezSpectator_BindFrame)
-	
+
+	self.Parent = Parent
+
 	self.IsLocked = false
 	
 	self.Textures = ezSpectator_Textures:Create()
@@ -60,9 +62,9 @@ function ezSpectator_BindFrame:Create()
 	
 	self.PowerBar = ezSpectator_PowerBar:Create(177, 9, _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 7, -36)
 	
-	self.CastFrame = ezSpectator_CastFrame:Create('TOPLEFT', self.Normal, 'BOTTOMLEFT', 0, 5)
+	self.CastFrame = ezSpectator_CastFrame:Create(self.Parent, 'TOPLEFT', self.Normal, 'BOTTOMLEFT', 0, 5)
 	
-	self.AuraFrame = ezSpectator_AuraFrame:Create(false, 'BOTTOMLEFT', self.Normal, 'TOPLEFT', 8, 27 * _ezSpectatorScale)
+	self.AuraFrame = ezSpectator_AuraFrame:Create(self.Parent, false, 'BOTTOMLEFT', self.Normal, 'TOPLEFT', 8, 27 * _ezSpectatorScale)
 	
 	self.SpellFrame = nil
 	

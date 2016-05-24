@@ -1,10 +1,12 @@
 ezSpectator_ControlWorker = {}
 ezSpectator_ControlWorker.__index = ezSpectator_ControlWorker
 
-function ezSpectator_ControlWorker:Create()
+function ezSpectator_ControlWorker:Create(Parent)
 	local self = {}
 	setmetatable(self, ezSpectator_ControlWorker)
-	
+
+	self.Parent = Parent
+
 	self.ControlIcon = nil
 	self.Class = nil
 	

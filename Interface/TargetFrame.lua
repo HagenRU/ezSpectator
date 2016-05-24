@@ -1,10 +1,12 @@
 ezSpectator_TargetFrame = {}
 ezSpectator_TargetFrame.__index = ezSpectator_TargetFrame
 
-function ezSpectator_TargetFrame:Create(...)
+function ezSpectator_TargetFrame:Create(Parent, ...)
 	local self = {}
 	setmetatable(self, ezSpectator_TargetFrame)
-	
+
+	self.Parent = Parent
+
 	self.Unit = nil
 	
 	self.Textures = ezSpectator_Textures:Create()

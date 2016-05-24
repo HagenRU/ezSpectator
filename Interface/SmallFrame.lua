@@ -2,11 +2,12 @@ ezSpectator_SmallFrame = {}
 ezSpectator_SmallFrame.__index = ezSpectator_SmallFrame
 
 --noinspection LuaOverlyLongMethod
-function ezSpectator_SmallFrame:Create(Worker)
+function ezSpectator_SmallFrame:Create(Worker, Parent)
 	local self = {}
 	setmetatable(self, ezSpectator_SmallFrame)
 	
 	self.Worker = Worker
+	self.Parent = Parent
 	
 	self.IsLocked = false
 	
@@ -67,11 +68,11 @@ function ezSpectator_SmallFrame:Create(Worker)
 	
 	self.PowerBar = ezSpectator_PowerBar:Create(177, 9, _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 7, -36)
 	
-	self.Target = ezSpectator_TargetFrame:Create('BOTTOMRIGHT', self.Normal, 'TOPRIGHT', -5, -9)
+	self.Target = ezSpectator_TargetFrame:Create(self.Parent, 'BOTTOMRIGHT', self.Normal, 'TOPRIGHT', -5, -9)
 	
-	self.CastFrame = ezSpectator_CastFrame:Create('TOPLEFT', self.Normal, 'BOTTOMLEFT', 0, 5)
+	self.CastFrame = ezSpectator_CastFrame:Create(self.Parent, 'TOPLEFT', self.Normal, 'BOTTOMLEFT', 0, 5)
 	
-	self.AuraFrame = ezSpectator_AuraFrame:Create(true, 'TOPLEFT', self.Normal, 'BOTTOMLEFT', 8, -18 * _ezSpectatorScale)
+	self.AuraFrame = ezSpectator_AuraFrame:Create(self.Parent, true, 'TOPLEFT', self.Normal, 'BOTTOMLEFT', 8, -18 * _ezSpectatorScale)
 	
 	self.SpellFrame = nil
 	

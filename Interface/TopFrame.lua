@@ -22,9 +22,9 @@ function ezSpectator_TopFrame:Create(Parent)
 	--self.Textures:GeneratePanel(self.MainFrame)
 	--self.Textures:CreateShadow(self.MainFrame)
 	
-	self.LeftTeam = ezSpectator_TeamFrame:Create(true, 'TOP', -290, -1)
+	self.LeftTeam = ezSpectator_TeamFrame:Create(self.Parent, true, 'TOP', -290, -1)
 	
-	self.RightTeam = ezSpectator_TeamFrame:Create(false, 'TOP', 290, -1)
+	self.RightTeam = ezSpectator_TeamFrame:Create(self.Parent, false, 'TOP', 290, -1)
 	
 	--self.EnrageOrb = ezSpectator_EnrageOrb:Create(60, 'TOP', 0, 5)
 	

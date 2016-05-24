@@ -1,10 +1,12 @@
 ezSpectator_SpellFrame = {}
 ezSpectator_SpellFrame.__index = ezSpectator_SpellFrame
 
-function ezSpectator_SpellFrame:Create(IsRightShift, ...)
+function ezSpectator_SpellFrame:Create(Parent, IsRightShift, ...)
 	local self = {}
 	setmetatable(self, ezSpectator_SpellFrame)
-	
+
+	self.Parent = Parent
+
 	self.Icons = {}
 	self.IconsCount = 4
 	
