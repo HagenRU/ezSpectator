@@ -85,7 +85,7 @@ function ezSpectator_MessageHandler:ProcessCommand(Target, Prefix, ...)
 		end
 		
 		if not TeamID then
-			self.Parent.Interface.Players[Target] = ezSpectator_PlayerWorker:Create(self.Parent.Interface)
+			self.Parent.Interface.Players[Target] = ezSpectator_PlayerWorker:Create(self.Parent)
 			self.Parent.Interface.Players[Target]:SetNickname(Target)
 			self.Parent.Interface.Players[Target]:Hide()
 		end

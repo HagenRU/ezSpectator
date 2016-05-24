@@ -2,11 +2,11 @@ ezSpectator_TopFrame = {}
 ezSpectator_TopFrame.__index = ezSpectator_TopFrame
 
 --noinspection LuaOverlyLongMethod
-function ezSpectator_TopFrame:Create(Interface)
+function ezSpectator_TopFrame:Create(Parent)
 	local self = {}
 	setmetatable(self, ezSpectator_TopFrame)
 	
-	self.Interface = Interface
+	self.Parent = Parent
 	
 	self.MatchTime = nil
 	self.Textures = ezSpectator_Textures:Create()
@@ -65,7 +65,7 @@ function ezSpectator_TopFrame:Create(Interface)
 	self.Reset:SetIcon('Refresh')
 	self.Reset:SetAction(function()
 		SendChatMessage('.spectate view ' .. UnitName('player'), 'GUILD')
-		self.Interface:ResetViewpoint()
+		self.Parent.Interface:ResetViewpoint()
 	end)
 	
 	self.Leave = ezSpectator_ClickIcon:Create(self.MainFrame, 'gold', 34 / _ezSpectatorScale, 'LEFT', self.Reset.Normal, 'RIGHT', -3, 0)

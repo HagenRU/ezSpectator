@@ -6,7 +6,8 @@ ezSpectator.__index = ezSpectator
 function ezSpectator:Create()
 	local self = {}
 	setmetatable(self, ezSpectator)
-	
+
+	self.Data = ezSpectator_DataWorker:Create(self)
 	self.Interface = ezSpectator_InterfaceWorker:Create(self)
 	self.Handler = ezSpectator_MessageHandler:Create(self)
 	

@@ -2,7 +2,7 @@ ezSpectator_PlayerWorker = {}
 ezSpectator_PlayerWorker.__index = ezSpectator_PlayerWorker
 
 --noinspection LuaOverlyLongMethod
-function ezSpectator_PlayerWorker:Create(Interface)
+function ezSpectator_PlayerWorker:Create(Parent)
 	local self = {}
 	setmetatable(self, ezSpectator_PlayerWorker)
 	
@@ -13,8 +13,7 @@ function ezSpectator_PlayerWorker:Create(Interface)
 		[7744] = 45
 	}
 	
-	self.Interface = Interface
-	self.Teams = Interface.Teams
+	self.Parent = Parent
 	
 	self.SpecWorker = ezSpectator_SpecWorker:Create()
 	
@@ -250,8 +249,8 @@ function ezSpectator_PlayerWorker:SetTeam(Value)
 	self.Team = Value
 	self.IsTeamSet = true
 	
-	table.insert(self.Teams[Value], self)
-	self:SetPosition(Value, #self.Teams[Value])
+	table.insert(self.Parent.Interface.Teams[Value], self)
+	self:SetPosition(Value, #self.Parent.Interface.Teams[Value])
 end
 
 
@@ -332,7 +331,7 @@ function ezSpectator_PlayerWorker:SetTarget(Value)
 	end
 	
 	if self.CurrentTarget and self.PlayerFrame:IsShown() then
-		self.Interface:ResetVictims()
+		self.Parent.Interface:ResetVictims()
 		self.CurrentTarget.VictimFrame:Show()
 	end
 end
@@ -411,7 +410,7 @@ end
 function ezSpectator_PlayerWorker:BindViewpoint()
 	SendChatMessage('.spectate view ' .. self.Nickname, 'GUILD')
 	
-	self.Interface:ResetViewpoint()
+	self.Parent.Interface:ResetViewpoint()
 	self.PlayerFrame:Show()
 	self:SetTarget(nil)
 end

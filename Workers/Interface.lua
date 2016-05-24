@@ -9,7 +9,7 @@ function ezSpectator_InterfaceWorker:Create(Parent)
 	
 	self.Parent = Parent
 	
-	self.TopFrame = ezSpectator_TopFrame:Create(self)
+	self.TopFrame = ezSpectator_TopFrame:Create(self.Parent)
 	
 	self.Reactor = CreateFrame('Frame', nil, nil)
 	self.Reactor.Parent = self
@@ -25,7 +25,7 @@ function ezSpectator_InterfaceWorker:Create(Parent)
 		end
 	end)
 	
-	self.Nameplates = ezSpectator_Nameplates:Create(self)
+	self.Nameplates = ezSpectator_Nameplates:Create(self.Parent)
 	
 	self:Reset()
 	return self

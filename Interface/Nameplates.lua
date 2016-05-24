@@ -1,11 +1,11 @@
 ezSpectator_Nameplates = {}
 ezSpectator_Nameplates.__index = ezSpectator_Nameplates
 
-function ezSpectator_Nameplates:Create(Interface)
+function ezSpectator_Nameplates:Create(Parent)
 	local self = {}
 	setmetatable(self, ezSpectator_Nameplates)
 	
-	self.Interface = Interface
+	self.Parent = Parent
 	
 	self.ChildrensChecked = -1
 	self.EventFrame = CreateFrame('Frame')
@@ -162,9 +162,9 @@ function ezSpectator_Nameplates:ProcessNameplate(SkipAnimation, Healthbar, Threa
 	HealthBorder.ezSpectator_Nameplate:SetValue(Value, SkipAnimation)
 	
 	HealthBorder.ezSpectator_Nameplate:SetNickname(NameText:GetText())
-	if self.Interface.Players[NameText:GetText()] then
-		HealthBorder.ezSpectator_Nameplate:SetTeam(self.Interface.Players[NameText:GetText()].Team)
-		HealthBorder.ezSpectator_Nameplate:SetClass(self.Interface.Players[NameText:GetText()].Class)
+	if self.Parent.Interface.Players[NameText:GetText()] then
+		HealthBorder.ezSpectator_Nameplate:SetTeam(self.Parent.Interface.Players[NameText:GetText()].Team)
+		HealthBorder.ezSpectator_Nameplate:SetClass(self.Parent.Interface.Players[NameText:GetText()].Class)
 	else
 		HealthBorder.ezSpectator_Nameplate:SetTeam(nil)
 		HealthBorder.ezSpectator_Nameplate:SetClass(nil)
