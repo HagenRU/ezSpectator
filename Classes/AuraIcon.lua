@@ -7,22 +7,6 @@ function ezSpectator_AuraIcon:Create(Parent, ParentFrame, ...)
 
 	self.Parent = Parent
 
-	self.Colors = { 
-		['none'] = {r = 0.80, g = 0, b = 0},
-		['magic'] = {r = 0.20, g = 0.60, b = 1.00},
-		['curse'] = {r = 0.60, g = 0.00, b = 1.00},
-		['disease'] = {r = 0.60, g = 0.40, b = 0},
-		['poison'] = {r = 0.00, g = 0.60, b = 0},
-	}
-	
-	self.DebuffTable = {
-		[0] = 'none', 
-		[1] = 'magic',
-		[2] = 'curse',
-		[3] = 'disease',
-		[4] = 'poison'
-	}
-	
 	self.MainFrame = CreateFrame('Button', nil, ParentFrame)
 	self.MainFrame:SetSize(16, 16)
 	self.MainFrame:SetPoint(...)
@@ -79,7 +63,7 @@ function ezSpectator_AuraIcon:Show(Spell, StackCount, Expiration, Duration, Debu
 		end
 		
 		if DebuffType and IsPositive == 0 then
-			local Color = self.Colors[self.DebuffTable[DebuffType]] or self.Colors.none
+			local Color = self.Parent.Data.DebuffColor[self.Parent.Data.DebuffList[DebuffType]] or self.Parent.Data.DebuffColor.none
 			self.Overlay:SetVertexColor(Color.r, Color.g, Color.b)
 			
 			if DebuffType > 0 then

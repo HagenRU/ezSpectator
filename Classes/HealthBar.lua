@@ -306,27 +306,7 @@ end
 function ezSpectator_HealthBar:SetClass(Value)
 	local Class, Color
 
-	if Value == 1 then
-		Class = 'WARRIOR'
-	elseif Value == 2 then
-		Class = 'PALADIN'
-	elseif Value == 3 then
-		Class = 'HUNTER'
-	elseif Value == 4 then
-		Class = 'ROGUE'
-	elseif Value == 5 then
-		Class = 'PRIEST'
-	elseif Value == 6 then 
-		Class = 'DEATHKNIGHT'
-	elseif Value == 7 then
-		Class = 'SHAMAN'
-	elseif Value == 8 then
-		Class = 'MAGE'
-	elseif Value == 9 then
-		Class = 'WARLOCK'
-	elseif Value == 11 then
-		Class = 'DRUID'
-	end
+	Class = self.Parent.Data.ClassTextEng[Value]
 	
 	if Class then
 		Color = RAID_CLASS_COLORS[Class]

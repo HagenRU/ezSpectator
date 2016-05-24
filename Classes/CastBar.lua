@@ -92,7 +92,7 @@ function ezSpectator_CastBar:SetCastType(Spell, Time, SpellName)
 	self:SetMaxValue(Time)
 	local r, g, b = 1, 1, 1
 	local IsProgressMode = false
-	
+
 	if Time == 99995 then -- range
 		--noinspection UnusedDef
 		r = 1.0
@@ -144,11 +144,8 @@ function ezSpectator_CastBar:SetCastType(Spell, Time, SpellName)
 		self:SetValue(Time)
 		self:SetText('Прерван!')
 	else --casting
-		--noinspection UnusedDef
 		r = 0.0
-		--noinspection UnusedDef
 		g = 1.0
-		--noinspection UnusedDef
 		b = 1.0
 		
 		self:SetValue(0)

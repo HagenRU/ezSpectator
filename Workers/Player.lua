@@ -6,13 +6,6 @@ function ezSpectator_PlayerWorker:Create(Parent)
 	local self = {}
 	setmetatable(self, ezSpectator_PlayerWorker)
 	
-	self.Trinkets = {
-		[65547] = 120,
-		[42292] = 120,
-		[59752] = 120,
-		[7744] = 45
-	}
-	
 	self.Parent = Parent
 	
 	self.SpecWorker = ezSpectator_SpecWorker:Create(self.Parent)
@@ -199,15 +192,15 @@ function ezSpectator_PlayerWorker:SetCast(Spell, Time)
 		return
 	end
 	
-	if (self.Trinkets[Spell] ~= nil) then
+	if (self.Parent.Data.Trinkets[Spell] ~= nil) then
 		self.SmallFrame.SpellFrame:Push(Spell)
-		self.SmallFrame.TrinketIcon:SetCooldown(GetTime(), self.Trinkets[Spell])
+		self.SmallFrame.TrinketIcon:SetCooldown(GetTime(), self.Parent.Data.Trinkets[Spell])
 		
 		self.PlayerFrame.SpellFrame:Push(Spell)
-		self.PlayerFrame.TrinketIcon:SetCooldown(GetTime(), self.Trinkets[Spell])
+		self.PlayerFrame.TrinketIcon:SetCooldown(GetTime(), self.Parent.Data.Trinkets[Spell])
 		
 		self.VictimFrame.SpellFrame:Push(Spell)
-		self.VictimFrame.TrinketIcon:SetCooldown(GetTime(), self.Trinkets[Spell])
+		self.VictimFrame.TrinketIcon:SetCooldown(GetTime(), self.Parent.Data.Trinkets[Spell])
 		return
 	end
 	

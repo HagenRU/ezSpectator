@@ -8,12 +8,6 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 
 	self.Parent = Parent
 
-	self.IconTable = {
-		{'Eye_Normal', 0.21875, 0.7890625, 0.21875, 0.7890625, 18},
-		{'Eye_Stroked', 0.21875, 0.7890625, 0.21875, 0.7890625, 18},
-		{'Logout', 0.25, 0.7578125, 0.25, 0.7578125, 14},
-		{'Refresh', 0.25, 0.7578125, 0.25, 0.7578125, 12}
-	}
 	self.Action = nil
 	
 	self.Textures = ezSpectator_Textures:Create()
@@ -141,7 +135,7 @@ function ezSpectator_ClickIcon:SetIcon(Name)
 	local Record
 
 	--noinspection UnusedDef
-	for Index, Value in pairs(self.IconTable) do
+	for Index, Value in pairs(self.Parent.Data.ClickIconOffset) do
 		if Value[1] == Name then
 			Record = Value
 			break

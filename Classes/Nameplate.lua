@@ -8,20 +8,6 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 
 	self.Parent = Parent
 
-	self.ClassTexts = {
-		'WARRIOR',
-		'PALADIN',
-		'HUNTER',
-		'ROGUE',
-		'PRIEST',
-		'DEATHKNIGHT',
-		'SHAMAN',
-		'MAGE',
-		'WARLOCK',
-		'',
-		'DRUID',
-	}
-
 	self.AnimationStartSpeed = 0
 	self.AnimationProgress = 10
 	self.IsLayerAnimated = true
@@ -395,7 +381,8 @@ end
 function ezSpectator_Nameplate:SetClass(Value)
 	local Class, Color
 
-	local Class = self.ClassTexts[Value]
+	Class = self.Parent.Data.ClassTextEng[Value]
+
 	if Class then
 		Color = RAID_CLASS_COLORS[Class]
 	end
