@@ -1,6 +1,7 @@
 ezSpectator_PlayerWorker = {}
 ezSpectator_PlayerWorker.__index = ezSpectator_PlayerWorker
 
+--noinspection LuaOverlyLongMethod
 function ezSpectator_PlayerWorker:Create(Interface)
 	local self = {}
 	setmetatable(self, ezSpectator_PlayerWorker)
@@ -240,6 +241,7 @@ function ezSpectator_PlayerWorker:SetTeam(Value)
 	if Value == 67 then
 		Value = 1
 	elseif Value == 469 then
+		--noinspection UnusedDef
 		Value = 2
 	else
 		return
@@ -342,7 +344,7 @@ function ezSpectator_PlayerWorker:SetSpec(Value)
 		return
 	end
 	
-	SpecName, SpecIcon = self.SpecWorker:GetData(self.Class, Value)
+	local SpecName, SpecIcon = self.SpecWorker:GetData(self.Class, Value)
 	self.SmallFrame.HealthBar:SetDescription(SpecName)
 	self.PlayerFrame.HealthBar:SetDescription(SpecName)
 	self.VictimFrame.HealthBar:SetDescription(SpecName)

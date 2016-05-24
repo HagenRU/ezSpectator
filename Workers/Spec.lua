@@ -47,6 +47,7 @@ function ezSpectator_SpecWorker:GetData(Class, Talents)
 		if MaxTree then
 			if Value > MaxTreeVal then
 				MaxTreeVal = Value
+				--noinspection UnusedDef
 				MaxTree = Index
 			end
 		else
@@ -57,37 +58,16 @@ function ezSpectator_SpecWorker:GetData(Class, Talents)
 		Tree[Index] = tonumber(Value)
 		Index = Index + 1
 	end
-	
-	local ClassText, SpecText = '', ''
-	if Class == 1 then
-		ClassText = 'Воин'
-	elseif Class == 2 then
-		ClassText = 'Паладин'
-	elseif Class == 3 then
-		ClassText = 'Охотник'
-	elseif Class == 4 then
-		ClassText = 'Разбойник'
-	elseif Class == 5 then
-		ClassText = 'Жрец'
-	elseif Class == 6 then 
-		ClassText = 'Рыцарь смерти'
-	elseif Class == 7 then
-		ClassText = 'Шаман'
-	elseif Class == 8 then
-		ClassText = 'Маг'
-	elseif Class == 9 then
-		ClassText = 'Чернокнижник'
-	elseif Class == 11 then
-		ClassText = 'Друид'
-	end
-	
+
+	local SpecText
+	local SpecIcon = ''
+
 	if MaxTreeVal < 44 then
 		SpecText = 'Гибрид'
-		SpecIcon = ''
 	else
 		if MaxTree then
 			SpecText = self.ClassTree[Class][MaxTree][1]
-			_, _, SpecIcon = GetSpellInfo(self.ClassTree[Class][MaxTree][2])
+			SpecIcon = select(3, GetSpellInfo(self.ClassTree[Class][MaxTree][2]))
 		end
 	end
 	

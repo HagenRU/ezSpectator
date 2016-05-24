@@ -1,6 +1,7 @@
 ezSpectator_PowerBar = {}
 ezSpectator_PowerBar.__index = ezSpectator_PowerBar
 
+--noinspection LuaOverlyLongMethod
 function ezSpectator_PowerBar:Create(Width, Height, Scale, Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
 	local self = {}
 	setmetatable(self, ezSpectator_PowerBar)

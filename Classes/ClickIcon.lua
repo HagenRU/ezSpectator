@@ -1,6 +1,7 @@
 ezSpectator_ClickIcon = {}
 ezSpectator_ClickIcon.__index = ezSpectator_ClickIcon
 
+--noinspection LuaOverlyLongMethod
 function ezSpectator_ClickIcon:Create(ParentFrame, Style, Size, ...)
 	local self = {}
 	setmetatable(self, ezSpectator_ClickIcon)
@@ -40,8 +41,6 @@ function ezSpectator_ClickIcon:Create(ParentFrame, Style, Size, ...)
 	if Style == 'gold' then
 		self.Textures:ClickIcon_Normal_Gold(self.Normal)
 		self.Textures:ClickIcon_Highlight_Gold(self.Highlight)
-		
-		SizeMod = 0
 	elseif Style == 'silver' then
 		self.Textures:ClickIcon_Normal_Silver(self.Normal)
 		self.Textures:ClickIcon_Highlight_Silver(self.Highlight)
@@ -137,7 +136,9 @@ end
 
 
 function ezSpectator_ClickIcon:SetIcon(Name)
-	local Record = nil
+	local Record
+
+	--noinspection UnusedDef
 	for Index, Value in pairs(self.IconTable) do
 		if Value[1] == Name then
 			Record = Value

@@ -1,6 +1,7 @@
 ezSpectator_CastFrame = {}
 ezSpectator_CastFrame.__index = ezSpectator_CastFrame
 
+--noinspection LuaOverlyLongMethod
 function ezSpectator_CastFrame:Create(...)
 	local self = {}
 	setmetatable(self, ezSpectator_CastFrame)
@@ -103,7 +104,7 @@ function ezSpectator_CastFrame:ShowCast(Spell, Time)
 		self.UpdateFrame.IsEnabled = true
 		self.UpdateFrame.IsProgressMode = self.CastBar:SetCastType(Spell, Time, SpellName)
 		if not self.UpdateFrame.IsProgressMode then
-			local r, g, b, a = self.CastBar.ProgressBar.texture:GetVertexColor()
+			local r, g, b = self.CastBar.ProgressBar.texture:GetVertexColor()
 			
 			self.UpdateFrame.IsGlowRising = true
 			self.Glow.texture:SetVertexColor(r, g, b, 0.75)

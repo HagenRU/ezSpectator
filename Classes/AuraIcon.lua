@@ -56,8 +56,9 @@ end
 
 
 
+--noinspection UnusedDef
 function ezSpectator_AuraIcon:Show(Spell, StackCount, Expiration, Duration, DebuffType, IsPositive, TimeOverride, LockAnimation)
-	local SpellName, _, SpellTexture = GetSpellInfo(Spell)
+	local SpellTexture = select(3, GetSpellInfo(Spell))
 	
 	if SpellTexture then
 		self.MainFrame:Show()

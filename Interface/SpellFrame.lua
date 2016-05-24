@@ -36,7 +36,7 @@ end
 
 
 function ezSpectator_SpellFrame:Push(Spell)
-	local SpellName, _, SpellTexture = GetSpellInfo(Spell)
+	local SpellTexture = select(3, GetSpellInfo(Spell))
 	
 	for IconLoop = self.IconsCount, 2, -1 do
 		self.Icons[IconLoop]:SetTexture(self.Icons[IconLoop - 1].Texture, self.Icons[IconLoop - 1].Normal:GetAlpha())

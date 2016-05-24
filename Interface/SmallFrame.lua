@@ -1,6 +1,7 @@
 ezSpectator_SmallFrame = {}
 ezSpectator_SmallFrame.__index = ezSpectator_SmallFrame
 
+--noinspection LuaOverlyLongMethod
 function ezSpectator_SmallFrame:Create(Worker)
 	local self = {}
 	setmetatable(self, ezSpectator_SmallFrame)

@@ -1,6 +1,7 @@
 ezSpectator_CastBar = {}
 ezSpectator_CastBar.__index = ezSpectator_CastBar
 
+--noinspection LuaOverlyLongMethod
 function ezSpectator_CastBar:Create(Width, Height, Scale, Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
 	local self = {}
 	setmetatable(self, ezSpectator_CastBar)
@@ -84,49 +85,68 @@ function ezSpectator_CastBar:SetText(Name)
 end
 
 
+--noinspection UnusedDef
 function ezSpectator_CastBar:SetCastType(Spell, Time, SpellName)
 	self:SetMaxValue(Time)
 	local r, g, b = 1, 1, 1
 	local IsProgressMode = false
 	
 	if Time == 99995 then -- range
+		--noinspection UnusedDef
 		r = 1.0
+		--noinspection UnusedDef
 		g = 1.0
+		--noinspection UnusedDef
 		b = 0.0
 		
 		self:SetValue(Time)
 		self:SetText('Отменено')
 	elseif Time == 99996 then -- los
+		--noinspection UnusedDef
 		r = 1.0
+		--noinspection UnusedDef
 		g = 1.0
+		--noinspection UnusedDef
 		b = 0.0
 		
 		self:SetValue(Time)
 		self:SetText('Отменено')
 	elseif Time == 99997 then -- success
+		--noinspection UnusedDef
 		r = 0.0
+		--noinspection UnusedDef
 		g = 1.0
+		--noinspection UnusedDef
 		b = 0.0
 		
 		self:SetValue(Time)
 		self:SetText('Успешно')
 	elseif Time == 99998 then -- canceled
+		--noinspection UnusedDef
 		r = 1.0
+		--noinspection UnusedDef
 		g = 1.0
+		--noinspection UnusedDef
 		b = 0.0
 		
 		self:SetValue(Time)
 		self:SetText('Отменено')
 	elseif Time == 99999 then -- interrupt
+		--noinspection UnusedDef
 		r = 1.0
+		--noinspection UnusedDef
 		g = 0.0
+		--noinspection UnusedDef
 		b = 0.0
 		
 		self:SetValue(Time)
 		self:SetText('Прерван!')
 	else --casting
+		--noinspection UnusedDef
 		r = 0.0
+		--noinspection UnusedDef
 		g = 1.0
+		--noinspection UnusedDef
 		b = 1.0
 		
 		self:SetValue(0)

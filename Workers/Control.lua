@@ -132,7 +132,21 @@ function ezSpectator_ControlWorker:Create()
 		['WARLOCK'] = {0.7421875, 0.98828125, 0.25, 0.5},
 		['PALADIN'] = {0, 0.25, 0.5, 0.75},
 		['DEATHKNIGHT'] = {0.25, 0.49609375, 0.5, 0.75},
-	}
+    }
+
+    self.ClassTexts = {
+        'WARRIOR',
+        'PALADIN',
+        'HUNTER',
+        'ROGUE',
+        'PRIEST',
+        'DEATHKNIGHT',
+        'SHAMAN',
+        'MAGE',
+        'WARLOCK',
+        '',
+        'DRUID',
+    }
 	
 	self.UpdateFrame = CreateFrame('Frame', nil, nil)
 	self.UpdateFrame.Parent = self
@@ -182,31 +196,10 @@ function ezSpectator_ControlWorker:SetClass(Class)
 	if Class then
 		self.Class = Class
 	end
-	
+
 	if self.Class then
-		local ClassText = nil
-		if self.Class == 1 then
-			ClassText = 'WARRIOR'
-		elseif self.Class == 2 then
-			ClassText = 'PALADIN'
-		elseif self.Class == 3 then
-			ClassText = 'HUNTER'
-		elseif self.Class == 4 then
-			ClassText = 'ROGUE'
-		elseif self.Class == 5 then
-			ClassText = 'PRIEST'
-		elseif self.Class == 6 then 
-			ClassText = 'DEATHKNIGHT'
-		elseif self.Class == 7 then
-			ClassText = 'SHAMAN'
-		elseif self.Class == 8 then
-			ClassText = 'MAGE'
-		elseif self.Class == 9 then
-			ClassText = 'WARLOCK'
-		elseif self.Class == 11 then
-			ClassText = 'DRUID'
-		end
-		
+		local ClassText = self.ClassTexts[self.Class]
+
 		local OffsetTable = self.ClassIcons[ClassText]
 		if OffsetTable then
 			self.ControlIcon:SetTexture('Interface\\Glues\\CharacterCreate\\UI-CharacterCreate-Classes', 17, false)

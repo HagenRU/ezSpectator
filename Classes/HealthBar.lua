@@ -1,6 +1,7 @@
 ezSpectator_HealthBar = {}
 ezSpectator_HealthBar.__index = ezSpectator_HealthBar
 
+--noinspection LuaOverlyLongMethod
 function ezSpectator_HealthBar:Create(DirectOrder, PersonalMode, FontSize, Width, Height, Scale, Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
 	local self = {}
 	setmetatable(self, ezSpectator_HealthBar)
@@ -301,8 +302,8 @@ end
 
 
 function ezSpectator_HealthBar:SetClass(Value)
-	local Class, Color = nil, nil
-	
+	local Class, Color
+
 	if Value == 1 then
 		Class = 'WARRIOR'
 	elseif Value == 2 then

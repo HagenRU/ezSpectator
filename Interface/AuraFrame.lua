@@ -52,9 +52,10 @@ end
 
 
 function ezSpectator_AuraFrame:PeekAura(IsPositive, DesiredIndex)
-	local Line, Index = nil, nil
+	local Line, Index
 	local InnerIndex = 1
-	
+
+	--noinspection UnusedDef
 	for IndexLoop, Record in ipairs(self.AuraStack) do
 		if (InnerIndex == DesiredIndex) and (Record.IsPositive == IsPositive) then
 			return Record
@@ -71,15 +72,16 @@ end
 
 
 function ezSpectator_AuraFrame:DrawAura(Record, Line, Index)
-	local DoDraw = nil
+	local DoDraw
 	if Record.Line and Record.Index then
+		--noinspection UnusedDef
 		DoDraw = Record.IsNeedUpdate or (Index ~= Record.Index) or (Line ~= Record.Line)
 	else
 		DoDraw = true
 	end
 	
 	if DoDraw then
-		local TimeOverride = nil
+		local TimeOverride
 		if Record.Line and Record.Index then
 			if not Record.IsNeedUpdate then
 				TimeOverride = self.AuraIcons[Record.Line][Record.Index].Cooldown.StartTime
@@ -97,14 +99,16 @@ end
 
 
 function ezSpectator_AuraFrame:Redraw()
-	local AuraType = nil
+	local AuraType
 	local LastUsedLine = 0
 	
 	if self.IsUpfilling then
+		--noinspection UnusedDef
 		AuraType = 0
 	else
 		AuraType = 1
 	end
+
 	for LineLoop = 1, self.DebuffLines, 1 do
 		for IndexLoop = 1, self.PerLine, 1 do
 			local Record = self:PeekAura(AuraType, IndexLoop + (LineLoop - 1) * self.PerLine)
@@ -122,10 +126,12 @@ function ezSpectator_AuraFrame:Redraw()
 	local LinesLeft = self.BuffLines + self.DebuffLines - LastUsedLine
 	
 	if self.IsUpfilling then
+		--noinspection UnusedDef
 		AuraType = 1
 	else
 		AuraType = 0
 	end
+
 	for LineLoop = 1, LinesLeft, 1 do
 		for IndexLoop = 1, self.PerLine, 1 do
 			local Record = self:PeekAura(AuraType, IndexLoop + (LineLoop - 1) * self.PerLine)
@@ -141,14 +147,14 @@ end
 
 
 function ezSpectator_AuraFrame:SetAura(IsRemoved, StackCount, Expiration, Duration, Spell, DebuffType, IsPositive, Caster)
-	local SpellName, _, SpellTexture = GetSpellInfo(Spell)
+	local SpellTexture = select(3, GetSpellInfo(Spell))
 	if not SpellTexture then
 		return
 	end
 	
 	local Record = {}
-	local RecordIndex = nil
-	
+	local RecordIndex
+
 	Record.IsNeedUpdate = false
 	for Index, Value in ipairs(self.AuraStack) do
 		if (Value.Spell == Spell) and (Value.Caster == Caster) then

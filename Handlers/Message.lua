@@ -20,6 +20,7 @@ end
 
 
 
+--noinspection UnusedDef
 function ezSpectator_MessageHandler:EventHandler(Event, ...)
 	if Event == 'CHAT_MSG_ADDON' then
 		if arg1 == 'ARENASPEC' and arg3 == 'WHISPER' and arg4 == '' then
@@ -38,9 +39,9 @@ end
 
 function ezSpectator_MessageHandler:ProcessMessage(Message)
 	local DelimiterPosition = 1
-	local DataPosition = 1
-	local MessageTarget = nil
-	
+	local DataPosition
+	local MessageTarget
+
 	if Message:find(';AUR=') then
 		local AuraTarget, Message = strsplit(';', Message)
 		local _, DataPart = strsplit('=', Message)
@@ -72,8 +73,8 @@ end
 
 function ezSpectator_MessageHandler:ProcessCommand(Target, Prefix, ...)
 	local Value = ...
-	local TeamID = nil
-	
+	local TeamID
+
 	if self.Interface.Players[Target] == nil then
 		if Target == '67' then
 			TeamID = 1

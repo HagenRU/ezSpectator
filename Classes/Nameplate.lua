@@ -1,10 +1,25 @@
 ezSpectator_Nameplate = {}
 ezSpectator_Nameplate.__index = ezSpectator_Nameplate
 
+--noinspection LuaOverlyLongMethod
 function ezSpectator_Nameplate:Create(ParentFrame, Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
 	local self = {}
 	setmetatable(self, ezSpectator_Nameplate)
-	
+
+	self.ClassTexts = {
+		'WARRIOR',
+		'PALADIN',
+		'HUNTER',
+		'ROGUE',
+		'PRIEST',
+		'DEATHKNIGHT',
+		'SHAMAN',
+		'MAGE',
+		'WARLOCK',
+		'',
+		'DRUID',
+	}
+
 	self.AnimationStartSpeed = 0
 	self.AnimationProgress = 10
 	self.IsLayerAnimated = true
@@ -376,30 +391,9 @@ end
 
 
 function ezSpectator_Nameplate:SetClass(Value)
-	local Class, Color = nil, nil
-	
-	if Value == 1 then
-		Class = 'WARRIOR'
-	elseif Value == 2 then
-		Class = 'PALADIN'
-	elseif Value == 3 then
-		Class = 'HUNTER'
-	elseif Value == 4 then
-		Class = 'ROGUE'
-	elseif Value == 5 then
-		Class = 'PRIEST'
-	elseif Value == 6 then 
-		Class = 'DEATHKNIGHT'
-	elseif Value == 7 then
-		Class = 'SHAMAN'
-	elseif Value == 8 then
-		Class = 'MAGE'
-	elseif Value == 9 then
-		Class = 'WARLOCK'
-	elseif Value == 11 then
-		Class = 'DRUID'
-	end
-	
+	local Class, Color
+
+	local Class = self.ClassTexts[Value]
 	if Class then
 		Color = RAID_CLASS_COLORS[Class]
 	end

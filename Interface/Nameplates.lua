@@ -13,7 +13,7 @@ function ezSpectator_Nameplates:Create(Interface)
 	self.EventFrame.Parent = self
 	self.EventFrame:RegisterEvent('PLAYER_ENTERING_WORLD')
 	self.EventFrame:SetScript('OnEvent', self.EventHandler)
-	self.EventFrame:SetScript('OnUpdate', function(self, Elapsed)
+	self.EventFrame:SetScript('OnUpdate', function(self)
 		if WorldFrame:GetNumChildren() ~= self.Parent.ChildrensChecked then
 			self.Parent.ChildrensChecked = WorldFrame:GetNumChildren()
 			self.Parent:ApplyHook(WorldFrame:GetChildren())
@@ -25,7 +25,7 @@ end
 
 
 
-function ezSpectator_Nameplates:EventHandler(Event, ...)
+function ezSpectator_Nameplates:EventHandler(Event)
 	if Event == 'PLAYER_ENTERING_WORLD' then
 		self.ChildrensChecked = -1
 	end
@@ -55,6 +55,7 @@ end
 
 
 
+--noinspection UnusedDef
 function ezSpectator_Nameplates:SaveOriginalNameplate(Healthbar, ThreatGlow, HealthBorder, CastBorder, CastUninterruptible, SpellIcon, HighlightTexture, NameText, LevelText, BossIcon, RaidIcon, MobIcon)
 	if not Healthbar.OriginalStatusBarTexture then
 		Healthbar.OriginalStatusBarTexture = Healthbar:GetStatusBarTexture()
@@ -143,7 +144,7 @@ function ezSpectator_Nameplates:ProcessNameplate(SkipAnimation, Healthbar, Threa
 		HealthBorder.ezSpectator_Nameplate = ezSpectator_Nameplate:Create(Healthbar, 'BOTTOM', HealthBorder, 'BOTTOM', 0, 10)
 	end
 	
-	local MinValue, MaxValue = Healthbar:GetMinMaxValues()
+	local MaxValue = select(2, Healthbar:GetMinMaxValues())
 	HealthBorder.ezSpectator_Nameplate:SetMaxValue(MaxValue)
 	
 	local Value = Healthbar:GetValue()
@@ -194,6 +195,8 @@ function ezSpectator_Nameplates:ApplyHook(...)
 		local CurrentRegion = CurrentFrame:GetRegions()
 		
 		if CurrentRegion and (CurrentRegion:GetObjectType() == 'Texture') and (CurrentRegion:GetTexture() == 'Interface\\TargetingFrame\\UI-TargetingFrame-Flash') then
+			--TODO hide castbar also!
+			--noinspection UnusedDef
 			local Healthbar, Castbar = CurrentFrame:GetChildren()
 			
 			Healthbar.ezSpectator_Nameplates = self
@@ -202,7 +205,7 @@ function ezSpectator_Nameplates:ApplyHook(...)
 					Frame.ezSpectator_Nameplates:OnShowHook(Frame)
 				end
 			end)
-			Healthbar:SetScript('OnUpdate', function(Frame, Elapsed)
+			Healthbar:SetScript('OnUpdate', function(Frame)
 				if Frame.ezSpectator_Nameplates then
 					Frame.ezSpectator_Nameplates:OnUpdateHook(Frame)
 				end

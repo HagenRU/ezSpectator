@@ -48,10 +48,12 @@ end
 function ezSpectator_InterfaceWorker:SetMode(Value)
 	if Value == 0 then
 		UIParent:Show()
-		
+
+		--noinspection UnusedDef
 		for Index, Player in pairs(self.Players) do
 			Player:Hide()
 			Player.SmallFrame.CastFrame:Hide()
+			--noinspection UnusedDef
 			Player = nil
 		end
 		self.TopFrame:Hide()
@@ -133,6 +135,7 @@ end
 
 
 function ezSpectator_InterfaceWorker:UpdateTargets()
+	--noinspection UnusedDef
 	for Index, Player in pairs(self.Players) do
 		if not Player.SmallFrame.IsLocked and not Player.IsDead then
 			Player.SmallFrame.Target:Update()
@@ -146,7 +149,8 @@ end
 
 function ezSpectator_InterfaceWorker:UpdateTeams()
 	local LeftMax, LeftVal, RightMax, RightVal = 0, 0, 0, 0
-	
+
+	--noinspection UnusedDef
 	for Index, Player in pairs(self.Players) do
 		if Player and Player:IsReady() then
 			if Player.Team == 1 then
@@ -172,7 +176,8 @@ end
 
 function ezSpectator_InterfaceWorker:ProcessWinner(Value)
 	Value = Value + 1
-	
+
+	--noinspection UnusedDef
 	for Index, Player in pairs(self.Players) do
 		Player:SetWinner(Value == Player.Team)
 	end
@@ -181,6 +186,7 @@ end
 
 
 function ezSpectator_InterfaceWorker:ResetViewpoint()
+	--noinspection UnusedDef
 	for Index, Player in pairs(self.Players) do
 		Player.PlayerFrame:Hide()
 		Player.VictimFrame:Hide()
@@ -190,6 +196,7 @@ end
 
 
 function ezSpectator_InterfaceWorker:ResetVictims()
+	--noinspection UnusedDef
 	for Index, Player in pairs(self.Players) do
 		Player.VictimFrame:Hide()
 	end

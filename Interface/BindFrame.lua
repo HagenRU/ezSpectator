@@ -1,6 +1,7 @@
 ezSpectator_BindFrame = {}
 ezSpectator_BindFrame.__index = ezSpectator_BindFrame
 
+--noinspection LuaOverlyLongMethod
 function ezSpectator_BindFrame:Create()
 	local self = {}
 	setmetatable(self, ezSpectator_BindFrame)
