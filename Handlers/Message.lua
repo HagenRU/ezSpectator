@@ -26,12 +26,6 @@ function ezSpectator_MessageHandler:EventHandler(Event, ...)
 		if arg1 == 'ARENASPEC' and arg3 == 'WHISPER' and arg4 == '' then
 			self.Parent:ProcessMessage(arg2)
 		end
-	elseif Event == 'COMBAT_LOG_EVENT_UNFILTERED' then
-		if arg2 == 'UNIT_DIED' then
-			if self.Parent.Interface.Players[arg7] then
-				--self.Parent.Interface.Players[arg7]:SetStatus(0)
-			end
-		end
 	end
 end
 
