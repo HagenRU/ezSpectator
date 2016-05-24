@@ -237,8 +237,6 @@ end
 
 
 function ezSpectator_PowerBar:SetPowerType(Value)
-	local r, g, b = 1, 1, 1
-
 	local PowerInfo = self.Parent.Data.PowerInfo[Value]
 	if not PowerInfo then
 		--noinspection ArrayElementZero
