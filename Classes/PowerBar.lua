@@ -243,6 +243,9 @@ function ezSpectator_PowerBar:SetPowerType(Value)
 		r = 0.0
 		g = 0.5
 		b = 1.0
+
+		self.AnimationStartSpeed = 0
+		self.AnimationProgress = 10
 	elseif Value == 1 then -- rage
 		r = 1.0
 		g = 0.0
