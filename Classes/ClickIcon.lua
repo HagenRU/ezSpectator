@@ -2,10 +2,12 @@ ezSpectator_ClickIcon = {}
 ezSpectator_ClickIcon.__index = ezSpectator_ClickIcon
 
 --noinspection LuaOverlyLongMethod
-function ezSpectator_ClickIcon:Create(ParentFrame, Style, Size, ...)
+function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	local self = {}
 	setmetatable(self, ezSpectator_ClickIcon)
-	
+
+	self.Parent = Parent
+
 	self.IconTable = {
 		{'Eye_Normal', 0.21875, 0.7890625, 0.21875, 0.7890625, 18},
 		{'Eye_Stroked', 0.21875, 0.7890625, 0.21875, 0.7890625, 18},

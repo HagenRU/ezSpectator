@@ -29,9 +29,9 @@ function ezSpectator_AuraFrame:Create(Parent, IsUpfilling, ...)
 		self.AuraIcons[Line] = {}
 		for Index = 1, self.PerLine, 1 do 
 			if IsUpfilling then
-				self.AuraIcons[Line][Index] = ezSpectator_AuraIcon:Create(self.MainFrame, 'TOPLEFT', self.MainFrame, 'TOPLEFT', (Index - 1) * self.IconWidth, (Line - 1) * self.IconHeight * -1 + (_ezSpectatorScale - 1) * 10)
+				self.AuraIcons[Line][Index] = ezSpectator_AuraIcon:Create(self.Parent, self.MainFrame, 'TOPLEFT', self.MainFrame, 'TOPLEFT', (Index - 1) * self.IconWidth, (Line - 1) * self.IconHeight * -1 + (_ezSpectatorScale - 1) * 10)
 			else
-				self.AuraIcons[Line][Index] = ezSpectator_AuraIcon:Create(self.MainFrame, 'BOTTOMLEFT', self.MainFrame, 'BOTTOMLEFT', (Index - 1) * self.IconWidth, (Line - 1) * self.IconHeight)
+				self.AuraIcons[Line][Index] = ezSpectator_AuraIcon:Create(self.Parent, self.MainFrame, 'BOTTOMLEFT', self.MainFrame, 'BOTTOMLEFT', (Index - 1) * self.IconWidth, (Line - 1) * self.IconHeight)
 			end
 		end
 	end

@@ -16,7 +16,7 @@ function ezSpectator_TeamFrame:Create(Parent, IsLeft, ...)
 	self.Normal:SetPoint(...)
 	self.Textures:TeamFrame_Normal(self.Normal)
 	
-	self.HealthBar = ezSpectator_HealthBar:Create(not IsLeft, false, 12 * _ezSpectatorScale, 462, 24, 0.75 * _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 10, -9)
+	self.HealthBar = ezSpectator_HealthBar:Create(self.Parent, not IsLeft, false, 12 * _ezSpectatorScale, 462, 24, 0.75 * _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 10, -9)
 	
 	return self
 end

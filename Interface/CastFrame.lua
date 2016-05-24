@@ -34,7 +34,7 @@ function ezSpectator_CastFrame:Create(Parent, ...)
 	self.Glow:SetPoint(...)
 	self.Textures:CastFrame_Glow(self.Glow)
 	
-	self.CastBar = ezSpectator_CastBar:Create(177, 11, _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 7, -6)
+	self.CastBar = ezSpectator_CastBar:Create(self.Parent, 177, 11, _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 7, -6)
 	
 	self.UpdateFrame = CreateFrame('Frame', nil, nil)
 	self.UpdateFrame.CastBar = self.CastBar

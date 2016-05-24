@@ -1,10 +1,12 @@
 ezSpectator_EnrageOrb = {}
 ezSpectator_EnrageOrb.__index = ezSpectator_EnrageOrb
 
-function ezSpectator_EnrageOrb:Create(Size, ...)
+function ezSpectator_EnrageOrb:Create(Parent, Size, ...)
 	local self = {}
 	setmetatable(self, ezSpectator_EnrageOrb)
-	
+
+	self.Parent = Parent
+
 	self.Textures = ezSpectator_Textures:Create()
 	
 	self.Backdrop = CreateFrame('Frame', nil, nil)

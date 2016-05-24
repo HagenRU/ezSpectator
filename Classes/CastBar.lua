@@ -2,10 +2,12 @@ ezSpectator_CastBar = {}
 ezSpectator_CastBar.__index = ezSpectator_CastBar
 
 --noinspection LuaOverlyLongMethod
-function ezSpectator_CastBar:Create(Width, Height, Scale, Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
+function ezSpectator_CastBar:Create(Parent, Width, Height, Scale, Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
 	local self = {}
 	setmetatable(self, ezSpectator_CastBar)
-	
+
+	self.Parent = Parent
+
 	self.CurrentValue = nil
 	
 	self.Textures = ezSpectator_Textures:Create()

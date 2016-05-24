@@ -1,10 +1,12 @@
 ezSpectator_AuraIcon = {}
 ezSpectator_AuraIcon.__index = ezSpectator_AuraIcon
 
-function ezSpectator_AuraIcon:Create(ParentFrame, ...)
+function ezSpectator_AuraIcon:Create(Parent, ParentFrame, ...)
 	local self = {}
 	setmetatable(self, ezSpectator_AuraIcon)
-	
+
+	self.Parent = Parent
+
 	self.Colors = { 
 		['none'] = {r = 0.80, g = 0, b = 0},
 		['magic'] = {r = 0.20, g = 0.60, b = 1.00},

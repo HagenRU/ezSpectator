@@ -2,9 +2,11 @@ ezSpectator_Nameplate = {}
 ezSpectator_Nameplate.__index = ezSpectator_Nameplate
 
 --noinspection LuaOverlyLongMethod
-function ezSpectator_Nameplate:Create(ParentFrame, Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
+function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
 	local self = {}
 	setmetatable(self, ezSpectator_Nameplate)
+
+	self.Parent = Parent
 
 	self.ClassTexts = {
 		'WARRIOR',

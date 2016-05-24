@@ -2,10 +2,12 @@ ezSpectator_PowerBar = {}
 ezSpectator_PowerBar.__index = ezSpectator_PowerBar
 
 --noinspection LuaOverlyLongMethod
-function ezSpectator_PowerBar:Create(Width, Height, Scale, Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
+function ezSpectator_PowerBar:Create(Parent, Width, Height, Scale, Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
 	local self = {}
 	setmetatable(self, ezSpectator_PowerBar)
-	
+
+	self.Parent = Parent
+
 	self.AnimationStartSpeed = 0
 	self.AnimationProgress = 10
 	self.IsLayerAnimated = false

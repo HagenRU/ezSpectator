@@ -2,12 +2,12 @@ ezSpectator_SmallFrame = {}
 ezSpectator_SmallFrame.__index = ezSpectator_SmallFrame
 
 --noinspection LuaOverlyLongMethod
-function ezSpectator_SmallFrame:Create(Worker, Parent)
+function ezSpectator_SmallFrame:Create(Parent, Worker)
 	local self = {}
 	setmetatable(self, ezSpectator_SmallFrame)
 	
-	self.Worker = Worker
 	self.Parent = Parent
+	self.Worker = Worker
 	
 	self.IsLocked = false
 	
@@ -64,9 +64,9 @@ function ezSpectator_SmallFrame:Create(Worker, Parent)
 		end
 	end)
 	
-	self.HealthBar = ezSpectator_HealthBar:Create(true, true, 10 * _ezSpectatorScale, 177, 26, _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 7, -6)
+	self.HealthBar = ezSpectator_HealthBar:Create(self.Parent, true, true, 10 * _ezSpectatorScale, 177, 26, _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 7, -6)
 	
-	self.PowerBar = ezSpectator_PowerBar:Create(177, 9, _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 7, -36)
+	self.PowerBar = ezSpectator_PowerBar:Create(self.Parent, 177, 9, _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 7, -36)
 	
 	self.Target = ezSpectator_TargetFrame:Create(self.Parent, 'BOTTOMRIGHT', self.Normal, 'TOPRIGHT', -5, -9)
 	
@@ -76,12 +76,12 @@ function ezSpectator_SmallFrame:Create(Worker, Parent)
 	
 	self.SpellFrame = nil
 	
-	self.TrinketIcon = ezSpectator_ClickIcon:Create(self.MainFrame, 'silver', 28, 'BOTTOMLEFT', self.Normal, 'TOPLEFT', 2, -4)
+	self.TrinketIcon = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'silver', 28, 'BOTTOMLEFT', self.Normal, 'TOPLEFT', 2, -4)
 	self.TrinketIcon:SetTexture('Interface\\Icons\\INV_Jewelry_TrinketPVP_02', 17, true)
 	
-	self.ControlIcon = ezSpectator_ClickIcon:Create(self.MainFrame, 'silver', 28, 'LEFT', self.TrinketIcon.Normal, 'RIGHT', -3, 0)
+	self.ControlIcon = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'silver', 28, 'LEFT', self.TrinketIcon.Normal, 'RIGHT', -3, 0)
 	
-	self.SpecIcon = ezSpectator_ClickIcon:Create(self.MainFrame, 'silver', 28, 'LEFT', self.ControlIcon.Normal, 'RIGHT', -3, 0)
+	self.SpecIcon = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'silver', 28, 'LEFT', self.ControlIcon.Normal, 'RIGHT', -3, 0)
 	
 	return self
 end

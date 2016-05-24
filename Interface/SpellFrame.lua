@@ -15,9 +15,9 @@ function ezSpectator_SpellFrame:Create(Parent, IsRightShift, ...)
 	self.MainFrame:SetScale(_ezSpectatorScale)
 	self.MainFrame:SetPoint(...)
 	
-	self.Icons[1] = ezSpectator_SpellIcon:Create(self.MainFrame, IsRightShift, self.MainFrame)
+	self.Icons[1] = ezSpectator_SpellIcon:Create(self.Parent, self.MainFrame, IsRightShift, self.MainFrame)
 	for IconLoop = 2, self.IconsCount, 1 do
-		self.Icons[IconLoop] = ezSpectator_SpellIcon:Create(self.MainFrame, IsRightShift, self.Icons[IconLoop - 1].Normal)
+		self.Icons[IconLoop] = ezSpectator_SpellIcon:Create(self.Parent, self.MainFrame, IsRightShift, self.Icons[IconLoop - 1].Normal)
 	end
 	
 	return self

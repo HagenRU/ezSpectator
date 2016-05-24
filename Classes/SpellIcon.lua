@@ -1,10 +1,12 @@
 ezSpectator_SpellIcon = {}
 ezSpectator_SpellIcon.__index = ezSpectator_SpellIcon
 
-function ezSpectator_SpellIcon:Create(ParentFrame, IsRightShift, ShiftFrame)
+function ezSpectator_SpellIcon:Create(Parent, ParentFrame, IsRightShift, ShiftFrame)
 	local self = {}
 	setmetatable(self, ezSpectator_SpellIcon)
-	
+
+	self.Parent = Parent
+
 	self.FadeLock = 0.33
 	
 	self.Textures = ezSpectator_Textures:Create()

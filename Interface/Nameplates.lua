@@ -141,7 +141,7 @@ end
 function ezSpectator_Nameplates:ProcessNameplate(SkipAnimation, Healthbar, ThreatGlow, HealthBorder, CastBorder, CastUninterruptible, SpellIcon, HighlightTexture, NameText, LevelText, BossIcon, RaidIcon, MobIcon)
 	self:HideOriginalNameplate(Healthbar, ThreatGlow, HealthBorder, CastBorder, CastUninterruptible, SpellIcon, HighlightTexture, NameText, LevelText, BossIcon, RaidIcon, MobIcon)
 	if not HealthBorder.ezSpectator_Nameplate then
-		HealthBorder.ezSpectator_Nameplate = ezSpectator_Nameplate:Create(Healthbar, 'BOTTOM', HealthBorder, 'BOTTOM', 0, 10)
+		HealthBorder.ezSpectator_Nameplate = ezSpectator_Nameplate:Create(self.Parent, Healthbar, 'BOTTOM', HealthBorder, 'BOTTOM', 0, 10)
 	end
 	
 	local MaxValue = select(2, Healthbar:GetMinMaxValues())

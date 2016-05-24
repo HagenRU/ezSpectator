@@ -16,7 +16,7 @@ end
 
 _ezSpectator = ezSpectator:Create()
 
---tb = ezSpectator_HealthBar:Create(true, true, 10 * _ezSpectatorScale, 177, 26, _ezSpectatorScale, 'LEFT', UIParent, 'CENTER', 0, 0)
+--tb = ezSpectator_HealthBar:Create(self, true, true, 10 * _ezSpectatorScale, 177, 26, _ezSpectatorScale, 'LEFT', UIParent, 'CENTER', 0, 0)
 --tb:SetClass(1)
 --tb:SetMaxValue(100000)
 --tb:SetValue(30000)

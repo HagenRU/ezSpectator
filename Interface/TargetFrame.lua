@@ -27,7 +27,7 @@ function ezSpectator_TargetFrame:Create(Parent, ...)
 	self.Normal:SetPoint(...)
 	self.Textures:TargetFrame_Normal(self.Normal)
 	
-	self.HealthBar = ezSpectator_HealthBar:Create(false, false, 8 * 1, 103, 18,  _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 4, -5)
+	self.HealthBar = ezSpectator_HealthBar:Create(self.Parent, false, false, 8 * 1, 103, 18,  _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 4, -5)
 	
 	return self
 end

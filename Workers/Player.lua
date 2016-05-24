@@ -17,7 +17,7 @@ function ezSpectator_PlayerWorker:Create(Parent)
 	
 	self.SpecWorker = ezSpectator_SpecWorker:Create(self.Parent)
 	
-	self.SmallFrame = ezSpectator_SmallFrame:Create(self, self.Parent)
+	self.SmallFrame = ezSpectator_SmallFrame:Create(self.Parent, self)
 	self.SmallFrame:Hide()
 	
 	self.SmallControlWorker = ezSpectator_ControlWorker:Create(self.Parent)

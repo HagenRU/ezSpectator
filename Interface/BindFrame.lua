@@ -58,9 +58,9 @@ function ezSpectator_BindFrame:Create(Parent)
 		end
 	end)
 	
-	self.HealthBar = ezSpectator_HealthBar:Create(true, true, 10 * _ezSpectatorScale, 177, 26, _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 7, -6)
+	self.HealthBar = ezSpectator_HealthBar:Create(self.Parent, true, true, 10 * _ezSpectatorScale, 177, 26, _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 7, -6)
 	
-	self.PowerBar = ezSpectator_PowerBar:Create(177, 9, _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 7, -36)
+	self.PowerBar = ezSpectator_PowerBar:Create(self.Parent, 177, 9, _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 7, -36)
 	
 	self.CastFrame = ezSpectator_CastFrame:Create(self.Parent, 'TOPLEFT', self.Normal, 'BOTTOMLEFT', 0, 5)
 	
@@ -68,12 +68,12 @@ function ezSpectator_BindFrame:Create(Parent)
 	
 	self.SpellFrame = nil
 	
-	self.TrinketIcon = ezSpectator_ClickIcon:Create(self.MainFrame, 'silver', 28, 'BOTTOMLEFT', self.Normal, 'TOPLEFT', 2, -4)
+	self.TrinketIcon = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'silver', 28, 'BOTTOMLEFT', self.Normal, 'TOPLEFT', 2, -4)
 	self.TrinketIcon:SetTexture('Interface\\Icons\\INV_Jewelry_TrinketPVP_02', 17, true)
 	
-	self.ControlIcon = ezSpectator_ClickIcon:Create(self.MainFrame, 'silver', 28, 'LEFT', self.TrinketIcon.Normal, 'RIGHT', -3, 0)
+	self.ControlIcon = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'silver', 28, 'LEFT', self.TrinketIcon.Normal, 'RIGHT', -3, 0)
 	
-	self.SpecIcon = ezSpectator_ClickIcon:Create(self.MainFrame, 'silver', 28, 'LEFT', self.ControlIcon.Normal, 'RIGHT', -3, 0)
+	self.SpecIcon = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'silver', 28, 'LEFT', self.ControlIcon.Normal, 'RIGHT', -3, 0)
 	
 	return self
 end

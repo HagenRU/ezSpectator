@@ -26,7 +26,7 @@ function ezSpectator_TopFrame:Create(Parent)
 	
 	self.RightTeam = ezSpectator_TeamFrame:Create(self.Parent, false, 'TOP', 290, -1)
 	
-	--self.EnrageOrb = ezSpectator_EnrageOrb:Create(60, 'TOP', 0, 5)
+	--self.EnrageOrb = ezSpectator_EnrageOrb:Create(self.Parent, 60, 'TOP', 0, 5)
 	
 	self.Time = self.MainFrame:CreateFontString(nil, 'OVERLAY', 'SystemFont_Shadow_Huge1')
 	self.Time:SetPoint('CENTER', 0, 0)
@@ -42,7 +42,7 @@ function ezSpectator_TopFrame:Create(Parent)
 		end
 	end)
 	
-	self.ShowUI = ezSpectator_ClickIcon:Create(self.MainFrame, 'gold', 34 / _ezSpectatorScale, 'LEFT', self.MainFrame, 'LEFT', 0, 0)
+	self.ShowUI = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'gold', 34 / _ezSpectatorScale, 'LEFT', self.MainFrame, 'LEFT', 0, 0)
 	self.ShowUI:SetIcon('Eye_Normal')
 	self.ShowUI:SetAction(function()
 		UIParent:Show()
@@ -51,7 +51,7 @@ function ezSpectator_TopFrame:Create(Parent)
 		self.HideUI:Show()
 	end)
 	
-	self.HideUI = ezSpectator_ClickIcon:Create(self.MainFrame, 'gold', 34 / _ezSpectatorScale, 'LEFT', self.MainFrame, 'LEFT', 0, 0)
+	self.HideUI = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'gold', 34 / _ezSpectatorScale, 'LEFT', self.MainFrame, 'LEFT', 0, 0)
 	self.HideUI:SetIcon('Eye_Stroked')
 	self.HideUI:Hide()
 	self.HideUI:SetAction(function()
@@ -61,14 +61,14 @@ function ezSpectator_TopFrame:Create(Parent)
 		self.HideUI:Hide()
 	end)
 	
-	self.Reset = ezSpectator_ClickIcon:Create(self.MainFrame, 'gold', 34 / _ezSpectatorScale, 'LEFT', self.ShowUI.Normal, 'RIGHT', -3, 0)
+	self.Reset = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'gold', 34 / _ezSpectatorScale, 'LEFT', self.ShowUI.Normal, 'RIGHT', -3, 0)
 	self.Reset:SetIcon('Refresh')
 	self.Reset:SetAction(function()
 		SendChatMessage('.spectate view ' .. UnitName('player'), 'GUILD')
 		self.Parent.Interface:ResetViewpoint()
 	end)
 	
-	self.Leave = ezSpectator_ClickIcon:Create(self.MainFrame, 'gold', 34 / _ezSpectatorScale, 'LEFT', self.Reset.Normal, 'RIGHT', -3, 0)
+	self.Leave = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'gold', 34 / _ezSpectatorScale, 'LEFT', self.Reset.Normal, 'RIGHT', -3, 0)
 	self.Leave:SetIcon('Logout')
 	self.Leave:SetAction(function()
 		LeaveBattlefield()

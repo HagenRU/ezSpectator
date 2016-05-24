@@ -2,10 +2,12 @@ ezSpectator_HealthBar = {}
 ezSpectator_HealthBar.__index = ezSpectator_HealthBar
 
 --noinspection LuaOverlyLongMethod
-function ezSpectator_HealthBar:Create(DirectOrder, PersonalMode, FontSize, Width, Height, Scale, Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
+function ezSpectator_HealthBar:Create(Parent, DirectOrder, PersonalMode, FontSize, Width, Height, Scale, Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
 	local self = {}
 	setmetatable(self, ezSpectator_HealthBar)
-	
+
+	self.Parent = Parent
+
 	self.AnimationStartSpeed = 0
 	self.AnimationProgress = 10
 	self.IsLayerAnimated = false
