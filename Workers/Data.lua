@@ -110,7 +110,7 @@ function ezSpectator_DataWorker:Create()
         -- energy
         [3] = {r = 1, g = 1, b = 0, AnimationStartSpeed = 5, AnimationProgress = 1},
         -- runic power
-        [6] = {r = 1, g = 1, b = 0, AnimationStartSpeed = 5, AnimationProgress = 1}
+        [6] = {r = 0, g = 1, b = 1, AnimationStartSpeed = 5, AnimationProgress = 1}
     }
 
     self.AuraRootEffect = 1
