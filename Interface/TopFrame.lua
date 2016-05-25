@@ -27,8 +27,13 @@ function ezSpectator_TopFrame:Create(Parent)
 	self.RightTeam = ezSpectator_TeamFrame:Create(self.Parent, false, 'TOP', 290, -1)
 	
 	--self.EnrageOrb = ezSpectator_EnrageOrb:Create(self.Parent, 60, 'TOP', 0, 5)
-	
-	self.Time = self.MainFrame:CreateFontString(nil, 'OVERLAY', 'SystemFont_Shadow_Huge1')
+
+	self.TextFrame = CreateFrame('Frame', nil, self.MainFrame)
+	self.TextFrame:SetFrameStrata('TOOLTIP')
+	self.TextFrame:SetSize(10, 10)
+	self.TextFrame:SetPoint('CENTER', self.MainFrame, 'CENTER')
+
+	self.Time = self.TextFrame:CreateFontString(nil, 'BACKGROUND', 'SystemFont_Shadow_Huge1')
 	self.Time:SetPoint('CENTER', 0, 0)
 	
 	self.UpdateFrame = CreateFrame('Frame', nil, nil)
