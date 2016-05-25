@@ -23,6 +23,8 @@ function ezSpectator_InterfaceWorker:Create(Parent)
 				self.Parent:ProcessWinner(Winner)
 			end
 		end
+
+		self.Parent:ProcessCastQueue()
 	end)
 	
 	self.Nameplates = ezSpectator_Nameplates:Create(self.Parent)
@@ -176,6 +178,17 @@ function ezSpectator_InterfaceWorker:ProcessWinner(Value)
 	--noinspection UnusedDef
 	for Index, Player in pairs(self.Players) do
 		Player:SetWinner(Value == Player.Team)
+	end
+end
+
+
+
+function ezSpectator_InterfaceWorker:ProcessCastQueue()
+	--noinspection UnusedDef
+	for Index, Player in pairs(self.Players) do
+		if Player.CastQueue:GetCount() > 0 then
+			Player:SetCast()
+		end
 	end
 end
 

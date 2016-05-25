@@ -134,6 +134,12 @@ end
 
 
 
+function ezSpectator_SmallFrame:IsCastProgressing()
+	return self.CastFrame.UpdateFrame.IsProgressMode;
+end
+
+
+
 function ezSpectator_SmallFrame:SetPoint(...)
 	self.Backdrop:SetPoint(...)
 	self.Normal:SetPoint(...)

@@ -31,7 +31,9 @@ function ezSpectator_PlayerWorker:Create(Parent)
 	
 	self.VictimControlWorker = ezSpectator_ControlWorker:Create(self.Parent)
 	self.VictimControlWorker:BindIcon(self.VictimFrame.ControlIcon)
-	
+
+	self.CastQueue = ezSpectator_DataStack:Create('FIFO')
+
 	self.CurrentTarget = nil
 	self.IsNicknameSet = false
 		self.Nickname = nil
@@ -49,7 +51,7 @@ function ezSpectator_PlayerWorker:Create(Parent)
 	
 	self.IsLocked = false
 	self.IsDead = false
-	
+
 	return self
 end
 
@@ -189,7 +191,7 @@ end
 
 function ezSpectator_PlayerWorker:SetCast(Spell, Time)
 	if self.SmallFrame.IsLocked then
-		return
+		return false
 	end
 	
 	if (self.Parent.Data.Trinkets[Spell] ~= nil) then
@@ -201,21 +203,48 @@ function ezSpectator_PlayerWorker:SetCast(Spell, Time)
 		
 		self.VictimFrame.SpellFrame:Push(Spell)
 		self.VictimFrame.TrinketIcon:SetCooldown(GetTime(), self.Parent.Data.Trinkets[Spell])
-		return
+		return true
 	end
-	
-	self.SmallFrame.CastFrame:ShowCast(Spell, Time)
-	if self.PlayerFrame:IsShown() then
-		self.PlayerFrame.CastFrame:ShowCast(Spell, Time)
-	end
-	if self.VictimFrame:IsShown() then
-		self.VictimFrame.CastFrame:ShowCast(Spell, Time)
-	end
-	
+
 	if Time == 99997 then
 		self.SmallFrame.SpellFrame:Push(Spell)
 		self.PlayerFrame.SpellFrame:Push(Spell)
 		self.VictimFrame.SpellFrame:Push(Spell)
+	end
+
+	local IsCastState = self.Parent.Data.CastInfo[Time] ~= nil
+
+	if self.SmallFrame:IsCastProgressing() and not IsCastState then
+		if Spell and Time then
+			local CastRecord = {}
+			CastRecord.Spell = Spell
+			CastRecord.Time = Time
+			CastRecord.Added = GetTime()
+
+			self.CastQueue:Push(CastRecord)
+		end
+
+		return false
+	else
+		local Shift = 0
+		if not IsCastState then
+			local CastRecord = self.CastQueue:Pop()
+			if CastRecord then
+				Spell = CastRecord.Spell
+				Time = CastRecord.Time
+				Shift = (GetTime() - CastRecord.Added)
+			end
+		end
+
+		self.SmallFrame.CastFrame:ShowCast(Spell, Time, Shift)
+		if self.PlayerFrame:IsShown() then
+			self.PlayerFrame.CastFrame:ShowCast(Spell, Time, Shift)
+		end
+		if self.VictimFrame:IsShown() then
+			self.VictimFrame.CastFrame:ShowCast(Spell, Time, Shift)
+		end
+
+		return true
 	end
 end
 
