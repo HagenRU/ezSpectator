@@ -88,7 +88,7 @@ end
 
 
 
-function ezSpectator_CastBar:SetCastType(Time, SpellName, Shift)
+function ezSpectator_CastBar:SetCastType(Time, SpellName)
 	self:SetMaxValue(Time)
 
 	local CastInfo = self.Parent.Data.CastInfo[Time]
