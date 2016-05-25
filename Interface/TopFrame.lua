@@ -26,7 +26,7 @@ function ezSpectator_TopFrame:Create(Parent)
 
 	self.TextFrame = CreateFrame('Frame', nil, self.MainFrame)
 	self.TextFrame:SetFrameStrata('TOOLTIP')
-	self.TextFrame:SetSize(10, 10)
+	self.TextFrame:SetSize(1, 1)
 	self.TextFrame:SetPoint('CENTER', self.MainFrame, 'CENTER')
 
 	self.Time = self.TextFrame:CreateFontString(nil, 'BACKGROUND', 'SystemFont_Shadow_Huge1')
