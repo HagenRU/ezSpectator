@@ -35,6 +35,16 @@ end
 
 
 
+function ezSpectator_DataStack:GetCount()
+    if self.First > self.Last then
+        return 0
+    else
+        return self.Last - self.First + 1
+    end
+end
+
+
+
 function ezSpectator_DataStack.PopFIFO(self)
     if self.First > self.Last then
         return nil
