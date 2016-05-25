@@ -14,12 +14,6 @@ function ezSpectator_ControlWorker:Create(Parent)
 	self.CurrentAuraLevel = -1
 	self.IsAnimated = false
 	
-	self.AuraRootEffect = 1
-	self.AuraSilenceEffect = 2
-	self.AuraCrowdControlEffect = 3
-	self.AuraStunEffect = 4
-	self.AuraImmunitylEffect = 5
-	
 	self.UpdateFrame = CreateFrame('Frame', nil, nil)
 	self.UpdateFrame.Parent = self
 	self.UpdateFrame.ElapsedTick = 0

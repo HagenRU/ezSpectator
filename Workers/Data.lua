@@ -113,6 +113,12 @@ function ezSpectator_DataWorker:Create()
         [6] = {r = 1, g = 1, b = 0, AnimationStartSpeed = 5, AnimationProgress = 1}
     }
 
+    self.AuraRootEffect = 1
+    self.AuraSilenceEffect = 2
+    self.AuraCrowdControlEffect = 3
+    self.AuraStunEffect = 4
+    self.AuraImmunitylEffect = 5
+
     self.ControlList = {
         -- Death Knight
         [47481] = self.AuraStunEffect,			-- Gnaw (Ghoul)
