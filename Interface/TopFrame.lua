@@ -17,11 +17,7 @@ function ezSpectator_TopFrame:Create(Parent)
 	self.MainFrame:SetHeight(35)
 	self.MainFrame:SetScale(_ezSpectatorScale)
 	self.MainFrame:SetPoint('TOP', 0, 0)
-	--self.MainFrame:SetAlpha(0.66)
-	
-	--self.Textures:GeneratePanel(self.MainFrame)
-	--self.Textures:CreateShadow(self.MainFrame)
-	
+
 	self.LeftTeam = ezSpectator_TeamFrame:Create(self.Parent, true, 'TOP', -290, -1)
 	
 	self.RightTeam = ezSpectator_TeamFrame:Create(self.Parent, false, 'TOP', 290, -1)
