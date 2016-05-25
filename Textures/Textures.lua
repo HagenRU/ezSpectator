@@ -216,24 +216,6 @@ end
 
 
 
-function ezSpectator_Textures:EnrageOrb_Backdrop(Frame)
-	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\EnrageOrb_Backdrop.tga')
-	Texture:SetTexCoord(0.08203125, 0.92578125, 0.08203125, 0.92578125)
-	Texture:SetAllPoints(Frame)
-	Frame.texture = Texture
-end
-
-
-
-function ezSpectator_Textures:EnrageOrb_Normal(Frame)
-	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\EnrageOrb_Normal.tga')
-	Texture:SetTexCoord(0.08203125, 0.92578125, 0.08203125, 0.92578125)
-	Texture:SetAllPoints(Frame)
-	Frame.texture = Texture
-end
-
-
-
 function ezSpectator_Textures:SpellIcon_Normal(Frame)
 	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\SpellIcon_Normal.tga')
 	Texture:SetTexCoord(0.21875, 0.7890625, 0.21875, 0.7890625)
