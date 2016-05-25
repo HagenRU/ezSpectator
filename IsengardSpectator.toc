@@ -10,6 +10,7 @@
 ## LoadOnDemand: 0
 Textures\Textures.lua
 
+Classes\Stack.lua
 Classes\HealthBar.lua
 Classes\PowerBar.lua
 Classes\CastBar.lua
