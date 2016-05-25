@@ -87,6 +87,7 @@ function ezSpectator_CastBar:SetText(Name)
 end
 
 
+
 function ezSpectator_CastBar:SetCastType(Time, SpellName)
 	self:SetMaxValue(Time)
 

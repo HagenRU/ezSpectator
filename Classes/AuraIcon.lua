@@ -41,7 +41,7 @@ function ezSpectator_AuraIcon:Create(Parent, ParentFrame, ...)
 end
 
 
-
+--TODO check "Expiration" parameter...
 --noinspection UnusedDef
 function ezSpectator_AuraIcon:Show(Spell, StackCount, Expiration, Duration, DebuffType, IsPositive, TimeOverride, LockAnimation)
 	local SpellTexture = select(3, GetSpellInfo(Spell))

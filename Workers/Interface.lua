@@ -51,8 +51,6 @@ function ezSpectator_InterfaceWorker:SetMode(Value)
 		for Index, Player in pairs(self.Players) do
 			Player:Hide()
 			Player.SmallFrame.CastFrame:Hide()
-			--noinspection UnusedDef
-			Player = nil
 		end
 		self.TopFrame:Hide()
 		

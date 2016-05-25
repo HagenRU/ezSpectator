@@ -29,7 +29,7 @@ function ezSpectator_DataWorker:Create()
         ['PRIEST'] = {0.49609375, 0.7421875, 0.25, 0.5},
         ['WARLOCK'] = {0.7421875, 0.98828125, 0.25, 0.5},
         ['PALADIN'] = {0, 0.25, 0.5, 0.75},
-        ['DEATHKNIGHT'] = {0.25, 0.49609375, 0.5, 0.75},
+        ['DEATHKNIGHT'] = {0.25, 0.49609375, 0.5, 0.75}
     }
 
     self.ClassTreeInfo = {
@@ -84,7 +84,7 @@ function ezSpectator_DataWorker:Create()
         ['magic'] = {r = 0.20, g = 0.60, b = 1.00},
         ['curse'] = {r = 0.60, g = 0.00, b = 1.00},
         ['disease'] = {r = 0.60, g = 0.40, b = 0},
-        ['poison'] = {r = 0.00, g = 0.60, b = 0},
+        ['poison'] = {r = 0.00, g = 0.60, b = 0}
     }
 
     self.CastInfo = {
@@ -110,7 +110,7 @@ function ezSpectator_DataWorker:Create()
         -- energy
         [3] = {r = 1, g = 1, b = 0, AnimationStartSpeed = 5, AnimationProgress = 1},
         -- runic power
-        [6] = {r = 1, g = 1, b = 0, AnimationStartSpeed = 5, AnimationProgress = 1},
+        [6] = {r = 1, g = 1, b = 0, AnimationStartSpeed = 5, AnimationProgress = 1}
     }
 
     self.ControlList = {

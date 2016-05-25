@@ -32,22 +32,18 @@ end
 
 
 function ezSpectator_MessageHandler:ProcessMessage(Message)
-	local DelimiterPosition = 1
-	local DataPosition
-	local MessageTarget
-
 	if Message:find(';AUR=') then
 		local AuraTarget, Message = strsplit(';', Message)
-		local _, DataPart = strsplit('=', Message)
+		local DataPart = select(2, strsplit('=', Message))
 		local aremove, astack, aexpiration, aduration, aspellId, adebyfftype, aisdebuff, acaster = strsplit(',', DataPart)
 
 		self:ProcessCommand(AuraTarget, 'AUR', tonumber(aremove), tonumber(astack), tonumber(aexpiration), tonumber(aduration), tonumber(aspellId), tonumber(adebyfftype), tonumber(aisdebuff), acaster)
 		return
 	end
 	
-	DataPosition = strfind(Message, ';', DelimiterPosition)
-	MessageTarget = strsub(Message, 1, DataPosition - 1)
-	DelimiterPosition = DataPosition + 1
+	local DataPosition = strfind(Message, ';', DelimiterPosition)
+	local MessageTarget = strsub(Message, 1, DataPosition - 1)
+	local DelimiterPosition = DataPosition + 1
 	
 	repeat
 		DataPosition = strfind(Message, ';', DelimiterPosition)

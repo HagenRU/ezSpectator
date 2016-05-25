@@ -99,7 +99,6 @@ function ezSpectator_CastFrame:ShowCast(Spell, Time)
 	local SpellName, _, _, _, _, _, CastTime = GetSpellInfo(Spell)
 	
 	if (CastTime > 0) and (Time > 0) then
-
 		self.UpdateFrame.ElapsedTick = 0
 		self.UpdateFrame.ElapsedTotal = 0
 		
