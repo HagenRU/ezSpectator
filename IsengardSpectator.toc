@@ -9,6 +9,7 @@
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 Textures\Textures.lua
+Sounds\Sounds.lua
 
 Classes\Stack.lua
 Classes\HealthBar.lua

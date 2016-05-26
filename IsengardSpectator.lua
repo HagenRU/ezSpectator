@@ -16,6 +16,8 @@ function ezSpectator:Create()
 	setmetatable(self, ezSpectator)
 
 	self.Data = ezSpectator_DataWorker:Create(self)
+	self.Sound = ezSpectator_Sounds:Create(self)
+
 	self.Interface = ezSpectator_InterfaceWorker:Create(self)
 	self.Handler = ezSpectator_MessageHandler:Create(self)
 	
@@ -24,12 +26,17 @@ end
 
 _ezSpectator = ezSpectator:Create()
 
+
+
+
 --tb = ezSpectator_HealthBar:Create(self, true, true, 10 * _ezSpectatorScale, 177, 26, _ezSpectatorScale, 'LEFT', UIParent, 'CENTER', 0, 0)
 --tb:SetClass(1)
 --tb:SetMaxValue(100000)
 --tb:SetValue(30000)
 --tb:SetNickname('Test')
 --tb:SetDescription('Animation')
+
+
 
 tb = ezSpectator_PlayerWorker:Create(_ezSpectator)
 tb:SetNickname('Test bar')
@@ -40,12 +47,16 @@ tb:SetMaxPower(1000)
 tb:SetHealth(5000)
 tb:SetPower(7000)
 --tb:SetTeam(67)
-
---_ezSpectator.Interface.TopFrame:Show()
---_ezSpectator.Interface.TopFrame:StartTimer(390)
-
 table.insert(_ezSpectator.Interface.Players, tb)
 
+
+
+--_ezSpectator.Interface.TopFrame:Show()
+--_ezSpectator.Interface.TopFrame:StartTimer(290)
+
+
+
 function play(...)
-	tb:SetCast(...)
+	_ezSpectator.Sound:Play('Berzerk')
+	--tb:SetCast(...)
 end
