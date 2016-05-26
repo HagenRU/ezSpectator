@@ -187,8 +187,14 @@ function ezSpectator_EnrageOrb:SetStackCount(Time)
 	self.ProgressBar:Hide()
 	self.Spark:Hide()
 
-	self.Sections:Show()
-	self.StackFrame:Show()
+	if not self.StackFrame:IsShown() then
+		for StackIndex = 1, self.Parent.Data.EnrageStackMax, 1 do
+			self.Stacks[StackIndex].StackDot:Hide()
+		end
+
+		self.StackFrame:Show()
+		self.Sections:Show()
+	end
 
 	local StackCount = ((Time - self.Parent.Data.EnrageStartAt) / self.Parent.Data.EnrageStackInterval) + 1
 
