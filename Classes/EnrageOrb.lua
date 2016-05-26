@@ -194,6 +194,10 @@ function ezSpectator_EnrageOrb:SetStackCount(Time)
 		if StackIndex <= StackCount then
 			if not self.Stacks[StackIndex].StackDot:IsShown() then
 				self.Stacks[StackIndex].Cooldown:SetCooldown(0, 0)
+
+				if StackIndex == 1 then
+					self.Parent.Sound:Play('Berzerk', 7)
+				end
 			end
 
 			self.Stacks[StackIndex].StackDot:Show()
@@ -206,6 +210,10 @@ end
 
 
 function ezSpectator_EnrageOrb:SetTime(Time)
+	if not self.MainFrame:IsShown() then
+		return
+	end
+
 	if Time <= self.Parent.Data.EnrageStartAt then
 		self:SetProgressValue(Time)
 	else
