@@ -8,7 +8,9 @@ function ezSpectator_InterfaceWorker:Create(Parent)
 	WorldStateScoreFrame:SetParent(nil)
 	
 	self.Parent = Parent
-	
+
+	self.IsRunning = false
+
 	self.TopFrame = ezSpectator_TopFrame:Create(self.Parent)
 	
 	self.Reactor = CreateFrame('Frame', nil, nil)
@@ -20,7 +22,11 @@ function ezSpectator_InterfaceWorker:Create(Parent)
 		if self.ElapsedTick > 0.5 then
 			local Winner = GetBattlefieldWinner()
 			if Winner then
-				self.Parent:ProcessWinner(Winner, 'DEFAULT')
+				if self.Parent.IsRunning then
+					self.Parent.IsRunning = false
+
+					self.Parent:ProcessWinner(Winner, 'DEFAULT')
+				end
 			end
 		end
 
@@ -47,6 +53,8 @@ end
 
 function ezSpectator_InterfaceWorker:SetMode(Value)
 	if Value == 0 then
+		self.IsRunning = false
+
 		UIParent:Show()
 
 		--noinspection UnusedDef
@@ -59,6 +67,8 @@ function ezSpectator_InterfaceWorker:SetMode(Value)
 		self:Reset()
 		self:ResetViewpoint()
 	else
+		self.IsRunning = true
+
 		self.TopFrame:Show()
 		
 		UIParent:Hide()
@@ -185,6 +195,7 @@ function ezSpectator_InterfaceWorker:ProcessWinner(Value, Mode)
 		SoundName = SoundName[math.random(#SoundName)]
 	end
 
+	print(SoundName)
 	self.Parent.Sound:Play(SoundName, 5)
 end
 

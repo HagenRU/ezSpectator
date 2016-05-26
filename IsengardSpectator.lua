@@ -28,6 +28,7 @@ _ezSpectator = ezSpectator:Create()
 
 
 function ezSpectator_Demo()
+	_ezSpectator.Interface.IsRunning = true
 	_ezSpectator.Interface.TopFrame:Show()
 	_ezSpectator.Interface.TopFrame:StartTimer(230)
 
@@ -36,6 +37,5 @@ function ezSpectator_Demo()
 		SoundName = SoundName[math.random(#SoundName)]
 	end
 
-	print(SoundName)
 	_ezSpectator.Sound:Play(SoundName, 5)
 end

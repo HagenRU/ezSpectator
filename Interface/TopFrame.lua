@@ -35,7 +35,7 @@ function ezSpectator_TopFrame:Create(Parent)
 	self.UpdateFrame = CreateFrame('Frame', nil, nil)
 	self.UpdateFrame.Parent = self
 	self.UpdateFrame:SetScript('OnUpdate', function(self, Elapsed)
-		if self.Parent.MatchTime ~= nil then
+		if self.Parent.MatchTime ~= nil and self.Parent.Parent.Interface.IsRunning then
 			self.Parent.MatchTime = self.Parent.MatchTime + Elapsed
 			
 			local Time = math.floor(self.Parent.MatchTime)
