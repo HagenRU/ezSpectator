@@ -28,6 +28,18 @@ function ezSpectator_DataWorker:Create()
         [1] = 'one'
     }
 
+    self.MatchEndings = {
+        ['DEFAULT'] = {
+            'EndOfRound',
+            'SKAARJannihilation',
+            'SKAARJbloodbath',
+            'SKAARJerradication',
+            'SKAARJextermination',
+            'SKAARJslaughter',
+            'SKAARJtermination'
+        }
+    }
+
     self.ClassTextEng = {
         'WARRIOR',
         'PALADIN',

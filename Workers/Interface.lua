@@ -20,7 +20,7 @@ function ezSpectator_InterfaceWorker:Create(Parent)
 		if self.ElapsedTick > 0.5 then
 			local Winner = GetBattlefieldWinner()
 			if Winner then
-				self.Parent:ProcessWinner(Winner)
+				self.Parent:ProcessWinner(Winner, 'DEFAULT')
 			end
 		end
 
@@ -172,13 +172,20 @@ end
 
 
 
-function ezSpectator_InterfaceWorker:ProcessWinner(Value)
+function ezSpectator_InterfaceWorker:ProcessWinner(Value, Mode)
 	Value = Value + 1
 
 	--noinspection UnusedDef
 	for Index, Player in pairs(self.Players) do
 		Player:SetWinner(Value == Player.Team)
 	end
+
+	local SoundName = self.Parent.Data.MatchEndings[Mode]
+	if type(SoundName) == 'table' then
+		SoundName = SoundName[math.random(#SoundName)]
+	end
+
+	self.Parent.Sound:Play(SoundName, 5)
 end
 
 

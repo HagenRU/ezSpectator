@@ -1,4 +1,3 @@
---TODO Активное отображение начала энрейджа после его включения, как для игроков, так и для тех кто смотрит матч через аддон, желательно сопроводить это звуковым эффектом и каким-то анонсом по центру экрана.
 --TODO Таргет игрока на текущий момент, включая пета, таргет по пету периодически бывает очень важен.
 --TODO Отдельный вывод самых важных кулдаунов где-то сбоку (общий для каждой из команд).
 --TODO Хп бары над головами игроков: Количество ХП в цвет команды
@@ -31,4 +30,12 @@ _ezSpectator = ezSpectator:Create()
 function ezSpectator_Demo()
 	_ezSpectator.Interface.TopFrame:Show()
 	_ezSpectator.Interface.TopFrame:StartTimer(230)
+
+	local SoundName = _ezSpectator.Data.MatchEndings['DEFAULT']
+	if type(SoundName) == 'table' then
+		SoundName = SoundName[math.random(#SoundName)]
+	end
+
+	print(SoundName)
+	_ezSpectator.Sound:Play(SoundName, 5)
 end
