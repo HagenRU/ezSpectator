@@ -30,7 +30,7 @@ _ezSpectator = ezSpectator:Create()
 function ezSpectator_Demo()
 	_ezSpectator.Interface.IsRunning = true
 	_ezSpectator.Interface.TopFrame:Show()
-	_ezSpectator.Interface.TopFrame:StartTimer(230)
+	_ezSpectator.Interface.TopFrame:StartTimer(298)
 
 	local SoundName = _ezSpectator.Data.MatchEndings['DEFAULT']
 	if type(SoundName) == 'table' then
