@@ -9,6 +9,25 @@ function ezSpectator_DataWorker:Create()
     self.EnrageStackInterval = 30
     self.EnrageStackMax = 10
 
+    self.TimeWarnings = {
+        [300] = '5_minute_warning',
+        [180] = '3_minutes_remain',
+        [120] = '2_minutes_remain',
+        [60] = '1_minute_remains',
+        [30] = '30_seconds_remain',
+        [20] = '20_seconds',
+        [10] = 'ten',
+        [9] = 'nine',
+        [8] = 'eight',
+        [7] = 'seven',
+        [6] = 'six',
+        [5] = 'five',
+        [4] = 'four',
+        [3] = 'three',
+        [2] = 'two',
+        [1] = 'one'
+    }
+
     self.ClassTextEng = {
         'WARRIOR',
         'PALADIN',

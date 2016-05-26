@@ -8,6 +8,8 @@ function ezSpectator_EnrageOrb:Create(Parent, Width, Height, ...)
 
 	self.Parent = Parent
 
+	self.SoundLast = {}
+
 	self.AnimationStartSpeed = 0
 	self.AnimationProgress = 0.1
 
@@ -214,7 +216,13 @@ function ezSpectator_EnrageOrb:SetTime(Time)
 		return
 	end
 
-	if Time <= self.Parent.Data.EnrageStartAt then
+	local SoundName = self.Parent.Data.TimeWarnings[self.Parent.Data.EnrageStartAt - Time]
+	if SoundName and (GetTime() - (self.SoundLast[SoundName] or 0) > 3) then
+		self.SoundLast[SoundName] = GetTime()
+		self.Parent.Sound:Play(SoundName, 5)
+	end
+
+	if Time < self.Parent.Data.EnrageStartAt then
 		self:SetProgressValue(Time)
 	else
 		self:SetStackCount(Time)
