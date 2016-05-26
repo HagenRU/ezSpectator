@@ -22,7 +22,7 @@ function ezSpectator_TopFrame:Create(Parent)
 	
 	self.RightTeam = ezSpectator_TeamFrame:Create(self.Parent, false, 'TOP', 290, -1)
 	
-	self.EnrageOrb = ezSpectator_EnrageOrb:Create(self.Parent, 170, 22, 'TOP', self.MainFrame, 'BOTTOM', 0, -8)
+	self.EnrageOrb = ezSpectator_EnrageOrb:Create(self.Parent, 170, 22, 'TOP', self.MainFrame, 'BOTTOM', 0, -10 * _ezSpectatorScale)
 
 	self.TextFrame = CreateFrame('Frame', nil, self.MainFrame)
 	self.TextFrame:SetFrameStrata('TOOLTIP')
