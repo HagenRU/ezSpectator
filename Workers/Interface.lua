@@ -156,6 +156,10 @@ end
 
 
 function ezSpectator_InterfaceWorker:UpdateTeams()
+	if not self.IsRunning then
+		return
+	end
+
 	local LeftMax, LeftVal, RightMax, RightVal = 0, 0, 0, 0
 
 	--noinspection UnusedDef
