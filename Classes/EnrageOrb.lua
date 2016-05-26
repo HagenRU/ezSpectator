@@ -1,6 +1,7 @@
 ezSpectator_EnrageOrb = {}
 ezSpectator_EnrageOrb.__index = ezSpectator_EnrageOrb
 
+--noinspection LuaOverlyLongMethod
 function ezSpectator_EnrageOrb:Create(Parent, Width, Height, ...)
 	local self = {}
 	setmetatable(self, ezSpectator_EnrageOrb)
