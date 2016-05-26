@@ -22,12 +22,12 @@ function ezSpectator_TopFrame:Create(Parent)
 	
 	self.RightTeam = ezSpectator_TeamFrame:Create(self.Parent, false, 'TOP', 290, -1)
 	
-	--self.EnrageOrb = ezSpectator_EnrageOrb:Create(self.Parent, 60, 'TOP', 0, 5)
+	self.EnrageOrb = ezSpectator_EnrageOrb:Create(self.Parent, 170, 22, 'TOP', self.MainFrame, 'BOTTOM', 0, -8)
 
 	self.TextFrame = CreateFrame('Frame', nil, self.MainFrame)
 	self.TextFrame:SetFrameStrata('TOOLTIP')
 	self.TextFrame:SetSize(1, 1)
-	self.TextFrame:SetPoint('CENTER', self.MainFrame, 'CENTER')
+	self.TextFrame:SetPoint('CENTER', self.MainFrame, 'CENTER', 0, 0)
 
 	self.Time = self.TextFrame:CreateFontString(nil, 'BACKGROUND', 'SystemFont_Shadow_Huge1')
 	self.Time:SetPoint('CENTER', 0, 0)
@@ -40,6 +40,8 @@ function ezSpectator_TopFrame:Create(Parent)
 			
 			local Time = math.floor(self.Parent.MatchTime)
 			self.Parent.Time:SetText(string.format('%.2d:%.2d', Time / 60 % 60, Time % 60))
+
+			self.Parent.EnrageOrb:SetTime(Time)
 		end
 	end)
 	
@@ -74,7 +76,7 @@ function ezSpectator_TopFrame:Create(Parent)
 	self.Leave:SetAction(function()
 		LeaveBattlefield()
 	end)
-	
+
 	self:Hide()
 	return self
 end
@@ -85,7 +87,7 @@ function ezSpectator_TopFrame:Hide()
 	self.MainFrame:Hide()
 	self.LeftTeam:Hide()
 	self.RightTeam:Hide()
-	--self.EnrageOrb:Hide()
+	self.EnrageOrb:Hide()
 end
 
 
@@ -94,7 +96,7 @@ function ezSpectator_TopFrame:Show()
 	self.MainFrame:Show()
 	self.LeftTeam:Show()
 	self.RightTeam:Show()
-	--self.EnrageOrb:Show()
+	self.EnrageOrb:Show()
 end
 
 

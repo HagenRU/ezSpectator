@@ -31,10 +31,21 @@ _ezSpectator = ezSpectator:Create()
 --tb:SetNickname('Test')
 --tb:SetDescription('Animation')
 
-function play(value)
-	if not value then
-		value = math.random(1, 100000)
-	end
-	
-	tb:SetValue(value)
+tb = ezSpectator_PlayerWorker:Create(_ezSpectator)
+tb:SetNickname('Test bar')
+tb:SetClass(1)
+tb:SetPowerType(1)
+tb:SetMaxHealth(10000)
+tb:SetMaxPower(1000)
+tb:SetHealth(5000)
+tb:SetPower(7000)
+--tb:SetTeam(67)
+
+--_ezSpectator.Interface.TopFrame:Show()
+--_ezSpectator.Interface.TopFrame:StartTimer(390)
+
+table.insert(_ezSpectator.Interface.Players, tb)
+
+function play(...)
+	tb:SetCast(...)
 end

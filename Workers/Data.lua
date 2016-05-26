@@ -5,6 +5,10 @@ function ezSpectator_DataWorker:Create()
     local self = {}
     setmetatable(self, ezSpectator_DataWorker)
 
+    self.EnrageStartAt = 300
+    self.EnrageStackInterval = 30
+    self.EnrageStackMax = 10
+
     self.ClassTextEng = {
         'WARRIOR',
         'PALADIN',

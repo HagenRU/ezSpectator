@@ -144,6 +144,51 @@ end
 
 
 
+function ezSpectator_Textures:EnrageOrb_Backdrop(Frame)
+	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\EnrageOrb_Backdrop.tga')
+	Texture:SetTexCoord(0, 1, 0.3046875, 0.6875)
+	Texture:SetAllPoints(Frame)
+	Frame.texture = Texture
+end
+
+
+
+function ezSpectator_Textures:EnrageOrb_Normal(Frame)
+	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\EnrageOrb_Normal.tga')
+	Texture:SetTexCoord(0, 1, 0.3046875, 0.6875)
+	Texture:SetAllPoints(Frame)
+	Frame.texture = Texture
+end
+
+
+
+function ezSpectator_Textures:EnrageOrb_Sections(Frame)
+	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\EnrageOrb_Sections.tga')
+	Texture:SetTexCoord(0, 1, 0.3046875, 0.6875)
+	Texture:SetAllPoints(Frame)
+	Frame.texture = Texture
+end
+
+
+
+function ezSpectator_Textures:PillowBar_Normal(Frame)
+	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\PillowBar_Normal.tga')
+	Texture:SetTexCoord(0, 1, 0, 1)
+	Texture:SetAllPoints(Frame)
+	Frame.texture = Texture
+end
+
+
+
+function ezSpectator_Textures:PillowBar_Glow(Frame)
+	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\PillowBar_Glow.tga')
+	Texture:SetTexCoord(0, 1, 0, 1)
+	Texture:SetAllPoints(Frame)
+	Frame.texture = Texture
+end
+
+
+
 function ezSpectator_Textures:HealthBar_Normal(Frame)
 	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\HealthBar_Normal.tga')
 	Texture:SetTexCoord(0, 1, 0, 1)
