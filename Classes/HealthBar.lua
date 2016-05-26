@@ -191,7 +191,6 @@ function ezSpectator_HealthBar:DecAnimatedValue()
 		self.AnimationDownBar.texture:SetTexCoord(0, AnimateWidth / self.Width, 0, 1)
 		
 		self.IsAnimatingDown = self.AnimationDownBar:GetWidth() >= self.ProgressBar:GetWidth()
-		
 	end
 	
 	if self.IsSparkAnimated then
@@ -455,7 +454,6 @@ function ezSpectator_HealthBar:SetValue(Value, IsInnerCall)
 	else
 		self.Percent:SetText('0%')
 	end
-	
 end
 
 
