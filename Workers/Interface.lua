@@ -10,6 +10,7 @@ function ezSpectator_InterfaceWorker:Create(Parent)
 	self.Parent = Parent
 
 	self.IsRunning = false
+	self.Viewpoint = nil
 
 	self.TopFrame = ezSpectator_TopFrame:Create(self.Parent)
 	
@@ -216,8 +217,14 @@ end
 
 
 function ezSpectator_InterfaceWorker:ResetViewpoint()
+	self.Viewpoint = nil
+
 	--noinspection UnusedDef
 	for Index, Player in pairs(self.Players) do
+		if not Player.IsDead then
+			Player.SmallFrame:SetAlpha(1)
+		end
+
 		Player.PlayerFrame:Hide()
 		Player.VictimFrame:Hide()
 	end

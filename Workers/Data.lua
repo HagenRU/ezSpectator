@@ -5,6 +5,8 @@ function ezSpectator_DataWorker:Create()
     local self = {}
     setmetatable(self, ezSpectator_DataWorker)
 
+    self.ViewpointAlpha = 0.33;
+
     self.EnrageStartAt = 420
     self.EnrageStackInterval = 30
     self.EnrageStackMax = 10

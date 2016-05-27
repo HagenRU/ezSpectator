@@ -61,6 +61,12 @@ end
 
 
 function ezSpectator_TargetFrame:SetUnit(Value)
+	if self.Parent.Interface.Viewpoint then
+		if self.Unit and not self.Unit.IsDead and (self.Unit ~= self.Parent.Interface.Viewpoint) then
+			self.Unit.SmallFrame:SetAlpha(1)
+		end
+	end
+
 	self.Unit = Value
 	self.HealthBar:ResetAnimation()
 	self:Update(true)
@@ -69,6 +75,10 @@ end
 
 
 function ezSpectator_TargetFrame:Update(LockAnimation)
+	if self.Parent.Interface.Viewpoint then
+		self.Parent.Interface.Viewpoint.SmallFrame.Target.Unit.SmallFrame:SetAlpha(self.Parent.Data.ViewpointAlpha)
+	end
+
 	if self.Unit and self.Unit:IsReady() then
 		self.HealthBar:SetNickname(self.Unit.Nickname)
 		self.HealthBar:SetClass(self.Unit.Class)

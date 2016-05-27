@@ -431,8 +431,11 @@ end
 
 function ezSpectator_PlayerWorker:BindViewpoint()
 	SendChatMessage('.spectate view ' .. self.Nickname, 'GUILD')
-	
 	self.Parent.Interface:ResetViewpoint()
+
+	self.Parent.Interface.Viewpoint = self
+	self.SmallFrame:SetAlpha(self.Parent.Data.ViewpointAlpha)
+
 	self.PlayerFrame:Show()
 	self:SetTarget(nil)
 end
