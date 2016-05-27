@@ -370,7 +370,7 @@ function ezSpectator_PlayerWorker:SetSpec(Value)
 	self.PlayerFrame.HealthBar:SetDescription(SpecName)
 	self.VictimFrame.HealthBar:SetDescription(SpecName)
 	
-	self.SmallFrame.SpecIcon:SetTexture(SpecIcon, 16, true)
+	self.SmallFrame.SpecIcon:SetTexture(SpecIcon, 17, true)
 end
 
 

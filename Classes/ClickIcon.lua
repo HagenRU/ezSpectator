@@ -118,6 +118,8 @@ end
 
 
 function ezSpectator_ClickIcon:SetTexture(Name, Size, CutBorders)
+	Size = Size / _ezSpectatorScale33
+
 	self.Icon:SetSize(Size, Size)
 	self.Cooldown:SetSize(Size, Size)
 	
