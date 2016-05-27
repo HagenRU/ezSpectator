@@ -106,7 +106,6 @@ function ezSpectator_ClickIcon:SetAlpha(Value)
 	self.Backdrop:SetAlpha(Value)
 	self.Normal:SetAlpha(Value)
 	self.Highlight:SetAlpha(Value)
-	self.Icon:SetAlpha(Value)
 end
 
 
@@ -118,7 +117,7 @@ end
 
 
 function ezSpectator_ClickIcon:SetTexture(Name, Size, CutBorders)
-	Size = Size / _ezSpectatorScale33
+	Size = Size / _ezSpectatorScale
 
 	self.Icon:SetSize(Size, Size)
 	self.Cooldown:SetSize(Size, Size)
