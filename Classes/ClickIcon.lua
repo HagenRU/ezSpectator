@@ -44,7 +44,7 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 		SizeMod = 0.5
 	end
 	
-	self.Icon = CreateFrame('Frame', nil, ParentFrame)
+	self.Icon = CreateFrame('Frame', nil, self.Backdrop)
 	self.Icon:SetFrameStrata('MEDIUM')
 	self.Icon:SetSize(Size, Size)
 	self.Icon:SetScale(_ezSpectatorScale)
