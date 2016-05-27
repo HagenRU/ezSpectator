@@ -5,7 +5,7 @@ function ezSpectator_DataWorker:Create()
     local self = {}
     setmetatable(self, ezSpectator_DataWorker)
 
-    self.EnrageStartAt = 300
+    self.EnrageStartAt = 420
     self.EnrageStackInterval = 30
     self.EnrageStackMax = 10
 
@@ -90,6 +90,10 @@ function ezSpectator_DataWorker:Create()
         {{'', ''}, {'', ''}, {'', ''}},
         --Друид
         {{'Баланс', '8921'}, {'Сила зверя', '40794'}, {'Исцеление', '43422'}}
+    }
+
+    self.ClassCooldownInfo = {
+        --TODO check cooldown topic
     }
 
     self.Trinkets = {
