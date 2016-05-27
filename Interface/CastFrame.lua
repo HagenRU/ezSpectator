@@ -122,15 +122,12 @@ end
 
 function ezSpectator_CastFrame:Show()
 	self.MainFrame:Show()
-	self.CastBar:Show()
 end
 
 
 
 function ezSpectator_CastFrame:Hide()
 	self.MainFrame:Hide()
-	self.CastBar:Hide()
-	self.Glow:SetAlpha(0)
 end
 
 

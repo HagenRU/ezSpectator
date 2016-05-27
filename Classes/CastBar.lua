@@ -64,25 +64,6 @@ end
 
 
 
-function ezSpectator_CastBar:Hide()
-	self.Backdrop:Hide()
-	self.ProgressBar:Hide()
-	self.Spark:Hide()
-	self.Overlay:Hide()
-	self.TextFrame:Hide()
-end
-
-
-
-function ezSpectator_CastBar:Show()
-	self.Backdrop:Show()
-	self.ProgressBar:Show()
-	self.Overlay:Show()
-	self.TextFrame:Show()
-end
-
-
-
 function ezSpectator_CastBar:SetText(Name)
 	self.Text:SetText(Name)
 end
