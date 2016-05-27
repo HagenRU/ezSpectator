@@ -230,6 +230,12 @@ end
 
 
 
+function ezSpectator_Nameplate:SetAlpha(Value)
+	self.MainFrame:SetAlpha(Value)
+end
+
+
+
 function ezSpectator_Nameplate:ResetAnimation()
 	if self.IsLayerAnimated then
 		self.AnimationUpBar:SetWidth(0)
