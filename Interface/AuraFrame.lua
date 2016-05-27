@@ -53,6 +53,12 @@ end
 
 
 
+function ezSpectator_AuraFrame:SetAlpha(Value)
+	self.MainFrame:SetAlpha(Value)
+end
+
+
+
 function ezSpectator_AuraFrame:PeekAura(IsPositive, DesiredIndex)
 	local Line, Index
 	local InnerIndex = 1

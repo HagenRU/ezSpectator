@@ -37,6 +37,12 @@ end
 
 
 
+function ezSpectator_SpellFrame:SetAlpha(Value)
+	self.MainFrame:SetAlpha(Value)
+end
+
+
+
 function ezSpectator_SpellFrame:Push(Spell)
 	local SpellTexture = select(3, GetSpellInfo(Spell))
 	

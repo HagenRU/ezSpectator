@@ -96,6 +96,7 @@ function ezSpectator_SmallFrame:Hide()
 	self.PowerBar:Hide()
 	self.Target:Hide()
 	self.Reactor:Hide()
+	self.CastFrame:Hide()
 	self.AuraFrame:Hide()
 	self.TrinketIcon:Hide()
 	self.ControlIcon:Hide()
@@ -165,7 +166,13 @@ function ezSpectator_SmallFrame:SetAlpha(Value)
 	self.HealthBar:SetAlpha(Value)
 	self.PowerBar:SetAlpha(Value)
 	self.Target:SetAlpha(Value)
+	self.CastFrame:SetAlpha(Value)
+	self.AuraFrame:SetAlpha(Value)
 	self.TrinketIcon:SetAlpha(Value)
 	self.ControlIcon:SetAlpha(Value)
 	self.SpecIcon:SetAlpha(Value)
+
+	if self.SpellFrame then
+		self.SpellFrame:SetAlpha(Value)
+	end
 end

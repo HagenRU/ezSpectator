@@ -2,25 +2,26 @@ ezSpectator_CastBar = {}
 ezSpectator_CastBar.__index = ezSpectator_CastBar
 
 --noinspection LuaOverlyLongMethod
-function ezSpectator_CastBar:Create(Parent, Width, Height, Scale, Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
+function ezSpectator_CastBar:Create(Parent, ParentFrame, Width, Height, Scale, Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
 	local self = {}
 	setmetatable(self, ezSpectator_CastBar)
 
 	self.Parent = Parent
+	self.ParentFrame = ParentFrame
 
 	self.CurrentValue = nil
 	
 	self.Textures = ezSpectator_Textures:Create()
 	self.Width = Width - 3
 	
-	self.Backdrop = CreateFrame('Frame', nil, nil)
+	self.Backdrop = CreateFrame('Frame', nil, self.ParentFrame)
 	self.Backdrop:SetFrameStrata('HIGH')
 	self.Backdrop:SetSize(Width, Height)
 	self.Backdrop:SetScale(Scale)
 	self.Backdrop:SetPoint(Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
 	self.Textures:HealthBar_Backdrop(self.Backdrop)
 	
-	self.ProgressBar = CreateFrame('Frame', nil, nil)
+	self.ProgressBar = CreateFrame('Frame', nil, self.ParentFrame)
 	self.ProgressBar:SetFrameStrata('DIALOG')
 	self.ProgressBar:SetSize(self.Width, Height - 2)
 	self.ProgressBar:SetScale(Scale)
@@ -28,7 +29,7 @@ function ezSpectator_CastBar:Create(Parent, Width, Height, Scale, Point, Relativ
 	self.Textures:HealthBar_Normal(self.ProgressBar)
 	self.ProgressBar.texture:SetVertexColor(1, 0, 0)
 	
-	self.Spark = CreateFrame('Frame', nil, nil)
+	self.Spark = CreateFrame('Frame', nil, self.ParentFrame)
 	self.Spark:SetFrameStrata('FULLSCREEN')
 	self.Spark:SetSize(128, Height - 2)
 	self.Spark:SetScale(Scale)
@@ -38,14 +39,14 @@ function ezSpectator_CastBar:Create(Parent, Width, Height, Scale, Point, Relativ
 	self.Spark.texture:SetVertexColor(1, 0, 0)
 	self.Spark:Hide()
 	
-	self.Overlay = CreateFrame('Frame', nil, nil)
+	self.Overlay = CreateFrame('Frame', nil, self.ParentFrame)
 	self.Overlay:SetFrameStrata('FULLSCREEN_DIALOG')
 	self.Overlay:SetSize(Width, Height)
 	self.Overlay:SetScale(Scale)
 	self.Overlay:SetPoint(Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
 	self.Textures:HealthBar_Overlay(self.Overlay)
 	
-	self.TextFrame = CreateFrame('Frame', nil, nil)
+	self.TextFrame = CreateFrame('Frame', nil, self.ParentFrame)
 	self.TextFrame:SetFrameStrata('TOOLTIP')
 	self.TextFrame:SetSize(Width, Height)
 	self.TextFrame:SetScale(Scale)

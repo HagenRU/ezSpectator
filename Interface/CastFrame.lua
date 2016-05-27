@@ -9,8 +9,10 @@ function ezSpectator_CastFrame:Create(Parent, ...)
 	self.Parent = Parent
 
 	self.Textures = ezSpectator_Textures:Create()
-	
-	self.Backdrop = CreateFrame('Frame', nil, nil)
+
+	self.MainFrame = CreateFrame('Frame', nil, nil)
+
+	self.Backdrop = CreateFrame('Frame', nil, self.MainFrame)
 	self.Backdrop:SetFrameLevel(1)
 	self.Backdrop:SetFrameStrata('BACKGROUND')
 	self.Backdrop:SetSize(191, 24)
@@ -18,7 +20,7 @@ function ezSpectator_CastFrame:Create(Parent, ...)
 	self.Backdrop:SetPoint(...)
 	self.Textures:CastFrame_Backdrop(self.Backdrop)
 	
-	self.Normal = CreateFrame('Frame', nil, nil)
+	self.Normal = CreateFrame('Frame', nil, self.MainFrame)
 	self.Normal:SetFrameLevel(1)
 	self.Normal:SetFrameStrata('LOW')
 	self.Normal:SetSize(191, 24)
@@ -26,7 +28,7 @@ function ezSpectator_CastFrame:Create(Parent, ...)
 	self.Normal:SetPoint(...)
 	self.Textures:CastFrame_Normal(self.Normal)
 	
-	self.Glow = CreateFrame('Frame', nil, nil)
+	self.Glow = CreateFrame('Frame', nil, self.MainFrame)
 	self.Glow:SetFrameLevel(1)
 	self.Glow:SetFrameStrata('TOOLTIP')
 	self.Glow:SetSize(191, 24)
@@ -34,7 +36,7 @@ function ezSpectator_CastFrame:Create(Parent, ...)
 	self.Glow:SetPoint(...)
 	self.Textures:CastFrame_Glow(self.Glow)
 	
-	self.CastBar = ezSpectator_CastBar:Create(self.Parent, 177, 11, _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 7, -6)
+	self.CastBar = ezSpectator_CastBar:Create(self.Parent, self.MainFrame, 177, 11, _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 7, -6)
 	
 	self.UpdateFrame = CreateFrame('Frame', nil, nil)
 	self.UpdateFrame.CastBar = self.CastBar
@@ -119,16 +121,20 @@ end
 
 
 function ezSpectator_CastFrame:Show()
-	self.Backdrop:Show()
-	self.Normal:Show()
+	self.MainFrame:Show()
 	self.CastBar:Show()
 end
 
 
 
 function ezSpectator_CastFrame:Hide()
-	self.Backdrop:Hide()
-	self.Normal:Hide()
+	self.MainFrame:Hide()
 	self.CastBar:Hide()
 	self.Glow:SetAlpha(0)
+end
+
+
+
+function ezSpectator_CastFrame:SetAlpha(Value)
+	self.MainFrame:SetAlpha(Value)
 end
