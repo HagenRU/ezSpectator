@@ -170,10 +170,14 @@ function ezSpectator_Nameplates:ProcessNameplate(SkipAnimation, Healthbar, Threa
 		HealthBorder.ezSpectator_Nameplate:SetClass(nil)
 	end
 
-	if self.Parent.Interface.Viewpoint and (HealthBorder.ezSpectator_Nameplate.Nickname:GetText() == self.Parent.Interface.Viewpoint.CurrentTarget.Nickname) then
-		HealthBorder.ezSpectator_Nameplate:SetAlpha(1)
+	if self.Parent.Interface.Viewpoint then
+		if HealthBorder.ezSpectator_Nameplate.Nickname:GetText() == self.Parent.Interface.Viewpoint.CurrentTarget.Nickname then
+			HealthBorder.ezSpectator_Nameplate:SetAlpha(1)
+		else
+			HealthBorder.ezSpectator_Nameplate:SetAlpha(self.Parent.Data.ViewpointNameplateAlpha)
+		end
 	else
-		HealthBorder.ezSpectator_Nameplate:SetAlpha(self.Parent.Data.ViewpointNameplateAlpha)
+		HealthBorder.ezSpectator_Nameplate:SetAlpha(1)
 	end
 end
 
