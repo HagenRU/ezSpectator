@@ -59,7 +59,7 @@ function ezSpectator_SmallFrame:Create(Parent, Worker)
 		end
 	end)
 	self.Reactor:SetScript('OnMouseUp', function()
-		if self.Backdrop:IsShown() then
+		if self.Backdrop:IsShown() and self.Parent.Interface.IsRunning then
 			self.Worker:BindViewpoint()
 		end
 	end)
