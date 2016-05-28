@@ -12,6 +12,7 @@ function ezSpectator_SpellIcon:Create(Parent, ParentFrame, IsRightShift, ShiftFr
 	self.Textures = ezSpectator_Textures:Create()
 	self.ParentFrame = ParentFrame
 	self.Texture = nil
+	self.Spell = nil
 	
 	self.Normal = CreateFrame('Frame', nil, ParentFrame)
 	self.Normal:SetFrameStrata('MEDIUM')
@@ -27,6 +28,13 @@ function ezSpectator_SpellIcon:Create(Parent, ParentFrame, IsRightShift, ShiftFr
 	self.Normal:SetAlpha(0)
 	self.Normal.FadeStart = 0
 	self.Normal.ElapsedTick = 0
+
+	self.Normal:EnableMouse(true)
+	self.Normal:SetScript('OnMouseUp', function()
+		if self.Normal:GetAlpha() > 0 then
+			self.Parent.Tooltip:ShowSpell(self.Normal, self.Spell)
+		end
+	end)
 	self.Normal:SetScript('OnUpdate', function(self, Elapsed)
 		self.ElapsedTick = self.ElapsedTick + Elapsed
 		
@@ -54,7 +62,8 @@ end
 
 
 
-function ezSpectator_SpellIcon:SetTexture(Texture, Alpha)
+function ezSpectator_SpellIcon:SetTexture(Texture, Alpha, Spell)
+	self.Spell = Spell
 	self.Texture = Texture
 	
 	if Texture then

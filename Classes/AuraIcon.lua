@@ -11,6 +11,13 @@ function ezSpectator_AuraIcon:Create(Parent, ParentFrame, ...)
 	self.MainFrame:SetSize(16, 16)
 	self.MainFrame:SetPoint(...)
 	self.MainFrame:Hide()
+
+	self.MainFrame:EnableMouse(true)
+	self.MainFrame:SetScript('OnMouseUp', function()
+		if self.MainFrame:IsShown() then
+			self.Parent.Tooltip:ShowSpell(self.MainFrame, self.Spell)
+		end
+	end)
 	
 	self.Cooldown = CreateFrame('Cooldown', nil, self.MainFrame)
 	self.Cooldown:SetAllPoints(self.MainFrame)
@@ -36,6 +43,8 @@ function ezSpectator_AuraIcon:Create(Parent, ParentFrame, ...)
 	
 	self.IsFree = true
 	self.IsPositive = nil
+
+	self.Spell = nil
 	
 	return self
 end
@@ -45,8 +54,10 @@ end
 --noinspection UnusedDef
 function ezSpectator_AuraIcon:Show(Spell, StackCount, Expiration, Duration, DebuffType, IsPositive, TimeOverride, LockAnimation)
 	local SpellTexture = select(3, GetSpellInfo(Spell))
-	
+
 	if SpellTexture then
+		self.Spell = Spell
+
 		self.MainFrame:Show()
 		
 		if Duration and Duration > 0 then

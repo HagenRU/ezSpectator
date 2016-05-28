@@ -20,7 +20,9 @@ function ezSpectator:Create()
 
 	self.Interface = ezSpectator_InterfaceWorker:Create(self)
 	self.Handler = ezSpectator_MessageHandler:Create(self)
-	
+
+	self.Tooltip = ezSpectator_TooltipWorker:Create(self)
+
 	return self
 end
 
