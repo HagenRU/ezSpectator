@@ -56,7 +56,9 @@ end
 
 
 
-function ezSpectator_ControlWorker:SetClass(Class)
+function ezSpectator_ControlWorker:SetClass(Class, Size)
+	Size = Size or 17
+
 	self.CurrentAuraLevel = -1
 	
 	if Class then
@@ -68,7 +70,7 @@ function ezSpectator_ControlWorker:SetClass(Class)
 
 		local OffsetTable = self.Parent.Data.ClassIconOffset[ClassText]
 		if OffsetTable then
-			self.ControlIcon:SetTexture('Interface\\Glues\\CharacterCreate\\UI-CharacterCreate-Classes', 17, false)
+			self.ControlIcon:SetTexture('Interface\\Glues\\CharacterCreate\\UI-CharacterCreate-Classes', Size, false)
 			local Left, Right, Top, Bottom = unpack(OffsetTable)
 			Left = Left + (Right - Left) * 0.08
 			Right = Right - (Right - Left) * 0.08
@@ -84,25 +86,30 @@ end
 
 
 
-function ezSpectator_ControlWorker:Update(AuraFrame)
+function ezSpectator_ControlWorker:Update(AuraFrame, Size)
+	Size = Size or 17
+
 	local IsAuraFound = false
-	for _, AuraRecord in pairs(AuraFrame.AuraStack) do
-		if self.Parent.Data.ControlList[AuraRecord.Spell] ~= nil then
-			if self.Parent.Data.ControlList[AuraRecord.Spell] >= self.CurrentAuraLevel then
-				IsAuraFound = true
-				
-				self.CurrentAura = AuraRecord
-				self.CurrentAuraLevel = self.Parent.Data.ControlList[AuraRecord.Spell]
+
+	if AuraFrame then
+		for _, AuraRecord in pairs(AuraFrame.AuraStack) do
+			if self.Parent.Data.ControlList[AuraRecord.Spell] ~= nil then
+				if self.Parent.Data.ControlList[AuraRecord.Spell] >= self.CurrentAuraLevel then
+					IsAuraFound = true
+
+					self.CurrentAura = AuraRecord
+					self.CurrentAuraLevel = self.Parent.Data.ControlList[AuraRecord.Spell]
+				end
 			end
 		end
 	end
-	
+
 	if IsAuraFound then
 		local _, _, AuraTexture = GetSpellInfo(self.CurrentAura.Spell)
-		self.ControlIcon:SetTexture(AuraTexture, 17, true)
+		self.ControlIcon:SetTexture(AuraTexture, Size, true)
 		self:DoAnimate(true)
 	else
-		self:SetClass(nil)
+		self:SetClass(nil, Size)
 		self:DoAnimate(false)
 	end
 end
