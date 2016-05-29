@@ -47,7 +47,6 @@ function ezSpectator_TooltipWorker:ShowSpell(ParentFrame, SpellID)
     self.TooltipFrame:SetHyperlink('|cff71d5ff|Hspell:' .. SpellID .. '|h[Blizzard Sucks]|h|r')
 
     self:Stylize()
-    self.TooltipFrame:Show()
 end
 
 
@@ -63,7 +62,7 @@ function ezSpectator_TooltipWorker:Stylize()
             top = 4,
             bottom = 4
         }
-    });
+    })
 
-    self.TooltipFrame:SetBackdropColor(0, 0, 0, 1);
+    self.TooltipFrame:SetBackdropColor(0, 0, 0, 1)
 end
