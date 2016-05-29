@@ -48,7 +48,8 @@ function ezSpectator_PlayerWorker:Create(Parent)
 	self.IsPowerSet = false
 	self.IsTeamSet = false
 		self.Team = nil
-	
+	self.Nameplate = nil
+
 	self.IsLocked = false
 	self.IsDead = false
 
@@ -243,6 +244,9 @@ function ezSpectator_PlayerWorker:SetCast(Spell, Time)
 		if self.VictimFrame:IsShown() then
 			self.VictimFrame.CastFrame:ShowCast(Spell, Time, Shift)
 		end
+		if self.Nameplate then
+			self.Nameplate:SetCast(Spell, Time, Shift)
+		end
 
 		return true
 	end
@@ -385,10 +389,14 @@ function ezSpectator_PlayerWorker:SetAura(...)
 	self.SmallFrame.AuraFrame:SetAura(...)
 	self.PlayerFrame.AuraFrame:SetAura(...)
 	self.VictimFrame.AuraFrame:SetAura(...)
-	
+
 	self.SmallControlWorker:Update(self.SmallFrame.AuraFrame)
 	self.PlayerControlWorker:Update(self.PlayerFrame.AuraFrame)
 	self.VictimControlWorker:Update(self.VictimFrame.AuraFrame)
+
+	if self.Nameplate then
+		self.Nameplate:SetAura()
+	end
 end
 
 
@@ -427,6 +435,12 @@ function ezSpectator_PlayerWorker:SetWinner(IsWinner)
 		self.VictimFrame:SetAlpha(0.5)
 		self.VictimFrame.HealthBar:SetOverride('ПОРАЖЕНИЕ')
 	end
+end
+
+
+
+function ezSpectator_PlayerWorker:SetNameplate(Value)
+	self.Nameplate = Value
 end
 
 
