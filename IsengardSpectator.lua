@@ -14,7 +14,7 @@
 --TODO Турнирные анонсы поверх аддона, их действительно не хватает когда скрыт интерфейс
 
 
-_ezSpectatorScale = 1.00
+_ezSpectatorScale = 1.15
 
 ezSpectator = {}
 ezSpectator.__index = ezSpectator
