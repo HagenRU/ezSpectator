@@ -114,6 +114,7 @@ function ezSpectator_ClickIcon:IsShown()
 end
 
 
+
 function ezSpectator_ClickIcon:SetAlpha(Value)
 	self.Backdrop:SetAlpha(Value)
 	self.Normal:SetAlpha(Value)
