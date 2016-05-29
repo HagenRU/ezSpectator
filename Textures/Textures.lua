@@ -225,15 +225,6 @@ end
 
 
 
-function ezSpectator_Textures:Nameplate_Effect(Frame)
-	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\Nameplate_Effect.tga')
-	Texture:SetTexCoord(0, 1, 0, 1)
-	Texture:SetAllPoints(Frame)
-	Frame.texture = Texture
-end
-
-
-
 function ezSpectator_Textures:Nameplate_Overlay(Frame)
 	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\Nameplate_Overlay.tga')
 	Texture:SetTexCoord(0, 1, 0, 1)
