@@ -252,6 +252,15 @@ end
 
 
 
+function ezSpectator_Textures:Nameplate_Castborder(Frame)
+	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\Nameplate_Castborder.tga')
+	Texture:SetTexCoord(0.140625, 0.890625, 0.140625, 0.890625)
+	Texture:SetAllPoints(Frame)
+	Frame.texture = Texture
+end
+
+
+
 function ezSpectator_Textures:SpellIcon_Normal(Frame)
 	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\SpellIcon_Normal.tga')
 	Texture:SetTexCoord(0.21875, 0.7890625, 0.21875, 0.7890625)

@@ -7,6 +7,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	setmetatable(self, ezSpectator_Nameplate)
 
 	self.Parent = Parent
+	self.PlayerWorker = nil
 
 	self.AnimationStartSpeed = 0
 	self.AnimationProgress = 10
@@ -22,78 +23,137 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.Textures = ezSpectator_Textures:Create()
 	
 	self.Width = 128
-	self.Height = 16
-	
+	self.Height = 12
+	self.CastSize = 36
+
 	self.MainFrame = CreateFrame('Frame', nil, ParentFrame)
 	self.MainFrame:SetSize(1, 1)
 	self.MainFrame:SetPoint(Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
 
-	self.Backdrop = CreateFrame('Frame', nil, self.MainFrame)
-	self.Backdrop:SetFrameLevel(2 + self.Parent.Data.NamePlateLevel)
-	self.Backdrop:SetFrameStrata('BACKGROUND')
-	self.Backdrop:SetSize(128, self.Height)
-	self.Backdrop:SetScale(self.Scale)
-	self.Backdrop:SetPoint('CENTER', 0, 0)
-	self.Textures:Nameplate_Backdrop(self.Backdrop)
-	
-	self.Glow = CreateFrame('Frame', nil, self.MainFrame)
-	self.Glow:SetFrameLevel(1 + self.Parent.Data.NamePlateLevel)
-	self.Glow:SetFrameStrata('BACKGROUND')
-	self.Glow:SetSize(141, 30)
-	self.Glow:SetScale(self.Scale)
-	self.Glow:SetPoint('TOPLEFT', self.Backdrop, 'TOPLEFT', -6, 6)
-	self.Textures:Nameplate_Glow(self.Glow)
-	
-	self.ProgressBar = CreateFrame('Frame', nil, self.MainFrame)
-	self.ProgressBar:SetFrameLevel(4 + self.Parent.Data.NamePlateLevel)
-	self.ProgressBar:SetFrameStrata('BACKGROUND')
-	self.ProgressBar:SetSize(self.Width, self.Height)
-	self.ProgressBar:SetScale(self.Scale)
-	self.ProgressBar:SetPoint('TOPLEFT', self.Backdrop, 'TOPLEFT', 0, 0)
-	self.Textures:Nameplate_Normal(self.ProgressBar)
-	
+	self.HealthBar = CreateFrame('Frame', nil, self.MainFrame)
+
+	self.HealthBar.Backdrop = CreateFrame('Frame', nil, self.MainFrame)
+	self.HealthBar.Backdrop:SetFrameLevel(2 + self.Parent.Data.NamePlateLevel)
+	self.HealthBar.Backdrop:SetFrameStrata('BACKGROUND')
+	self.HealthBar.Backdrop:SetSize(128, self.Height)
+	self.HealthBar.Backdrop:SetScale(self.Scale)
+	self.HealthBar.Backdrop:SetPoint('CENTER', self.CastSize / 2, 0)
+	self.Textures:Nameplate_Backdrop(self.HealthBar.Backdrop)
+
+	self.HealthBar:SetFrameLevel(4 + self.Parent.Data.NamePlateLevel)
+	self.HealthBar:SetFrameStrata('BACKGROUND')
+	self.HealthBar:SetSize(self.Width, self.Height)
+	self.HealthBar:SetScale(self.Scale)
+	self.HealthBar:SetPoint('TOPLEFT', self.HealthBar.Backdrop, 'TOPLEFT', 0, 0)
+	self.Textures:Nameplate_Normal(self.HealthBar)
+
+	self.HealthBar.Glow = CreateFrame('Frame', nil, self.MainFrame)
+	self.HealthBar.Glow:SetFrameLevel(1 + self.Parent.Data.NamePlateLevel)
+	self.HealthBar.Glow:SetFrameStrata('BACKGROUND')
+	self.HealthBar.Glow:SetSize(141, 30)
+	self.HealthBar.Glow:SetScale(self.Scale)
+	self.HealthBar.Glow:SetPoint('TOPLEFT', self.HealthBar.Backdrop, 'TOPLEFT', -6, 6)
+	self.Textures:Nameplate_Glow(self.HealthBar.Glow)
+
 	if self.IsLayerAnimated then
-		self.AnimationDownBar = CreateFrame('Frame', nil, self.MainFrame)
-		self.AnimationDownBar:SetFrameLevel(3 + self.Parent.Data.NamePlateLevel)
-		self.AnimationDownBar:SetFrameStrata('BACKGROUND')
-		self.AnimationDownBar:SetSize(0, self.Height)
-		self.AnimationDownBar:SetScale(self.Scale)
-		self.AnimationDownBar:SetPoint('TOPLEFT', self.Backdrop, 'TOPLEFT', 0, 0)
-		self.Textures:HealthBar_Normal(self.AnimationDownBar)
-		self.AnimationDownBar.texture:SetVertexColor(1, 0, 0)
+		self.HealthBar.AnimationDownBar = CreateFrame('Frame', nil, self.MainFrame)
+		self.HealthBar.AnimationDownBar:SetFrameLevel(3 + self.Parent.Data.NamePlateLevel)
+		self.HealthBar.AnimationDownBar:SetFrameStrata('BACKGROUND')
+		self.HealthBar.AnimationDownBar:SetSize(0, self.Height)
+		self.HealthBar.AnimationDownBar:SetScale(self.Scale)
+		self.HealthBar.AnimationDownBar:SetPoint('TOPLEFT', self.HealthBar.Backdrop, 'TOPLEFT', 0, 0)
+		self.Textures:HealthBar_Normal(self.HealthBar.AnimationDownBar)
+		self.HealthBar.AnimationDownBar.texture:SetVertexColor(1, 0, 0)
 		
-		self.AnimationUpBar = CreateFrame('Frame', nil, self.MainFrame)
-		self.AnimationUpBar:SetFrameLevel(5 + self.Parent.Data.NamePlateLevel)
-		self.AnimationUpBar:SetFrameStrata('BACKGROUND')
-		self.AnimationUpBar:SetSize(0, self.Height - 2)
-		self.AnimationUpBar:SetScale(self.Scale)
-		self.AnimationUpBar:SetPoint('RIGHT', self.ProgressBar, 'RIGHT', 0, 0)
-		self.Textures:HealthBar_Normal(self.AnimationUpBar)
-		self.AnimationUpBar.texture:SetVertexColor(0, 1, 0)
+		self.HealthBar.AnimationUpBar = CreateFrame('Frame', nil, self.MainFrame)
+		self.HealthBar.AnimationUpBar:SetFrameLevel(5 + self.Parent.Data.NamePlateLevel)
+		self.HealthBar.AnimationUpBar:SetFrameStrata('BACKGROUND')
+		self.HealthBar.AnimationUpBar:SetSize(0, self.Height - 2)
+		self.HealthBar.AnimationUpBar:SetScale(self.Scale)
+		self.HealthBar.AnimationUpBar:SetPoint('RIGHT', self.HealthBar, 'RIGHT', 0, 0)
+		self.Textures:HealthBar_Normal(self.HealthBar.AnimationUpBar)
+		self.HealthBar.AnimationUpBar.texture:SetVertexColor(0, 1, 0)
 	end
 	
-	self.Overlay = CreateFrame('Frame', nil, self.MainFrame)
-	self.Overlay:SetFrameLevel(6 + self.Parent.Data.NamePlateLevel)
-	self.Overlay:SetFrameStrata('BACKGROUND')
-	self.Overlay:SetSize(128, self.Height)
-	self.Overlay:SetScale(self.Scale)
-	self.Overlay:SetPoint('CENTER', 0, 0)
-	self.Textures:Nameplate_Overlay(self.Overlay)
+	self.HealthBar.Overlay = CreateFrame('Frame', nil, self.MainFrame)
+	self.HealthBar.Overlay:SetFrameLevel(6 + self.Parent.Data.NamePlateLevel)
+	self.HealthBar.Overlay:SetFrameStrata('BACKGROUND')
+	self.HealthBar.Overlay:SetSize(128, self.Height)
+	self.HealthBar.Overlay:SetScale(self.Scale)
+	self.HealthBar.Overlay:SetPoint('CENTER', self.CastSize / 2, 0)
+	self.Textures:Nameplate_Overlay(self.HealthBar.Overlay)
 	
-	self.Effect = CreateFrame('Frame', nil, self.MainFrame)
-	self.Effect:SetFrameLevel(7 + self.Parent.Data.NamePlateLevel)
-	self.Effect:SetFrameStrata('BACKGROUND')
-	self.Effect:SetSize(128, self.Height)
-	self.Effect:SetScale(self.Scale)
-	self.Effect:SetPoint('CENTER', 0, 0)
-	self.Textures:Nameplate_Effect(self.Effect)
-	
+	self.HealthBar.Effect = CreateFrame('Frame', nil, self.MainFrame)
+	self.HealthBar.Effect:SetFrameLevel(7 + self.Parent.Data.NamePlateLevel)
+	self.HealthBar.Effect:SetFrameStrata('BACKGROUND')
+	self.HealthBar.Effect:SetSize(128, self.Height)
+	self.HealthBar.Effect:SetScale(self.Scale)
+	self.HealthBar.Effect:SetPoint('CENTER', self.CastSize / 2, 0)
+	self.Textures:Nameplate_Effect(self.HealthBar.Effect)
+
+	self.CastBar = CreateFrame('Frame', nil, self.MainFrame)
+
+	self.CastBar.Backdrop = CreateFrame('Frame', nil, self.MainFrame)
+	self.CastBar.Backdrop:SetFrameLevel(2 + self.Parent.Data.NamePlateLevel)
+	self.CastBar.Backdrop:SetFrameStrata('BACKGROUND')
+	self.CastBar.Backdrop:SetSize(128, self.Height)
+	self.CastBar.Backdrop:SetScale(self.Scale)
+	self.CastBar.Backdrop:SetPoint('CENTER', self.CastSize / 2, -self.Height - 3)
+	self.Textures:Nameplate_Backdrop(self.CastBar.Backdrop)
+
+	self.CastBar:SetFrameLevel(4 + self.Parent.Data.NamePlateLevel)
+	self.CastBar:SetFrameStrata('BACKGROUND')
+	self.CastBar:SetSize(self.Width, self.Height)
+	self.CastBar:SetScale(self.Scale)
+	self.CastBar:SetPoint('TOPLEFT', self.CastBar.Backdrop, 'TOPLEFT', 0, 0)
+	self.Textures:Nameplate_Normal(self.CastBar)
+	self.CastBar.texture:SetVertexColor(0, 1, 1)
+
+	self.CastBar.Glow = CreateFrame('Frame', nil, self.MainFrame)
+	self.CastBar.Glow:SetFrameLevel(1 + self.Parent.Data.NamePlateLevel)
+	self.CastBar.Glow:SetFrameStrata('BACKGROUND')
+	self.CastBar.Glow:SetSize(141, 30)
+	self.CastBar.Glow:SetScale(self.Scale)
+	self.CastBar.Glow:SetPoint('TOPLEFT', self.CastBar.Backdrop, 'TOPLEFT', -6, 6)
+	self.Textures:Nameplate_Glow(self.CastBar.Glow)
+
+	self.CastBar.Overlay = CreateFrame('Frame', nil, self.MainFrame)
+	self.CastBar.Overlay:SetFrameLevel(6 + self.Parent.Data.NamePlateLevel)
+	self.CastBar.Overlay:SetFrameStrata('BACKGROUND')
+	self.CastBar.Overlay:SetSize(128, self.Height)
+	self.CastBar.Overlay:SetScale(self.Scale)
+	self.CastBar.Overlay:SetPoint('CENTER', self.CastSize / 2, -self.Height - 3)
+	self.Textures:Nameplate_Overlay(self.CastBar.Overlay)
+
+	self.CastBar.Effect = CreateFrame('Frame', nil, self.MainFrame)
+	self.CastBar.Effect:SetFrameLevel(7 + self.Parent.Data.NamePlateLevel)
+	self.CastBar.Effect:SetFrameStrata('BACKGROUND')
+	self.CastBar.Effect:SetSize(128, self.Height)
+	self.CastBar.Effect:SetScale(self.Scale)
+	self.CastBar.Effect:SetPoint('CENTER', self.CastSize / 2, -self.Height - 3)
+	self.Textures:Nameplate_Effect(self.CastBar.Effect)
+
+	self.Castborder = CreateFrame('Frame', nil, self.MainFrame)
+	self.Castborder:SetFrameLevel(2 + self.Parent.Data.NamePlateLevel)
+	self.Castborder:SetFrameStrata('BACKGROUND')
+	self.Castborder:SetSize(self.CastSize, self.CastSize)
+	self.Castborder:SetScale(self.Scale)
+	self.Castborder:SetPoint('RIGHT', self.HealthBar, 'LEFT', 2, -8)
+	self.Textures:Nameplate_Castborder(self.Castborder)
+
+	self.Icon = ezSpectator_ClickIcon:Create(self.Parent, self.Castborder, 'clear', self.CastSize, 'CENTER', -1, 1)
+	self.Icon.Icon:SetFrameLevel(1 + self.Parent.Data.NamePlateLevel)
+	self.Icon.Icon:SetFrameStrata('BACKGROUND')
+
+	self.ControlWorker = ezSpectator_ControlWorker:Create(self.Parent)
+	self.ControlWorker:BindIcon(self.Icon)
+
 	self.TextFrame = CreateFrame('Frame', nil, self.MainFrame)
 	self.TextFrame:SetFrameLevel(8 + self.Parent.Data.NamePlateLevel)
 	self.TextFrame:SetFrameStrata('BACKGROUND')
 	self.TextFrame:SetSize(1, 1)
 	self.TextFrame:SetScale(1)
-	self.TextFrame:SetPoint('BOTTOM', self.Backdrop, 'TOP', 0, 8)
+	self.TextFrame:SetPoint('BOTTOM', self.HealthBar.Backdrop, 'TOP', -self.CastSize / 4, 8)
 	
 	self.Nickname = self.TextFrame:CreateFontString(nil, 'OVERLAY')
 	self.Nickname:SetFont('Interface\\Addons\\IsengardSpectator\\Fonts\\DejaVuSans.ttf', 12)
@@ -137,17 +197,17 @@ end
 function ezSpectator_Nameplate:DecAnimatedValue()
 	if self.IsLayerAnimated then
 		self.AnimationDownCycle = self.AnimationDownCycle + self.AnimationProgress
-		local AnimateWidth = self.AnimationDownBar:GetWidth() - self.Weight * self.AnimationDownCycle
+		local AnimateWidth = self.HealthBar.AnimationDownBar:GetWidth() - self.Weight * self.AnimationDownCycle
 		
 		if AnimateWidth <= 0 then
-			self.AnimationDownBar:Hide()
+			self.HealthBar.AnimationDownBar:Hide()
 		else
-			self.AnimationDownBar:Show()
+			self.HealthBar.AnimationDownBar:Show()
 		end
-		self.AnimationDownBar:SetWidth(AnimateWidth)
-		self.AnimationDownBar.texture:SetTexCoord(0, AnimateWidth / self.Width, 0, 1)
+		self.HealthBar.AnimationDownBar:SetWidth(AnimateWidth)
+		self.HealthBar.AnimationDownBar.texture:SetTexCoord(0, AnimateWidth / self.Width, 0, 1)
 		
-		self.IsAnimatingDown = self.AnimationDownBar:GetWidth() >= self.ProgressBar:GetWidth()
+		self.IsAnimatingDown = self.HealthBar.AnimationDownBar:GetWidth() >= self.HealthBar:GetWidth()
 	end
 	
 	if self.IsSparkAnimated then
@@ -168,17 +228,17 @@ end
 function ezSpectator_Nameplate:IncAnimatedValue()
 	if self.IsLayerAnimated then
 		self.AnimationUpCycle = self.AnimationUpCycle + self.AnimationProgress
-		local AnimateWidth = self.AnimationUpBar:GetWidth() - self.Weight * self.AnimationUpCycle
+		local AnimateWidth = self.HealthBar.AnimationUpBar:GetWidth() - self.Weight * self.AnimationUpCycle
 		
 		if AnimateWidth <= 0 then
-			self.AnimationUpBar:Hide()
+			self.HealthBar.AnimationUpBar:Hide()
 		else
-			self.AnimationUpBar:Show()
+			self.HealthBar.AnimationUpBar:Show()
 		end
-		self.AnimationUpBar:SetWidth(AnimateWidth)
-		self.AnimationUpBar.texture:SetTexCoord((self.Width - (self.Width - self.ProgressBar:GetWidth()) - self.AnimationUpBar:GetWidth()) / self.Width, self.ProgressBar:GetWidth() / self.Width, 0, 1)
+		self.HealthBar.AnimationUpBar:SetWidth(AnimateWidth)
+		self.HealthBar.AnimationUpBar.texture:SetTexCoord((self.Width - (self.Width - self.HealthBar:GetWidth()) - self.HealthBar.AnimationUpBar:GetWidth()) / self.Width, self.HealthBar:GetWidth() / self.Width, 0, 1)
 		
-		self.IsAnimatingUp = self.AnimationUpBar:GetWidth() > 0
+		self.IsAnimatingUp = self.HealthBar.AnimationUpBar:GetWidth() > 0
 	end
 	
 	if self.IsSparkAnimated then
@@ -196,21 +256,36 @@ end
 
 
 
+function ezSpectator_Nameplate:IsValid()
+	local Result
+
+	if self.PlayerWorker then
+		if self.PlayerWorker.Nameplate == self then
+			Result = true
+		else
+			Result = false
+		end
+	else
+		Result = false
+	end
+
+	if not Result then
+		self.Icon:Hide()
+		self.ControlWorker:Update(nil, (self.CastSize + 2) * self.Scale / _ezSpectatorScale - (_ezSpectatorScale - 1) * (self.CastSize / 2))
+	end
+
+	return Result
+end
+
+
+
 function ezSpectator_Nameplate:Show()
 	self.MainFrame:Show()
 
-	self.Backdrop:Show()
-	self.Glow:Hide()
-	self.ProgressBar:Show()
-	
 	if self.IsLayerAnimated then
-		self.AnimationUpBar:Show()
-		self.AnimationDownBar:Show()
+		self.HealthBar.AnimationUpBar:Show()
+		self.HealthBar.AnimationDownBar:Show()
 	end
-	
-	self.Overlay:Show()
-	self.Effect:Hide()
-	self.TextFrame:Show()
 end
 
 
@@ -218,18 +293,10 @@ end
 function ezSpectator_Nameplate:Hide()
 	self.MainFrame:Hide()
 
-	self.Backdrop:Hide()
-	self.Glow:Hide()
-	self.ProgressBar:Hide()
-	
 	if self.IsLayerAnimated then
-		self.AnimationUpBar:Hide()
-		self.AnimationDownBar:Hide()
+		self.HealthBar.AnimationUpBar:Hide()
+		self.HealthBar.AnimationDownBar:Hide()
 	end
-	
-	self.Overlay:Hide()
-	self.Effect:Hide()
-	self.TextFrame:Hide()
 end
 
 
@@ -242,8 +309,8 @@ end
 
 function ezSpectator_Nameplate:ResetAnimation()
 	if self.IsLayerAnimated then
-		self.AnimationUpBar:SetWidth(0)
-		self.AnimationDownBar:SetWidth(0)
+		self.HealthBar.AnimationUpBar:SetWidth(0)
+		self.HealthBar.AnimationDownBar:SetWidth(0)
 	end
 	
 	if self.IsSparkAnimated then
@@ -282,10 +349,10 @@ function ezSpectator_Nameplate:SetValue(Value, IsInnerCall)
 	if self.CurrentValue and (IsInnerCall ~= true) then
 		if Value > self.CurrentValue then
 			if self.IsLayerAnimated then
-				local AnimationWidth = self.AnimationUpBar:GetWidth() + ProgressWidth - self.ProgressBar:GetWidth()
+				local AnimationWidth = self.HealthBar.AnimationUpBar:GetWidth() + ProgressWidth - self.HealthBar:GetWidth()
 				
-				self.AnimationUpBar:SetWidth(AnimationWidth)
-				self.AnimationUpBar.texture:SetTexCoord((self.Width - (self.Width - ProgressWidth) - self.AnimationUpBar:GetWidth()) / self.Width, ProgressWidth / self.Width, 0, 1)
+				self.HealthBar.AnimationUpBar:SetWidth(AnimationWidth)
+				self.HealthBar.AnimationUpBar.texture:SetTexCoord((self.Width - (self.Width - ProgressWidth) - self.HealthBar.AnimationUpBar:GetWidth()) / self.Width, ProgressWidth / self.Width, 0, 1)
 				
 				if not self.IsAnimatingUp then
 					self.AnimationUpCycle = self.AnimationStartSpeed
@@ -307,18 +374,18 @@ function ezSpectator_Nameplate:SetValue(Value, IsInnerCall)
 			end
 		else
 			if self.IsLayerAnimated then
-				local AnimationWidth = self.AnimationUpBar:GetWidth() + ProgressWidth - self.ProgressBar:GetWidth()
+				local AnimationWidth = self.HealthBar.AnimationUpBar:GetWidth() + ProgressWidth - self.HealthBar:GetWidth()
 				
 				if AnimationWidth < 0 then
 					AnimationWidth = 0
 				end
 				
-				self.AnimationUpBar:SetWidth(AnimationWidth)
-				self.AnimationUpBar.texture:SetTexCoord((self.Width - (self.Width - ProgressWidth) - self.AnimationUpBar:GetWidth()) / self.Width, ProgressWidth / self.Width, 0, 1)
+				self.HealthBar.AnimationUpBar:SetWidth(AnimationWidth)
+				self.HealthBar.AnimationUpBar.texture:SetTexCoord((self.Width - (self.Width - ProgressWidth) - self.HealthBar.AnimationUpBar:GetWidth()) / self.Width, ProgressWidth / self.Width, 0, 1)
 				
 				if not self.IsAnimatingDown then
-					self.AnimationDownBar:SetWidth(self.ProgressBar:GetWidth())
-					self.AnimationDownBar.texture:SetTexCoord(0, self.ProgressBar:GetWidth() / self.Width, 0, 1)
+					self.HealthBar.AnimationDownBar:SetWidth(self.HealthBar:GetWidth())
+					self.HealthBar.AnimationDownBar.texture:SetTexCoord(0, self.HealthBar:GetWidth() / self.Width, 0, 1)
 					
 					self.AnimationDownCycle = self.AnimationStartSpeed
 					self.IsAnimatingDown = true
@@ -344,8 +411,8 @@ function ezSpectator_Nameplate:SetValue(Value, IsInnerCall)
 		return true
 	end
 	
-	self.ProgressBar:SetWidth(ProgressWidth)
-	self.ProgressBar.texture:SetTexCoord(0, ProgressWidth / self.Width, 0, 1)
+	self.HealthBar:SetWidth(ProgressWidth)
+	self.HealthBar.texture:SetTexCoord(0, ProgressWidth / self.Width, 0, 1)
 	
 	self.CurrentValue = Value
 end
@@ -362,44 +429,80 @@ function ezSpectator_Nameplate:SetTeam(Value)
 	if Value then
 		if Value == 1 then
 			self.Nickname:SetTextColor(0, 0.75, 0)
-			--self.ProgressBar.texture:SetVertexColor(0, 0.75, 0)
-			--self.Glow.texture:SetVertexColor(0, 0.75, 0, 0.5)
-			--self.Effect.texture:SetVertexColor(0, 0.75, 0)
+			--self.HealthBar.texture:SetVertexColor(0, 0.75, 0)
+			--self.HealthBar.Glow.texture:SetVertexColor(0, 0.75, 0, 0.5)
+			--self.HealthBar.Effect.texture:SetVertexColor(0, 0.75, 0)
 		end
 		
 		if Value == 2 then
 			self.Nickname:SetTextColor(0.9, 0.9, 0)
-			--self.ProgressBar.texture:SetVertexColor(0.9, 0.9, 0)
-			--self.Glow.texture:SetVertexColor(0.9, 0.9, 0, 0.5)
-			--self.Effect.texture:SetVertexColor(0.9, 0.9, 0)
+			--self.HealthBar.texture:SetVertexColor(0.9, 0.9, 0)
+			--self.HealthBar.Glow.texture:SetVertexColor(0.9, 0.9, 0, 0.5)
+			--self.HealthBar.Effect.texture:SetVertexColor(0.9, 0.9, 0)
 		end
 		
-		--self.Glow:Show()
-		--self.Effect:Show()
-		self.Glow:Hide()
-		self.Effect:Hide()
+		--self.HealthBar.Glow:Show()
+		--self.HealthBar.Effect:Show()
+		self.HealthBar.Glow:Hide()
+		self.HealthBar.Effect:Hide()
+		self.CastBar.Glow:Hide()
+		self.CastBar.Effect:Hide()
 	else
 		self.Nickname:SetTextColor(1, 1, 1)
-		self.ProgressBar.texture:SetVertexColor(1, 1, 1)
-		self.Glow:Hide()
-		self.Effect:Hide()
+		self.HealthBar.texture:SetVertexColor(1, 1, 1)
+		self.HealthBar.Glow:Hide()
+		self.HealthBar.Effect:Hide()
+		self.CastBar.Glow:Hide()
+		self.CastBar.Effect:Hide()
+	end
+end
+
+
+
+function ezSpectator_Nameplate:SetPlayer(Value)
+	self.PlayerWorker = Value
+
+	if self:IsValid() then
+		self:SetAura()
 	end
 end
 
 
 
 function ezSpectator_Nameplate:SetClass(Value)
-	local Class, Color
+	if self:IsValid() then
+		if not Value then
+			self.Icon:Hide()
+		else
+			if not self.Icon:IsShown() then
+				self.Icon:Show()
+			end
 
-	Class = self.Parent.Data.ClassTextEng[Value]
-
-	if Class then
-		Color = RAID_CLASS_COLORS[Class]
+			if self.ControlWorker.Class ~= Value then
+				self.ControlWorker:SetClass(Value, (self.CastSize + 2) * self.Scale / _ezSpectatorScale - (_ezSpectatorScale - 1) * (self.CastSize / 2))
+			end
+		end
 	end
-	
-	if Color then
-		self.ProgressBar.texture:SetVertexColor(Color.r, Color.g, Color.b)
-	else
-		self.ProgressBar.texture:SetVertexColor(1, 1, 1)
+end
+
+
+
+function ezSpectator_Nameplate:SetCast(Spell, Time, Shift)
+	if not self:IsValid() then
+		return
+	end
+
+	local CastTime = select(7, GetSpellInfo(Spell))
+
+	if (CastTime > 0) and (Time > 0) then
+
+	end
+end
+
+
+
+function ezSpectator_Nameplate:SetAura()
+	if self:IsValid() then
+		self.ControlWorker:Update(self.PlayerWorker.SmallFrame.AuraFrame, (self.CastSize + 2) * self.Scale / _ezSpectatorScale - (_ezSpectatorScale - 1) * (self.CastSize / 2))
 	end
 end

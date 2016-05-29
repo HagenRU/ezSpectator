@@ -155,9 +155,13 @@ function ezSpectator_Nameplates:ProcessNameplate(SkipAnimation, Healthbar, Threa
 		if self.Parent.Interface.Players[NameText:GetText()] then
 			HealthBorder.ezSpectator_Nameplate:SetTeam(self.Parent.Interface.Players[NameText:GetText()].Team)
 			HealthBorder.ezSpectator_Nameplate:SetClass(self.Parent.Interface.Players[NameText:GetText()].Class)
+
+			self.Parent.Interface.Players[NameText:GetText()]:SetNameplate(HealthBorder.ezSpectator_Nameplate)
+			HealthBorder.ezSpectator_Nameplate:SetPlayer(self.Parent.Interface.Players[NameText:GetText()])
 		else
 			HealthBorder.ezSpectator_Nameplate:SetTeam(nil)
 			HealthBorder.ezSpectator_Nameplate:SetClass(nil)
+			HealthBorder.ezSpectator_Nameplate:SetPlayer(nil)
 		end
 
 		if self.Parent.Interface.Viewpoint then
