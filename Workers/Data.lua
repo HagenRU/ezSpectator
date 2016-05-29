@@ -5,6 +5,8 @@ function ezSpectator_DataWorker:Create()
     local self = {}
     setmetatable(self, ezSpectator_DataWorker)
 
+    self.NamePlateLevel = 0
+
     self.ViewpointAlpha = 0.33;
     self.ViewpointNameplateAlpha = 0.50;
 

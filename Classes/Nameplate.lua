@@ -27,10 +27,9 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.MainFrame = CreateFrame('Frame', nil, ParentFrame)
 	self.MainFrame:SetSize(1, 1)
 	self.MainFrame:SetPoint(Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
-	self.MainFrame:SetFrameLevel(0)
-	
+
 	self.Backdrop = CreateFrame('Frame', nil, self.MainFrame)
-	self.Backdrop:SetFrameLevel(2)
+	self.Backdrop:SetFrameLevel(2 + self.Parent.Data.NamePlateLevel)
 	self.Backdrop:SetFrameStrata('BACKGROUND')
 	self.Backdrop:SetSize(128, self.Height)
 	self.Backdrop:SetScale(self.Scale)
@@ -38,7 +37,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.Textures:Nameplate_Backdrop(self.Backdrop)
 	
 	self.Glow = CreateFrame('Frame', nil, self.MainFrame)
-	self.Glow:SetFrameLevel(1)
+	self.Glow:SetFrameLevel(1 + self.Parent.Data.NamePlateLevel)
 	self.Glow:SetFrameStrata('BACKGROUND')
 	self.Glow:SetSize(141, 30)
 	self.Glow:SetScale(self.Scale)
@@ -46,7 +45,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.Textures:Nameplate_Glow(self.Glow)
 	
 	self.ProgressBar = CreateFrame('Frame', nil, self.MainFrame)
-	self.ProgressBar:SetFrameLevel(4)
+	self.ProgressBar:SetFrameLevel(4 + self.Parent.Data.NamePlateLevel)
 	self.ProgressBar:SetFrameStrata('BACKGROUND')
 	self.ProgressBar:SetSize(self.Width, self.Height)
 	self.ProgressBar:SetScale(self.Scale)
@@ -55,7 +54,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	
 	if self.IsLayerAnimated then
 		self.AnimationDownBar = CreateFrame('Frame', nil, self.MainFrame)
-		self.AnimationDownBar:SetFrameLevel(3)
+		self.AnimationDownBar:SetFrameLevel(3 + self.Parent.Data.NamePlateLevel)
 		self.AnimationDownBar:SetFrameStrata('BACKGROUND')
 		self.AnimationDownBar:SetSize(0, self.Height)
 		self.AnimationDownBar:SetScale(self.Scale)
@@ -64,7 +63,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 		self.AnimationDownBar.texture:SetVertexColor(1, 0, 0)
 		
 		self.AnimationUpBar = CreateFrame('Frame', nil, self.MainFrame)
-		self.AnimationUpBar:SetFrameLevel(5)
+		self.AnimationUpBar:SetFrameLevel(5 + self.Parent.Data.NamePlateLevel)
 		self.AnimationUpBar:SetFrameStrata('BACKGROUND')
 		self.AnimationUpBar:SetSize(0, self.Height - 2)
 		self.AnimationUpBar:SetScale(self.Scale)
@@ -74,7 +73,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	end
 	
 	self.Overlay = CreateFrame('Frame', nil, self.MainFrame)
-	self.Overlay:SetFrameLevel(6)
+	self.Overlay:SetFrameLevel(6 + self.Parent.Data.NamePlateLevel)
 	self.Overlay:SetFrameStrata('BACKGROUND')
 	self.Overlay:SetSize(128, self.Height)
 	self.Overlay:SetScale(self.Scale)
@@ -82,7 +81,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.Textures:Nameplate_Overlay(self.Overlay)
 	
 	self.Effect = CreateFrame('Frame', nil, self.MainFrame)
-	self.Effect:SetFrameLevel(7)
+	self.Effect:SetFrameLevel(7 + self.Parent.Data.NamePlateLevel)
 	self.Effect:SetFrameStrata('BACKGROUND')
 	self.Effect:SetSize(128, self.Height)
 	self.Effect:SetScale(self.Scale)
@@ -90,7 +89,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.Textures:Nameplate_Effect(self.Effect)
 	
 	self.TextFrame = CreateFrame('Frame', nil, self.MainFrame)
-	self.TextFrame:SetFrameLevel(8)
+	self.TextFrame:SetFrameLevel(8 + self.Parent.Data.NamePlateLevel)
 	self.TextFrame:SetFrameStrata('BACKGROUND')
 	self.TextFrame:SetSize(1, 1)
 	self.TextFrame:SetScale(1)
@@ -128,7 +127,8 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 			self.ElapsedTick = 0
 		end
 	end)
-	
+
+	self.Parent.Data.NamePlateLevel = self.Parent.Data.NamePlateLevel + 8
 	return self
 end
 
