@@ -45,15 +45,17 @@ function ezSpectator_TooltipWorker:ShowSpell(ParentFrame, SpellID)
 
     self.TooltipFrame:ClearLines()
     self.TooltipFrame:SetHyperlink('|cff71d5ff|Hspell:' .. SpellID .. '|h[Blizzard Sucks]|h|r')
+    self.TooltipFrame:AddDoubleLine('\nИдентификатор #' .. SpellID, '', 0.2, 0.2, 0.2)
 
     self:Stylize()
+    self.TooltipFrame:Show()
 end
 
 
 
 function ezSpectator_TooltipWorker:Stylize()
     self.TooltipFrame:SetBackdrop({
-        bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+        bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
         edgeFile = 'Interface\\AddOns\\IsengardSpectator\\Textures\\TooltipEdge',
         tile = true, tileSize = 16, edgeSize = 16,
         insets = {
