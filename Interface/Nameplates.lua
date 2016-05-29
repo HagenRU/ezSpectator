@@ -66,6 +66,7 @@ end
 --noinspection UnusedDef
 function ezSpectator_Nameplates:SaveOriginalNameplate(Healthbar, ThreatGlow, HealthBorder, CastBorder, CastUninterruptible, SpellIcon, HighlightTexture, NameText, LevelText, BossIcon, RaidIcon, MobIcon)
 	Healthbar.OriginalStatusBarTexture = Healthbar:GetStatusBarTexture():GetTexture()
+	Healthbar.CastbarObject.OriginalStatusBarTexture = Healthbar.CastbarObject:GetStatusBarTexture():GetTexture()
 	self:EncodeTexCoord(ThreatGlow)
 	self:EncodeTexCoord(HealthBorder)
 	self:EncodeTexCoord(CastBorder)
@@ -74,13 +75,14 @@ function ezSpectator_Nameplates:SaveOriginalNameplate(Healthbar, ThreatGlow, Hea
 	self:EncodeTexCoord(MobIcon)
 	BossIcon.OriginalAlpha = BossIcon:GetAlpha()
 	RaidIcon.OriginalAlpha = RaidIcon:GetAlpha()
-	SpellIcon.OriginalAlpha = SpellIcon:GetAlpha()
+	SpellIcon.OriginalWidth = SpellIcon:GetWidth()
 end
 
 
 
 function ezSpectator_Nameplates:HideOriginalNameplate(Healthbar, ThreatGlow, HealthBorder, CastBorder, CastUninterruptible, SpellIcon, HighlightTexture, NameText, LevelText, BossIcon, RaidIcon, MobIcon)
 	Healthbar:SetStatusBarTexture(EMPTY_TEXTURE)
+	Healthbar.CastbarObject:SetStatusBarTexture(EMPTY_TEXTURE)
 	ThreatGlow:SetTexCoord(0, 0, 0, 0)
 	HealthBorder:SetTexCoord(0, 0, 0, 0)
 	CastBorder:SetTexCoord(0, 0, 0, 0)
@@ -91,7 +93,7 @@ function ezSpectator_Nameplates:HideOriginalNameplate(Healthbar, ThreatGlow, Hea
 	LevelText:SetWidth(0.001)
 	BossIcon:SetAlpha(0)
 	RaidIcon:SetAlpha(0)
-	SpellIcon:SetAlpha(0)
+	SpellIcon:SetWidth(0.001)
 	
 	Healthbar.IsHidden = true
 end
@@ -100,6 +102,7 @@ end
 
 function ezSpectator_Nameplates:ShowOriginalNameplate(Healthbar, ThreatGlow, HealthBorder, CastBorder, CastUninterruptible, SpellIcon, HighlightTexture, NameText, LevelText, BossIcon, RaidIcon, MobIcon)
 	Healthbar:SetStatusBarTexture(Healthbar.OriginalStatusBarTexture)
+	Healthbar.CastbarObject:SetStatusBarTexture(Healthbar.CastbarObject.OriginalStatusBarTexture)
 	ThreatGlow:SetTexCoord(self:DecodeTexCoord(ThreatGlow))
 	HealthBorder:SetTexCoord(self:DecodeTexCoord(HealthBorder))
 	CastBorder:SetTexCoord(self:DecodeTexCoord(CastBorder))
@@ -110,7 +113,7 @@ function ezSpectator_Nameplates:ShowOriginalNameplate(Healthbar, ThreatGlow, Hea
 	LevelText:SetWidth(0)
 	BossIcon:SetAlpha(BossIcon.OriginalAlpha)
 	RaidIcon:SetAlpha(RaidIcon.OriginalAlpha)
-	SpellIcon:SetAlpha(SpellIcon.OriginalAlpha)
+	SpellIcon:SetWidth(SpellIcon.OriginalWidth)
 
 	HealthBorder.ezSpectator_Nameplate:Hide()
 	Healthbar.IsHidden = false
@@ -197,10 +200,9 @@ function ezSpectator_Nameplates:ApplyHook(...)
 		local CurrentRegion = CurrentFrame:GetRegions()
 		
 		if CurrentRegion and (CurrentRegion:GetObjectType() == 'Texture') and (CurrentRegion:GetTexture() == 'Interface\\TargetingFrame\\UI-TargetingFrame-Flash') then
-			--TODO hide castbar also!
-			--noinspection UnusedDef
 			local Healthbar, Castbar = CurrentFrame:GetChildren()
-			
+			Healthbar.CastbarObject = Castbar
+
 			Healthbar.ezSpectator_Nameplates = self
 			Healthbar:HookScript('OnShow', function(Frame)
 				if Frame.ezSpectator_Nameplates then
