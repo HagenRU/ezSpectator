@@ -197,6 +197,8 @@ end
 
 
 function ezSpectator_Nameplate:Show()
+	self.MainFrame:Show()
+
 	self.Backdrop:Show()
 	self.Glow:Hide()
 	self.ProgressBar:Show()
@@ -214,6 +216,8 @@ end
 
 
 function ezSpectator_Nameplate:Hide()
+	self.MainFrame:Hide()
+
 	self.Backdrop:Hide()
 	self.Glow:Hide()
 	self.ProgressBar:Hide()

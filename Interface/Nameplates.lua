@@ -19,7 +19,7 @@ function ezSpectator_Nameplates:Create(Parent)
 			self.Parent:ApplyHook(WorldFrame:GetChildren())
 		end
 	end)
-	
+
 	return self
 end
 
@@ -35,7 +35,7 @@ end
 
 function ezSpectator_Nameplates:EncodeTexCoord(Texture)
 	local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = Texture:GetTexCoord()
-	
+
 	Texture.OriginalTexCoord = {}
 	Texture.OriginalTexCoord.ULx = ULx
 	Texture.OriginalTexCoord.ULy = ULy
@@ -50,52 +50,31 @@ end
 
 
 function ezSpectator_Nameplates:DecodeTexCoord(Texture)
-	return Texture.OriginalTexCoord.ULx, Texture.OriginalTexCoord.ULy, Texture.OriginalTexCoord.LLx, Texture.OriginalTexCoord.LLy, Texture.OriginalTexCoord.URx, Texture.OriginalTexCoord.URy, Texture.OriginalTexCoord.LRx, Texture.OriginalTexCoord.LRy
+	return
+		Texture.OriginalTexCoord.ULx,
+		Texture.OriginalTexCoord.ULy,
+		Texture.OriginalTexCoord.LLx,
+		Texture.OriginalTexCoord.LLy,
+		Texture.OriginalTexCoord.URx,
+		Texture.OriginalTexCoord.URy,
+		Texture.OriginalTexCoord.LRx,
+		Texture.OriginalTexCoord.LRy
 end
 
 
 
 --noinspection UnusedDef
 function ezSpectator_Nameplates:SaveOriginalNameplate(Healthbar, ThreatGlow, HealthBorder, CastBorder, CastUninterruptible, SpellIcon, HighlightTexture, NameText, LevelText, BossIcon, RaidIcon, MobIcon)
-	if not Healthbar.OriginalStatusBarTexture then
-		Healthbar.OriginalStatusBarTexture = Healthbar:GetStatusBarTexture()
-	end
-	
-	if not ThreatGlow.OriginalTexCoord then
-		self:EncodeTexCoord(ThreatGlow)
-	end
-	
-	if not HealthBorder.OriginalTexCoord then
-		self:EncodeTexCoord(HealthBorder)
-	end
-	
-	if not CastBorder.OriginalTexCoord then
-		self:EncodeTexCoord(CastBorder)
-	end
-	
-	if not CastUninterruptible.OriginalTexCoord then
-		self:EncodeTexCoord(CastUninterruptible)
-	end
-	
-	if not HighlightTexture.OriginalTexCoord then
-		self:EncodeTexCoord(HighlightTexture)
-	end
-	
-	if not MobIcon.OriginalTexCoord then
-		self:EncodeTexCoord(MobIcon)
-	end
-	
-	if not BossIcon.OriginalAlpha then
-		BossIcon.OriginalAlpha = BossIcon:GetAlpha()
-	end
-	
-	if not RaidIcon.OriginalAlpha then
-		RaidIcon.OriginalAlpha = RaidIcon:GetAlpha()
-	end
-		
-	if not SpellIcon.OriginalAlpha then
-		SpellIcon.OriginalAlpha = SpellIcon:GetAlpha()
-	end
+	Healthbar.OriginalStatusBarTexture = Healthbar:GetStatusBarTexture():GetTexture()
+	self:EncodeTexCoord(ThreatGlow)
+	self:EncodeTexCoord(HealthBorder)
+	self:EncodeTexCoord(CastBorder)
+	self:EncodeTexCoord(CastUninterruptible)
+	self:EncodeTexCoord(HighlightTexture)
+	self:EncodeTexCoord(MobIcon)
+	BossIcon.OriginalAlpha = BossIcon:GetAlpha()
+	RaidIcon.OriginalAlpha = RaidIcon:GetAlpha()
+	SpellIcon.OriginalAlpha = SpellIcon:GetAlpha()
 end
 
 
@@ -132,52 +111,65 @@ function ezSpectator_Nameplates:ShowOriginalNameplate(Healthbar, ThreatGlow, Hea
 	BossIcon:SetAlpha(BossIcon.OriginalAlpha)
 	RaidIcon:SetAlpha(RaidIcon.OriginalAlpha)
 	SpellIcon:SetAlpha(SpellIcon.OriginalAlpha)
-	
+
+	HealthBorder.ezSpectator_Nameplate:Hide()
 	Healthbar.IsHidden = false
 end
 
 
 
 function ezSpectator_Nameplates:ProcessNameplate(SkipAnimation, Healthbar, ThreatGlow, HealthBorder, CastBorder, CastUninterruptible, SpellIcon, HighlightTexture, NameText, LevelText, BossIcon, RaidIcon, MobIcon)
-	self:HideOriginalNameplate(Healthbar, ThreatGlow, HealthBorder, CastBorder, CastUninterruptible, SpellIcon, HighlightTexture, NameText, LevelText, BossIcon, RaidIcon, MobIcon)
-	if not HealthBorder.ezSpectator_Nameplate then
-		HealthBorder.ezSpectator_Nameplate = ezSpectator_Nameplate:Create(self.Parent, Healthbar, 'BOTTOM', HealthBorder, 'BOTTOM', 0, 10)
-	end
-	
-	local MaxValue = select(2, Healthbar:GetMinMaxValues())
-	HealthBorder.ezSpectator_Nameplate:SetMaxValue(MaxValue)
-	
-	local Value = Healthbar:GetValue()
-	
-	if not SkipAnimation then
-		SkipAnimation = HealthBorder.ezSpectator_Nameplate.IsUpdating
-		HealthBorder.ezSpectator_Nameplate.IsUpdating = false
-	else
-		HealthBorder.ezSpectator_Nameplate.IsUpdating = true
-	end
-	
-	if SkipAnimation then
-		HealthBorder.ezSpectator_Nameplate:ResetAnimation()
-	end
-	HealthBorder.ezSpectator_Nameplate:SetValue(Value, SkipAnimation)
-	
-	HealthBorder.ezSpectator_Nameplate:SetNickname(NameText:GetText())
-	if self.Parent.Interface.Players[NameText:GetText()] then
-		HealthBorder.ezSpectator_Nameplate:SetTeam(self.Parent.Interface.Players[NameText:GetText()].Team)
-		HealthBorder.ezSpectator_Nameplate:SetClass(self.Parent.Interface.Players[NameText:GetText()].Class)
-	else
-		HealthBorder.ezSpectator_Nameplate:SetTeam(nil)
-		HealthBorder.ezSpectator_Nameplate:SetClass(nil)
-	end
+	if self.Parent.Interface.IsRunning then
+		if not Healthbar.IsHidden then
+			self:SaveOriginalNameplate(Healthbar, ThreatGlow, HealthBorder, CastBorder, CastUninterruptible, SpellIcon, HighlightTexture, NameText, LevelText, BossIcon, RaidIcon, MobIcon)
+			self:HideOriginalNameplate(Healthbar, ThreatGlow, HealthBorder, CastBorder, CastUninterruptible, SpellIcon, HighlightTexture, NameText, LevelText, BossIcon, RaidIcon, MobIcon)
+		end
 
-	if self.Parent.Interface.Viewpoint then
-		if HealthBorder.ezSpectator_Nameplate.Nickname:GetText() == self.Parent.Interface.Viewpoint.CurrentTarget.Nickname then
-			HealthBorder.ezSpectator_Nameplate:SetAlpha(1)
+		if not HealthBorder.ezSpectator_Nameplate then
+			HealthBorder.ezSpectator_Nameplate = ezSpectator_Nameplate:Create(self.Parent, Healthbar, 'BOTTOM', HealthBorder, 'BOTTOM', 0, 10)
 		else
-			HealthBorder.ezSpectator_Nameplate:SetAlpha(self.Parent.Data.ViewpointNameplateAlpha)
+			HealthBorder.ezSpectator_Nameplate:Show()
+		end
+
+		local MaxValue = select(2, Healthbar:GetMinMaxValues())
+		HealthBorder.ezSpectator_Nameplate:SetMaxValue(MaxValue)
+
+		local Value = Healthbar:GetValue()
+
+		if not SkipAnimation then
+			SkipAnimation = HealthBorder.ezSpectator_Nameplate.IsUpdating
+			HealthBorder.ezSpectator_Nameplate.IsUpdating = false
+		else
+			HealthBorder.ezSpectator_Nameplate.IsUpdating = true
+		end
+
+		if SkipAnimation then
+			HealthBorder.ezSpectator_Nameplate:ResetAnimation()
+		end
+		HealthBorder.ezSpectator_Nameplate:SetValue(Value, SkipAnimation)
+
+		HealthBorder.ezSpectator_Nameplate:SetNickname(NameText:GetText())
+		if self.Parent.Interface.Players[NameText:GetText()] then
+			HealthBorder.ezSpectator_Nameplate:SetTeam(self.Parent.Interface.Players[NameText:GetText()].Team)
+			HealthBorder.ezSpectator_Nameplate:SetClass(self.Parent.Interface.Players[NameText:GetText()].Class)
+		else
+			HealthBorder.ezSpectator_Nameplate:SetTeam(nil)
+			HealthBorder.ezSpectator_Nameplate:SetClass(nil)
+		end
+
+		if self.Parent.Interface.Viewpoint then
+			if HealthBorder.ezSpectator_Nameplate.Nickname:GetText() == self.Parent.Interface.Viewpoint.CurrentTarget.Nickname then
+				HealthBorder.ezSpectator_Nameplate:SetAlpha(1)
+			else
+				HealthBorder.ezSpectator_Nameplate:SetAlpha(self.Parent.Data.ViewpointNameplateAlpha)
+			end
+		else
+			HealthBorder.ezSpectator_Nameplate:SetAlpha(1)
 		end
 	else
-		HealthBorder.ezSpectator_Nameplate:SetAlpha(1)
+		if Healthbar.IsHidden then
+			self:ShowOriginalNameplate(Healthbar, ThreatGlow, HealthBorder, CastBorder, CastUninterruptible, SpellIcon, HighlightTexture, NameText, LevelText, BossIcon, RaidIcon, MobIcon)
+		end
 	end
 end
 
