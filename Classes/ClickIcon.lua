@@ -14,19 +14,22 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	self.ParentFrame = ParentFrame
 	
 	self.Backdrop = CreateFrame('Frame', nil, ParentFrame)
-	self.Backdrop:SetFrameStrata('LOW')
+	self.Backdrop:SetFrameLevel(1)
+	self.Backdrop:SetFrameStrata('HIGH')
 	self.Backdrop:SetSize(Size, Size)
 	self.Backdrop:SetScale(_ezSpectatorScale)
 	self.Backdrop:SetPoint(...)
 	self.Textures:ClickIcon_Backdrop(self.Backdrop)
 	
 	self.Normal = CreateFrame('Frame', nil, ParentFrame)
+	self.Normal:SetFrameLevel(4)
 	self.Normal:SetFrameStrata('HIGH')
 	self.Normal:SetSize(Size, Size)
 	self.Normal:SetScale(_ezSpectatorScale)
 	self.Normal:SetPoint(...)
 	
 	self.Highlight = CreateFrame('Frame', nil, ParentFrame)
+	self.Highlight:SetFrameLevel(5)
 	self.Highlight:SetFrameStrata('HIGH')
 	self.Highlight:SetSize(Size, Size)
 	self.Highlight:SetScale(_ezSpectatorScale)
@@ -42,16 +45,20 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 		self.Textures:ClickIcon_Highlight_Silver(self.Highlight)
 		
 		SizeMod = 0.5
+	elseif Style == 'clear' then
+		self.Backdrop.texture:SetTexture(EMPTY_TEXTURE)
 	end
 	
 	self.Icon = CreateFrame('Frame', nil, self.Backdrop)
-	self.Icon:SetFrameStrata('MEDIUM')
+	self.Icon:SetFrameLevel(2)
+	self.Icon:SetFrameStrata('HIGH')
 	self.Icon:SetSize(Size, Size)
 	self.Icon:SetScale(_ezSpectatorScale)
 	
 	self.Icon:SetPoint('CENTER', self.Normal, 'CENTER', 0, SizeMod)
 	
 	self.Cooldown = CreateFrame('Cooldown', nil, self.Icon)
+	self.Cooldown:SetFrameLevel(3)
 	self.Cooldown:SetFrameStrata('HIGH')
 	self.Cooldown:SetSize(Size, Size)
 	self.Cooldown:SetPoint('CENTER', self.Normal, 'CENTER', 0, SizeMod)
