@@ -361,7 +361,7 @@ function ezSpectator_Nameplate:SetValue(Value, IsInnerCall)
 		Value = self.MaxValue
 	end
 	
-	local ProgressWidth = Value * self.Weight
+	local ProgressWidth = self.Parent.Data:SafeSize(Value * self.Weight)
 	
 	if self.CurrentValue and (IsInnerCall ~= true) then
 		if Value > self.CurrentValue then
@@ -434,7 +434,7 @@ function ezSpectator_Nameplate:SetValue(Value, IsInnerCall)
 		return true
 	end
 	
-	self.HealthBar:SetWidth(self.Parent.Data:SafeSize(ProgressWidth))
+	self.HealthBar:SetWidth(ProgressWidth)
 	self.HealthBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width), 0, 1)
 	
 	self.CurrentValue = Value
@@ -464,9 +464,9 @@ function ezSpectator_Nameplate:SetCastValue(Value)
 		Value = self.CastMaxValue
 	end
 
-	local ProgressWidth = Value * self.CastWeight
+	local ProgressWidth = self.Parent.Data:SafeSize(Value * self.CastWeight)
 
-	self.CastBar:SetWidth(self.Parent.Data:SafeSize(ProgressWidth))
+	self.CastBar:SetWidth(ProgressWidth)
 	self.CastBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width), 0, 1)
 
 	return Value < self.CastMaxValue

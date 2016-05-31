@@ -113,9 +113,9 @@ function ezSpectator_CastBar:SetValue(Value)
 		Result = false
 	end
 	
-	local ProgressWidth = Value * self.Weight
+	local ProgressWidth = self.Parent.Data:SafeSize(Value * self.Weight)
 	
-	self.ProgressBar:SetWidth(self.Parent.Data:SafeSize(ProgressWidth))
+	self.ProgressBar:SetWidth(ProgressWidth)
 	self.ProgressBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width), 0, 1)
 	
 	local SparkWidth = ProgressWidth + 64

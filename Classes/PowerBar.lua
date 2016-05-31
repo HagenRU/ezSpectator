@@ -286,7 +286,7 @@ function ezSpectator_PowerBar:SetValue(Value, IsInnerCall)
 		Value = self.MaxValue
 	end
 	
-	local ProgressWidth = Value * self.Weight
+	local ProgressWidth = self.Parent.Data:SafeSize(Value * self.Weight)
 	
 	if self.CurrentValue and (IsInnerCall ~= true) then
 		if Value > self.CurrentValue then
@@ -359,7 +359,7 @@ function ezSpectator_PowerBar:SetValue(Value, IsInnerCall)
 		return true
 	end
 	
-	self.ProgressBar:SetWidth(self.Parent.Data:SafeSize(ProgressWidth))
+	self.ProgressBar:SetWidth(ProgressWidth)
 	self.ProgressBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width), 0, 1)
 	if ProgressWidth / self.Width ~= self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width) then
 		print(ProgressWidth, ProgressWidth / self.Width, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width))
