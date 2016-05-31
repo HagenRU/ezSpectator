@@ -296,20 +296,20 @@ function ezSpectator_EnrageOrb:SetProgressValue(Value, IsInnerCall)
 	end
 
 	self.ProgressBar:SetWidth(ProgressWidth)
-	self.ProgressBar.texture:SetTexCoord(0, ProgressWidth / self.Width, 0, 1)
+	self.ProgressBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width), 0, 1)
 
 	local SparkWidth = ProgressWidth + 64
 	if SparkWidth > self.Width then
 		SparkWidth = 64 + self.Width - ProgressWidth
 		self.Spark:SetWidth(SparkWidth)
-		self.Spark.texture:SetTexCoord(0, SparkWidth / 128, 0, 1)
+		self.Spark.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(SparkWidth / 128), 0, 1)
 
 		self.Spark:ClearAllPoints()
 		self.Spark:SetPoint('LEFT', self.ProgressBar, 'RIGHT', -64, 0)
 	elseif ProgressWidth < 64 then
 		SparkWidth = ProgressWidth + 64
 		self.Spark:SetWidth(SparkWidth)
-		self.Spark.texture:SetTexCoord(1 - SparkWidth / 128, 1, 0, 1)
+		self.Spark.texture:SetTexCoord(self.Parent.Data:SafeTexCoord(1 - SparkWidth / 128), 1, 0, 1)
 
 		self.Spark:ClearAllPoints()
 		self.Spark:SetPoint('RIGHT', self.ProgressBar, 'LEFT', SparkWidth, 0)

@@ -190,7 +190,7 @@ function ezSpectator_HealthBar:DecAnimatedValue()
 			end
 		end
 		self.AnimationDownBar:SetWidth(AnimateWidth)
-		self.AnimationDownBar.texture:SetTexCoord(0, AnimateWidth / self.Width, 0, 1)
+		self.AnimationDownBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(AnimateWidth / self.Width), 0, 1)
 		
 		self.IsAnimatingDown = self.AnimationDownBar:GetWidth() >= self.ProgressBar:GetWidth()
 	end
@@ -223,7 +223,12 @@ function ezSpectator_HealthBar:IncAnimatedValue()
 			end
 		end
 		self.AnimationUpBar:SetWidth(AnimateWidth)
-		self.AnimationUpBar.texture:SetTexCoord((self.Width - (self.Width - self.ProgressBar:GetWidth()) - self.AnimationUpBar:GetWidth()) / self.Width, self.ProgressBar:GetWidth() / self.Width, 0, 1)
+		self.AnimationUpBar.texture:SetTexCoord(
+			self.Parent.Data:SafeTexCoord((self.Width - (self.Width - self.ProgressBar:GetWidth()) - self.AnimationUpBar:GetWidth()) / self.Width),
+			self.Parent.Data:SafeTexCoord(self.ProgressBar:GetWidth() / self.Width),
+			0,
+			1
+		)
 		
 		self.IsAnimatingUp = self.AnimationUpBar:GetWidth() > 0
 	end
@@ -351,7 +356,12 @@ function ezSpectator_HealthBar:SetValue(Value, IsInnerCall)
 				local AnimationWidth = self.AnimationUpBar:GetWidth() + ProgressWidth - self.ProgressBar:GetWidth()
 				
 				self.AnimationUpBar:SetWidth(AnimationWidth)
-				self.AnimationUpBar.texture:SetTexCoord((self.Width - (self.Width - ProgressWidth) - self.AnimationUpBar:GetWidth()) / self.Width, ProgressWidth / self.Width, 0, 1)
+				self.AnimationUpBar.texture:SetTexCoord(
+					self.Parent.Data:SafeTexCoord((self.Width - (self.Width - ProgressWidth) - self.AnimationUpBar:GetWidth()) / self.Width),
+					self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width),
+					0,
+					1
+				)
 				
 				if not self.IsAnimatingUp then
 					self.AnimationUpCycle = self.AnimationStartSpeed
@@ -380,11 +390,16 @@ function ezSpectator_HealthBar:SetValue(Value, IsInnerCall)
 				end
 				
 				self.AnimationUpBar:SetWidth(AnimationWidth)
-				self.AnimationUpBar.texture:SetTexCoord((self.Width - (self.Width - ProgressWidth) - self.AnimationUpBar:GetWidth()) / self.Width, ProgressWidth / self.Width, 0, 1)
+				self.AnimationUpBar.texture:SetTexCoord(
+					self.Parent.Data:SafeTexCoord((self.Width - (self.Width - ProgressWidth) - self.AnimationUpBar:GetWidth()) / self.Width),
+					self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width),
+					0,
+					1
+				)
 				
 				if not self.IsAnimatingDown then
 					self.AnimationDownBar:SetWidth(self.ProgressBar:GetWidth())
-					self.AnimationDownBar.texture:SetTexCoord(0, self.ProgressBar:GetWidth() / self.Width, 0, 1)
+					self.AnimationDownBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(self.ProgressBar:GetWidth() / self.Width), 0, 1)
 					
 					self.AnimationDownCycle = self.AnimationStartSpeed
 					self.IsAnimatingDown = true
@@ -411,20 +426,20 @@ function ezSpectator_HealthBar:SetValue(Value, IsInnerCall)
 	end
 	
 	self.ProgressBar:SetWidth(ProgressWidth)
-	self.ProgressBar.texture:SetTexCoord(0, ProgressWidth / self.Width, 0, 1)
+	self.ProgressBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width), 0, 1)
 	
 	local SparkWidth = ProgressWidth + 64
 	if SparkWidth > self.Width then
 		SparkWidth = 64 + self.Width - ProgressWidth
 		self.Spark:SetWidth(SparkWidth)
-		self.Spark.texture:SetTexCoord(0, SparkWidth / 128, 0, 1)
+		self.Spark.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(SparkWidth / 128), 0, 1)
 		
 		self.Spark:ClearAllPoints()
 		self.Spark:SetPoint('LEFT', self.ProgressBar, 'RIGHT', -64, 0)
 	elseif ProgressWidth < 64 then
 		SparkWidth = ProgressWidth + 64
 		self.Spark:SetWidth(SparkWidth)
-		self.Spark.texture:SetTexCoord(1 - SparkWidth / 128, 1, 0, 1)
+		self.Spark.texture:SetTexCoord(self.Parent.Data:SafeTexCoord(1 - SparkWidth / 128), 1, 0, 1)
 		
 		self.Spark:ClearAllPoints()
 		self.Spark:SetPoint('RIGHT', self.ProgressBar, 'LEFT', SparkWidth, 0)
