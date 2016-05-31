@@ -9,11 +9,12 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	self.Parent = Parent
 
 	self.Action = nil
+	self.IsTextInteractive = false
 	
 	self.Textures = ezSpectator_Textures:Create()
 	self.ParentFrame = ParentFrame
 	
-	self.Backdrop = CreateFrame('Frame', nil, ParentFrame)
+	self.Backdrop = CreateFrame('Frame', nil, self.ParentFrame)
 	self.Backdrop:SetFrameLevel(1)
 	self.Backdrop:SetFrameStrata('HIGH')
 	self.Backdrop:SetSize(Size, Size)
@@ -21,14 +22,14 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	self.Backdrop:SetPoint(...)
 	self.Textures:ClickIcon_Backdrop(self.Backdrop)
 	
-	self.Normal = CreateFrame('Frame', nil, ParentFrame)
+	self.Normal = CreateFrame('Frame', nil, self.ParentFrame)
 	self.Normal:SetFrameLevel(4)
 	self.Normal:SetFrameStrata('HIGH')
 	self.Normal:SetSize(Size, Size)
 	self.Normal:SetScale(_ezSpectatorScale)
 	self.Normal:SetPoint(...)
 	
-	self.Highlight = CreateFrame('Frame', nil, ParentFrame)
+	self.Highlight = CreateFrame('Frame', nil, self.ParentFrame)
 	self.Highlight:SetFrameLevel(5)
 	self.Highlight:SetFrameStrata('HIGH')
 	self.Highlight:SetSize(Size, Size)
@@ -62,8 +63,19 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	self.Cooldown:SetFrameStrata('HIGH')
 	self.Cooldown:SetSize(Size, Size)
 	self.Cooldown:SetPoint('CENTER', self.Normal, 'CENTER', 0, SizeMod)
-	
-	self.Reactor = CreateFrame('Frame', nil, ParentFrame)
+
+	self.TextFrame = CreateFrame('Frame', nil, self.ParentFrame)
+	self.TextFrame:SetFrameStrata('TOOLTIP')
+	self.TextFrame:SetSize(1, 1)
+
+	self.Text = self.TextFrame:CreateFontString(nil, 'OVERLAY')
+	self.Text:SetFont('Interface\\Addons\\IsengardSpectator\\Fonts\\DejaVuSans.ttf', 8)
+	self.Text:SetTextColor(1, 1, 1, 0.75)
+	self.Text:SetShadowColor(0, 0, 0, 0.75)
+	self.Text:SetShadowOffset(1, -1)
+	self.Text:SetPoint('CENTER', 0, 1)
+
+	self.Reactor = CreateFrame('Frame', nil, self.ParentFrame)
 	self.Reactor:SetFrameStrata('TOOLTIP')
 	self.Reactor:SetSize(Size, Size)
 	self.Reactor:SetScale(_ezSpectatorScale)
@@ -82,6 +94,26 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 			self.Normal:Show()
 		end
 	end)
+	self.Reactor:SetScript('OnUpdate', function()
+		if self.IsTextInteractive then
+			local OffsetX, OffsetY, Width, Height = self.Normal:GetBoundsRect()
+			OffsetX = OffsetX + 237
+			OffsetY = OffsetY + 194
+
+
+			local CenterX = OffsetX + Width / 2
+			local CenterY = OffsetY + Height / 2
+
+			local CursorX, CursorY =  GetCursorPosition()
+
+			local DiffX = abs(CenterX - CursorX)
+			local DiffY = abs(CenterY - CursorY)
+
+			local Distance = math.sqrt(DiffX * DiffX + DiffY * DiffY)
+
+			self.TextFrame:SetAlpha(1 - Distance / 200)
+		end
+	end)
 	
 	return self
 end
@@ -93,6 +125,7 @@ function ezSpectator_ClickIcon:Show()
 	self.Normal:Show()
 	self.Icon:Show()
 	self.Cooldown:Show()
+	self.TextFrame:Show()
 	self.Reactor:Show()
 end
 
@@ -104,6 +137,7 @@ function ezSpectator_ClickIcon:Hide()
 	self.Highlight:Hide()
 	self.Icon:Hide()
 	self.Cooldown:Hide()
+	self.TextFrame:Hide()
 	self.Reactor:Hide()
 end
 
@@ -119,6 +153,7 @@ function ezSpectator_ClickIcon:SetAlpha(Value)
 	self.Backdrop:SetAlpha(Value)
 	self.Normal:SetAlpha(Value)
 	self.Highlight:SetAlpha(Value)
+	self.TextFrame:SetAlpha(Value)
 end
 
 
@@ -164,6 +199,36 @@ function ezSpectator_ClickIcon:SetIcon(Name)
 		Texture:SetTexCoord(Record[2], Record[3], Record[4], Record[5])
 		Texture:SetAllPoints(self.Icon)
 		self.Icon.texture = Texture
+	end
+end
+
+
+
+function ezSpectator_ClickIcon:SetText(Value)
+	self.Text:SetText(Value)
+end
+
+
+
+function ezSpectator_ClickIcon:SetTextAlignTop()
+	self.TextFrame:ClearAllPoints()
+	self.TextFrame:SetPoint('BOTTOM', self.Normal, 'TOP', 0, 2)
+end
+
+
+
+function ezSpectator_ClickIcon:SetTextAlignBottom()
+	self.TextFrame:ClearAllPoints()
+	self.TextFrame:SetPoint('TOP', self.Normal, 'BOTTOM', 0, -2)
+end
+
+
+
+function ezSpectator_ClickIcon:SetTextInteractive(IsInteractive)
+	self.IsTextInteractive = IsInteractive
+
+	if not IsInteractive then
+		self.TextFrame:SetAlpha(1)
 	end
 end
 
