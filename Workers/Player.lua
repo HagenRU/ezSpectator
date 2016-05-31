@@ -265,27 +265,9 @@ function ezSpectator_PlayerWorker:SetTeam(Value)
 	
 	if Value == 67 then
 		Value = 1
-
-		self.SmallFrame.Normal.texture:SetVertexColor(0, 1, 0, 1)
-		self.SmallFrame.Normal.texture:SetBlendMode("ADD")
-
-		self.PlayerFrame.Normal.texture:SetVertexColor(0, 1, 0, 1)
-		self.PlayerFrame.Normal.texture:SetBlendMode("ADD")
-
-		self.VictimFrame.Normal.texture:SetVertexColor(0, 1, 0, 1)
-		self.VictimFrame.Normal.texture:SetBlendMode("ADD")
 	elseif Value == 469 then
 		--noinspection UnusedDef
 		Value = 2
-
-		self.SmallFrame.Normal.texture:SetVertexColor(1, 1, 0, 1)
-		self.SmallFrame.Normal.texture:SetBlendMode("ADD")
-
-		self.PlayerFrame.Normal.texture:SetVertexColor(1, 1, 0, 1)
-		self.PlayerFrame.Normal.texture:SetBlendMode("ADD")
-
-		self.VictimFrame.Normal.texture:SetVertexColor(1, 1, 0, 1)
-		self.VictimFrame.Normal.texture:SetBlendMode("ADD")
 	else
 		return
 	end
