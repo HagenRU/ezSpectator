@@ -48,6 +48,7 @@ function ezSpectator_PlayerWorker:Create(Parent)
 	self.IsPowerSet = false
 	self.IsTeamSet = false
 		self.Team = nil
+		self.TeamFrame = nil
 	self.Nameplate = nil
 
 	self.IsLocked = false
@@ -106,7 +107,7 @@ function ezSpectator_PlayerWorker:SetClass(Class)
 	if self.SmallFrame.IsLocked then
 		return
 	end
-	
+
 	self.Class = Class
 	self.IsClassSet = true
 	
@@ -265,10 +266,13 @@ function ezSpectator_PlayerWorker:SetTeam(Value)
 	
 	if Value == 67 then
 		Value = 1
+		self.TeamFrame = self.Parent.Interface.TopFrame.LeftTeam
 	elseif Value == 469 then
 		--noinspection UnusedDef
 		Value = 2
+		self.TeamFrame = self.Parent.Interface.TopFrame.RightTeam
 	else
+		self.TeamFrame = nil
 		return
 	end
 	
