@@ -132,7 +132,7 @@ function ezSpectator_PowerBar:DecAnimatedValue()
 				self.AnimationDownBar:Show()
 			end
 		end
-		self.AnimationDownBar:SetWidth(AnimateWidth)
+		self.AnimationDownBar:SetWidth(self.Parent.Data:SafeSize(AnimateWidth))
 		self.AnimationDownBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(AnimateWidth / self.Width), 0, 1)
 		
 		self.IsAnimatingDown = self.AnimationDownBar:GetWidth() >= self.ProgressBar:GetWidth()
@@ -165,7 +165,7 @@ function ezSpectator_PowerBar:IncAnimatedValue()
 				self.AnimationUpBar:Show()
 			end
 		end
-		self.AnimationUpBar:SetWidth(AnimateWidth)
+		self.AnimationUpBar:SetWidth(self.Parent.Data:SafeSize(AnimateWidth))
 		self.AnimationUpBar.texture:SetTexCoord(
 			self.Parent.Data:SafeTexCoord((self.Width - (self.Width - self.ProgressBar:GetWidth()) - self.AnimationUpBar:GetWidth()) / self.Width),
 			self.Parent.Data:SafeTexCoord(self.ProgressBar:GetWidth() / self.Width),
@@ -293,7 +293,7 @@ function ezSpectator_PowerBar:SetValue(Value, IsInnerCall)
 			if self.IsLayerAnimated then
 				local AnimationWidth = self.AnimationUpBar:GetWidth() + ProgressWidth - self.ProgressBar:GetWidth()
 				
-				self.AnimationUpBar:SetWidth(AnimationWidth)
+				self.AnimationUpBar:SetWidth(self.Parent.Data:SafeSize(AnimationWidth))
 				self.AnimationUpBar.texture:SetTexCoord(
 					self.Parent.Data:SafeTexCoord((self.Width - (self.Width - ProgressWidth) - self.AnimationUpBar:GetWidth()) / self.Width),
 					self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width),
@@ -322,12 +322,8 @@ function ezSpectator_PowerBar:SetValue(Value, IsInnerCall)
 		else
 			if self.IsLayerAnimated then
 				local AnimationWidth = self.AnimationUpBar:GetWidth() + ProgressWidth - self.ProgressBar:GetWidth()
-				
-				if AnimationWidth < 0 then
-					AnimationWidth = 0
-				end
-				
-				self.AnimationUpBar:SetWidth(AnimationWidth)
+
+				self.AnimationUpBar:SetWidth(self.Parent.Data:SafeSize(AnimationWidth))
 				self.AnimationUpBar.texture:SetTexCoord(
 					self.Parent.Data:SafeTexCoord((self.Width - (self.Width - ProgressWidth) - self.AnimationUpBar:GetWidth()) / self.Width),
 					self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width),
@@ -363,20 +359,23 @@ function ezSpectator_PowerBar:SetValue(Value, IsInnerCall)
 		return true
 	end
 	
-	self.ProgressBar:SetWidth(ProgressWidth)
+	self.ProgressBar:SetWidth(self.Parent.Data:SafeSize(ProgressWidth))
 	self.ProgressBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width), 0, 1)
+	if ProgressWidth / self.Width ~= self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width) then
+		print(ProgressWidth, ProgressWidth / self.Width, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width))
+	end
 	
 	local SparkWidth = ProgressWidth + 64
 	if SparkWidth > self.Width then
 		SparkWidth = 64 + self.Width - ProgressWidth
-		self.Spark:SetWidth(SparkWidth)
+		self.Spark:SetWidth(self.Parent.Data:SafeSize(SparkWidth))
 		self.Spark.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(SparkWidth / 128), 0, 1)
 		
 		self.Spark:ClearAllPoints()
 		self.Spark:SetPoint('LEFT', self.ProgressBar, 'RIGHT', -64, 0)
 	elseif ProgressWidth < 64 then
 		SparkWidth = ProgressWidth + 64
-		self.Spark:SetWidth(SparkWidth)
+		self.Spark:SetWidth(self.Parent.Data:SafeSize(SparkWidth))
 		self.Spark.texture:SetTexCoord(self.Parent.Data:SafeTexCoord(1 - SparkWidth / 128), 1, 0, 1)
 		
 		self.Spark:ClearAllPoints()

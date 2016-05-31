@@ -216,7 +216,7 @@ function ezSpectator_Nameplate:DecAnimatedValue()
 				self.HealthBar.AnimationDownBar:Show()
 			end
 		end
-		self.HealthBar.AnimationDownBar:SetWidth(AnimateWidth)
+		self.HealthBar.AnimationDownBar:SetWidth(self.Parent.Data:SafeSize(AnimateWidth))
 		self.HealthBar.AnimationDownBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(AnimateWidth / self.Width), 0, 1)
 		
 		self.IsAnimatingDown = self.HealthBar.AnimationDownBar:GetWidth() >= self.HealthBar:GetWidth()
@@ -249,7 +249,7 @@ function ezSpectator_Nameplate:IncAnimatedValue()
 				self.HealthBar.AnimationUpBar:Show()
 			end
 		end
-		self.HealthBar.AnimationUpBar:SetWidth(AnimateWidth)
+		self.HealthBar.AnimationUpBar:SetWidth(self.Parent.Data:SafeSize(AnimateWidth))
 		self.HealthBar.AnimationUpBar.texture:SetTexCoord(
 			self.Parent.Data:SafeTexCoord((self.Width - (self.Width - self.HealthBar:GetWidth()) - self.HealthBar.AnimationUpBar:GetWidth()) / self.Width),
 			self.Parent.Data:SafeTexCoord(self.HealthBar:GetWidth() / self.Width),
@@ -368,7 +368,7 @@ function ezSpectator_Nameplate:SetValue(Value, IsInnerCall)
 			if self.IsLayerAnimated then
 				local AnimationWidth = self.HealthBar.AnimationUpBar:GetWidth() + ProgressWidth - self.HealthBar:GetWidth()
 				
-				self.HealthBar.AnimationUpBar:SetWidth(AnimationWidth)
+				self.HealthBar.AnimationUpBar:SetWidth(self.Parent.Data:SafeSize(AnimationWidth))
 				self.HealthBar.AnimationUpBar.texture:SetTexCoord(
 					self.Parent.Data:SafeTexCoord((self.Width - (self.Width - ProgressWidth) - self.HealthBar.AnimationUpBar:GetWidth()) / self.Width),
 					self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width),
@@ -397,12 +397,8 @@ function ezSpectator_Nameplate:SetValue(Value, IsInnerCall)
 		else
 			if self.IsLayerAnimated then
 				local AnimationWidth = self.HealthBar.AnimationUpBar:GetWidth() + ProgressWidth - self.HealthBar:GetWidth()
-				
-				if AnimationWidth < 0 then
-					AnimationWidth = 0
-				end
-				
-				self.HealthBar.AnimationUpBar:SetWidth(AnimationWidth)
+
+				self.HealthBar.AnimationUpBar:SetWidth(self.Parent.Data:SafeSize(AnimationWidth))
 				self.HealthBar.AnimationUpBar.texture:SetTexCoord(
 					self.Parent.Data:SafeTexCoord((self.Width - (self.Width - ProgressWidth) - self.HealthBar.AnimationUpBar:GetWidth()) / self.Width),
 					self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width),
@@ -438,7 +434,7 @@ function ezSpectator_Nameplate:SetValue(Value, IsInnerCall)
 		return true
 	end
 	
-	self.HealthBar:SetWidth(ProgressWidth)
+	self.HealthBar:SetWidth(self.Parent.Data:SafeSize(ProgressWidth))
 	self.HealthBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width), 0, 1)
 	
 	self.CurrentValue = Value
@@ -470,7 +466,7 @@ function ezSpectator_Nameplate:SetCastValue(Value)
 
 	local ProgressWidth = Value * self.CastWeight
 
-	self.CastBar:SetWidth(ProgressWidth)
+	self.CastBar:SetWidth(self.Parent.Data:SafeSize(ProgressWidth))
 	self.CastBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width), 0, 1)
 
 	return Value < self.CastMaxValue
