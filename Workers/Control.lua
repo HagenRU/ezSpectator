@@ -77,8 +77,6 @@ function ezSpectator_ControlWorker:SetClass(Class, Size)
 			
 			self.ControlIcon.Icon.texture:SetTexCoord(Left, Right, Top, Bottom)
 		end
-	else
-		return
 	end
 end
 
