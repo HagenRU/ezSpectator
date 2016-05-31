@@ -268,3 +268,17 @@ function ezSpectator_DataWorker:Create()
 
     return self
 end
+
+
+
+function ezSpectator_DataWorker:SafeTexCoord(Value)
+    if Value > 1 then
+        Value = 1
+    end
+
+    if Value < 0 then
+        Value = 0
+    end
+
+    return Value
+end
