@@ -65,3 +65,9 @@ end
 function ezSpectator_TeamFrame:SetScore(Value)
 	self.HealthBar:SetDescription(Value)
 end
+
+
+
+function ezSpectator_TeamFrame:SetCooldown(Spell, Value)
+	self.SpellCooldown:Push(Spell, Value)
+end
