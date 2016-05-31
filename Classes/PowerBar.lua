@@ -361,10 +361,7 @@ function ezSpectator_PowerBar:SetValue(Value, IsInnerCall)
 	
 	self.ProgressBar:SetWidth(ProgressWidth)
 	self.ProgressBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width), 0, 1)
-	if ProgressWidth / self.Width ~= self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width) then
-		print(ProgressWidth, ProgressWidth / self.Width, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width))
-	end
-	
+
 	local SparkWidth = ProgressWidth + 64
 	if SparkWidth > self.Width then
 		SparkWidth = 64 + self.Width - ProgressWidth
