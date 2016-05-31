@@ -6,9 +6,9 @@ function ezSpectator_CooldownFrame:Create(Parent, ParentFrame, IsLeft)
     setmetatable(self, ezSpectator_CooldownFrame)
 
     self.MaxCount = 13
-    self.IconSize = 20
-    self.OffsetX = 60
-    self.OffsetY = -47
+    self.IconSize = 22
+    self.OffsetX = 52 * _ezSpectatorScale
+    self.OffsetY = -22.5 * _ezSpectatorScale
 
     self.Parent = Parent
     self.ParentFrame = ParentFrame
@@ -30,9 +30,9 @@ function ezSpectator_CooldownFrame:Create(Parent, ParentFrame, IsLeft)
     self.CooldownIcons = {}
     for Index = 1, self.MaxCount, 1 do
         if self.IsLeft then
-            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'silver', self.IconSize, 'BOTTOMLEFT', self.MainFrame, 'BOTTOMLEFT', (Index - 1) * self.IconSize, self.IconSize)
+            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'silver', self.IconSize, 'BOTTOMLEFT', self.MainFrame, 'BOTTOMLEFT', (Index - 1) * self.IconSize, 0)
         else
-            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'silver', self.IconSize, 'BOTTOMRIGHT', self.MainFrame, 'BOTTOMRIGHT', (Index - 1) * -self.IconSize, self.IconSize)
+            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'silver', self.IconSize, 'BOTTOMRIGHT', self.MainFrame, 'BOTTOMRIGHT', (Index - 1) * -self.IconSize, 0)
         end
     end
 
