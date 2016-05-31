@@ -100,7 +100,6 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 			OffsetX = OffsetX + 237
 			OffsetY = OffsetY + 194
 
-
 			local CenterX = OffsetX + Width / 2
 			local CenterY = OffsetY + Height / 2
 
