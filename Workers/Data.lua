@@ -493,3 +493,13 @@ function ezSpectator_DataWorker:SafeTexCoord(Value)
 
     return Value
 end
+
+
+
+function ezSpectator_DataWorker:SafeSize(Value)
+    if Value < 0 then
+        Value = 0
+    end
+
+    return Value
+end
