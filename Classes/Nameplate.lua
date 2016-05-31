@@ -301,10 +301,6 @@ function ezSpectator_Nameplate:Show()
 		self.HealthBar.AnimationUpBar:Show()
 		self.HealthBar.AnimationDownBar:Show()
 	end
-
-	if self.CastUpdateFrame.IsProgressMode and self:IsValid() then
-		self.CastBar:Show()
-	end
 end
 
 
