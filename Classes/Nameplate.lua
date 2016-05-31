@@ -212,7 +212,7 @@ function ezSpectator_Nameplate:DecAnimatedValue()
 		if AnimateWidth <= 0 then
 			self.HealthBar.AnimationDownBar:Hide()
 		else
-			if self.MainFrame:IsShown() then
+			if self.MainFrame:IsVisible() then
 				self.HealthBar.AnimationDownBar:Show()
 			end
 		end
@@ -245,7 +245,7 @@ function ezSpectator_Nameplate:IncAnimatedValue()
 		if AnimateWidth <= 0 then
 			self.HealthBar.AnimationUpBar:Hide()
 		else
-			if self.MainFrame:IsShown() then
+			if self.MainFrame:IsVisible() then
 				self.HealthBar.AnimationUpBar:Show()
 			end
 		end
@@ -296,11 +296,6 @@ end
 
 function ezSpectator_Nameplate:Show()
 	self.MainFrame:Show()
-
-	if self.IsLayerAnimated then
-		self.HealthBar.AnimationUpBar:Show()
-		self.HealthBar.AnimationDownBar:Show()
-	end
 end
 
 
