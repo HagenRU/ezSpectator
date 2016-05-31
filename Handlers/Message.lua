@@ -81,6 +81,7 @@ function ezSpectator_MessageHandler:ProcessCommand(Target, Prefix, ...)
 		end
 	else
 		if self.Parent.Interface.Players[Target]:IsReady() and not self.Parent.Interface.Players[Target]:IsShown() then
+			self.Parent.Interface.Players[Target]:RequestCooldowns()
 			self.Parent.Interface.Players[Target]:Show()
 		end
 	end
@@ -119,6 +120,8 @@ function ezSpectator_MessageHandler:ProcessCommand(Target, Prefix, ...)
 		self.Parent.Interface:SetTeamColor(TeamID, Value)
 	elseif Prefix == 'SRC' then
 		self.Parent.Interface:SetTeamScore(TeamID, Value)
+	elseif Prefix == 'CDN' then
+		self.Parent.Interface.Players[Target]:SetCooldown(tonumber(strsub(Value, 1, strfind(Value, ',') - 1)), tonumber(strsub(Value, strfind(Value, ',') + 1)))
 	elseif Prefix == 'ENB' then
 		self.Parent.Interface:SetMode(tonumber(Value))
 	else

@@ -449,6 +449,17 @@ end
 
 
 
+function ezSpectator_PlayerWorker:SetCooldown(Spell, Value)
+	if self.IsTeamSet then
+		--TODO remove abs after fix on serverside will be applied
+		Value = math.abs(Value)
+
+		self.TeamFrame:SetCooldown(Spell, Value)
+	end
+end
+
+
+
 function ezSpectator_PlayerWorker:BindViewpoint()
 	SendChatMessage('.spectate view ' .. self.Nickname, 'GUILD')
 	self.Parent.Interface:ResetViewpoint()
@@ -458,4 +469,15 @@ function ezSpectator_PlayerWorker:BindViewpoint()
 
 	self.PlayerFrame:Show()
 	self:SetTarget(nil)
+end
+
+
+
+function ezSpectator_PlayerWorker:RequestCooldowns()
+	local ClassCooldowns = self.Parent.Data.ClassSpellInfo[self.Class]
+	if ClassCooldowns then
+		for SpellID, Value in pairs(ClassCooldowns) do
+			SendChatMessage('.spectate cooldown ' .. self.Nickname .. ' ' .. SpellID, 'GUILD')
+		end
+	end
 end
