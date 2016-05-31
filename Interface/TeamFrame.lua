@@ -19,6 +19,7 @@ function ezSpectator_TeamFrame:Create(Parent, IsLeft, ...)
 	self.Textures:TeamFrame_Normal(self.Normal)
 	
 	self.HealthBar = ezSpectator_HealthBar:Create(self.Parent, IsLeft, false, 12 * _ezSpectatorScale, 462, 24, 0.75 * _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 10, -9)
+	self.SpellCooldown = ezSpectator_CooldownFrame:Create(self.Parent, self.Normal, IsLeft)
 
 	return self
 end
@@ -28,6 +29,7 @@ end
 function ezSpectator_TeamFrame:Hide()
 	self.Normal:Hide()
 	self.HealthBar:Hide()
+	self.SpellCooldown:Hide()
 end
 
 
@@ -35,6 +37,7 @@ end
 function ezSpectator_TeamFrame:Show()
 	self.Normal:Show()
 	self.HealthBar:Show()
+	self.SpellCooldown:Show()
 end
 
 

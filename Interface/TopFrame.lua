@@ -19,10 +19,7 @@ function ezSpectator_TopFrame:Create(Parent)
 	self.MainFrame:SetPoint('TOP', 0, 0)
 
 	self.LeftTeam = ezSpectator_TeamFrame:Create(self.Parent, true, 'TOP', -290, -1)
-	self.LeftCooldown = ezSpectator_CooldownFrame:Create(self.Parent, true, 'LEFT', self.MainFrame, 'CENTER', 95, -64)
-
 	self.RightTeam = ezSpectator_TeamFrame:Create(self.Parent, false, 'TOP', 290, -1)
-	self.RightCooldown = ezSpectator_CooldownFrame:Create(self.Parent, false, 'RIGHT', self.MainFrame, 'CENTER', -95, -64)
 
 	self.EnrageOrb = ezSpectator_EnrageOrb:Create(self.Parent, 170, 22, 'TOP', self.MainFrame, 'BOTTOM', 0, -10 * _ezSpectatorScale)
 
@@ -88,9 +85,7 @@ end
 function ezSpectator_TopFrame:Hide()
 	self.MainFrame:Hide()
 	self.LeftTeam:Hide()
-	self.LeftCooldown:Hide()
 	self.RightTeam:Hide()
-	self.RightCooldown:Hide()
 	self.EnrageOrb:Hide()
 end
 
@@ -99,9 +94,7 @@ end
 function ezSpectator_TopFrame:Show()
 	self.MainFrame:Show()
 	self.LeftTeam:Show()
-	self.LeftCooldown:Show()
 	self.RightTeam:Show()
-	self.RightCooldown:Show()
 	self.EnrageOrb:Show()
 end
 
