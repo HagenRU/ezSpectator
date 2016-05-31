@@ -5,6 +5,8 @@ function ezSpectator_TeamFrame:Create(Parent, IsLeft, ...)
 	local self = {}
 	setmetatable(self, ezSpectator_TeamFrame)
 
+	IsLeft = not IsLeft
+
 	self.Parent = Parent
 
 	self.Textures = ezSpectator_Textures:Create()
@@ -16,8 +18,8 @@ function ezSpectator_TeamFrame:Create(Parent, IsLeft, ...)
 	self.Normal:SetPoint(...)
 	self.Textures:TeamFrame_Normal(self.Normal)
 	
-	self.HealthBar = ezSpectator_HealthBar:Create(self.Parent, not IsLeft, false, 12 * _ezSpectatorScale, 462, 24, 0.75 * _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 10, -9)
-	
+	self.HealthBar = ezSpectator_HealthBar:Create(self.Parent, IsLeft, false, 12 * _ezSpectatorScale, 462, 24, 0.75 * _ezSpectatorScale, 'TOPLEFT', self.Normal, 'TOPLEFT', 10, -9)
+
 	return self
 end
 
