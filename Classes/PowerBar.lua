@@ -128,7 +128,9 @@ function ezSpectator_PowerBar:DecAnimatedValue()
 		if AnimateWidth <= 0 then
 			self.AnimationDownBar:Hide()
 		else
-			self.AnimationDownBar:Show()
+			if self.MainFrame:IsVisible() then
+				self.AnimationDownBar:Show()
+			end
 		end
 		self.AnimationDownBar:SetWidth(AnimateWidth)
 		self.AnimationDownBar.texture:SetTexCoord(0, AnimateWidth / self.Width, 0, 1)
@@ -159,7 +161,9 @@ function ezSpectator_PowerBar:IncAnimatedValue()
 		if AnimateWidth <= 0 then
 			self.AnimationUpBar:Hide()
 		else
-			self.AnimationUpBar:Show()
+			if self.MainFrame:IsVisible() then
+				self.AnimationUpBar:Show()
+			end
 		end
 		self.AnimationUpBar:SetWidth(AnimateWidth)
 		self.AnimationUpBar.texture:SetTexCoord((self.Width - (self.Width - self.ProgressBar:GetWidth()) - self.AnimationUpBar:GetWidth()) / self.Width, self.ProgressBar:GetWidth() / self.Width, 0, 1)
@@ -201,12 +205,7 @@ end
 function ezSpectator_PowerBar:Show()
 	self.Backdrop:Show()
 	self.ProgressBar:Show()
-	
-	if self.IsLayerAnimated then
-		self.AnimationUpBar:Show()
-		self.AnimationDownBar:Show()
-	end
-	
+
 	self.Overlay:Show()
 	self.TextFrame:Show()
 end
