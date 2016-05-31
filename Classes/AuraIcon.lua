@@ -1,14 +1,14 @@
 ezSpectator_AuraIcon = {}
 ezSpectator_AuraIcon.__index = ezSpectator_AuraIcon
 
-function ezSpectator_AuraIcon:Create(Parent, ParentFrame, ...)
+function ezSpectator_AuraIcon:Create(Parent, ParentFrame, Size, ...)
 	local self = {}
 	setmetatable(self, ezSpectator_AuraIcon)
 
 	self.Parent = Parent
 
 	self.MainFrame = CreateFrame('Button', nil, ParentFrame)
-	self.MainFrame:SetSize(16, 16)
+	self.MainFrame:SetSize(Size, Size)
 	self.MainFrame:SetPoint(...)
 	self.MainFrame:Hide()
 

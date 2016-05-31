@@ -13,8 +13,7 @@ function ezSpectator_AuraFrame:Create(Parent, IsUpfilling, ...)
 	self.DebuffLines = 2
 	self.PerLine = 9
 	
-	self.IconWidth = 20
-	self.IconHeight = 20
+	self.IconSize = 20
 	
 	self.MainFrame = CreateFrame('Frame', nil, nil)
 	self.MainFrame:SetFrameLevel(1)
@@ -29,9 +28,9 @@ function ezSpectator_AuraFrame:Create(Parent, IsUpfilling, ...)
 		self.AuraIcons[Line] = {}
 		for Index = 1, self.PerLine, 1 do 
 			if IsUpfilling then
-				self.AuraIcons[Line][Index] = ezSpectator_AuraIcon:Create(self.Parent, self.MainFrame, 'TOPLEFT', self.MainFrame, 'TOPLEFT', (Index - 1) * self.IconWidth, (Line - 1) * self.IconHeight * -1 + (_ezSpectatorScale - 1) * 10)
+				self.AuraIcons[Line][Index] = ezSpectator_AuraIcon:Create(self.Parent, self.MainFrame, self.IconSize - 4, 'TOPLEFT', self.MainFrame, 'TOPLEFT', (Index - 1) * self.IconSize, (Line - 1) * self.IconSize * -1 + (_ezSpectatorScale - 1) * 10)
 			else
-				self.AuraIcons[Line][Index] = ezSpectator_AuraIcon:Create(self.Parent, self.MainFrame, 'BOTTOMLEFT', self.MainFrame, 'BOTTOMLEFT', (Index - 1) * self.IconWidth, (Line - 1) * self.IconHeight)
+				self.AuraIcons[Line][Index] = ezSpectator_AuraIcon:Create(self.Parent, self.MainFrame, self.IconSize - 4, 'BOTTOMLEFT', self.MainFrame, 'BOTTOMLEFT', (Index - 1) * self.IconSize, (Line - 1) * self.IconSize)
 			end
 		end
 	end
