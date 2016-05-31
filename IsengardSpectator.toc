@@ -28,7 +28,7 @@ Interface\SpellFrame.lua
 Interface\SmallFrame.lua
 Interface\BindFrame.lua
 Interface\Nameplates.lua
-
+Interface\CooldownFrame.lua
 Interface\TeamFrame.lua
 Interface\TopFrame.lua
 
