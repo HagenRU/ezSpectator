@@ -66,9 +66,7 @@ function ezSpectator_ControlWorker:SetClass(Class, Size)
 	end
 
 	if self.Class then
-		local ClassText = self.Parent.Data.ClassTextEng[self.Class]
-
-		local OffsetTable = self.Parent.Data.ClassIconOffset[ClassText]
+		local OffsetTable = self.Parent.Data.ClassIconOffset[self.Class]
 		if OffsetTable then
 			self.ControlIcon:SetTexture('Interface\\Glues\\CharacterCreate\\UI-CharacterCreate-Classes', Size, false)
 			local Left, Right, Top, Bottom = unpack(OffsetTable)
