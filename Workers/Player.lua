@@ -17,7 +17,7 @@ function ezSpectator_PlayerWorker:Create(Parent)
 	self.SmallControlWorker:BindIcon(self.SmallFrame.ControlIcon)
 	
 	self.PlayerFrame = ezSpectator_BindFrame:Create(self.Parent)
-	self.PlayerFrame:SetPoint('BOTTOMRIGHT', UIParent, 'BOTTOM', -10, 20)
+	self.PlayerFrame:SetPoint('BOTTOMRIGHT', UIParent, 'BOTTOM', -10, 43)
 	self.PlayerFrame.SpellFrame = ezSpectator_SpellFrame:Create(self.Parent, false, 'TOPRIGHT', self.PlayerFrame.Normal, 'TOPLEFT', 0, -19)
 	self.PlayerFrame:Hide()
 	
@@ -25,7 +25,7 @@ function ezSpectator_PlayerWorker:Create(Parent)
 	self.PlayerControlWorker:BindIcon(self.PlayerFrame.ControlIcon)
 	
 	self.VictimFrame = ezSpectator_BindFrame:Create(self.Parent)
-	self.VictimFrame:SetPoint('BOTTOMLEFT', UIParent, 'BOTTOM', 10, 20)
+	self.VictimFrame:SetPoint('BOTTOMLEFT', UIParent, 'BOTTOM', 10, 43)
 	self.VictimFrame.SpellFrame = ezSpectator_SpellFrame:Create(self.Parent, true, 'TOPLEFT', self.VictimFrame.Normal, 'TOPRIGHT', 0, -19)
 	self.VictimFrame:Hide()
 	

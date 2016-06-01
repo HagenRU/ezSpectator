@@ -7,8 +7,8 @@ function ezSpectator_CooldownFrame:Create(Parent, ParentFrame, IsLeft)
 
     self.MaxCount = 13
     self.IconSize = 22
-    self.OffsetX = 52 * _ezSpectatorScale
-    self.OffsetY = -22.5 * _ezSpectatorScale
+    self.OffsetX = 10 * _ezSpectatorScale
+    self.OffsetY = 1 * _ezSpectatorScale
 
     self.Parent = Parent
     self.ParentFrame = ParentFrame
@@ -21,18 +21,18 @@ function ezSpectator_CooldownFrame:Create(Parent, ParentFrame, IsLeft)
     self.MainFrame:SetSize(1, 1)
 
     if IsLeft then
-        self.MainFrame:SetPoint('LEFT', self.ParentFrame, 'BOTTOMLEFT', self.OffsetX, self.OffsetY)
+        self.MainFrame:SetPoint('LEFT', UIParent, 'BOTTOM', self.OffsetX, self.OffsetY)
     else
-        self.MainFrame:SetPoint('RIGHT', self.ParentFrame, 'BOTTOMRIGHT', -self.OffsetX, self.OffsetY)
+        self.MainFrame:SetPoint('RIGHT', UIParent, 'BOTTOM', -self.OffsetX, self.OffsetY)
     end
 
 
     self.CooldownIcons = {}
     for Index = 1, self.MaxCount, 1 do
         if self.IsLeft then
-            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'silver', self.IconSize, 'BOTTOMLEFT', self.MainFrame, 'BOTTOMLEFT', (Index - 1) * self.IconSize, 0)
+            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'none', self.IconSize, 'BOTTOMLEFT', self.MainFrame, 'BOTTOMLEFT', (Index - 1) * self.IconSize, 0)
         else
-            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'silver', self.IconSize, 'BOTTOMRIGHT', self.MainFrame, 'BOTTOMRIGHT', (Index - 1) * -self.IconSize, 0)
+            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'none', self.IconSize, 'BOTTOMRIGHT', self.MainFrame, 'BOTTOMRIGHT', (Index - 1) * -self.IconSize, 0)
         end
     end
 
