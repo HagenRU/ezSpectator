@@ -81,7 +81,7 @@ function ezSpectator_MessageHandler:ProcessCommand(Target, Prefix, ...)
 		end
 	else
 		if self.Parent.Interface.Players[Target]:IsReady() and not self.Parent.Interface.Players[Target]:IsShown() then
-			self.Parent.Interface.Players[Target]:RequestCooldowns()
+			self.Parent.Interface.Players[Target]:RequestCooldown()
 			self.Parent.Interface.Players[Target]:Show()
 		end
 	end

@@ -212,6 +212,13 @@ function ezSpectator_PlayerWorker:SetCast(Spell, Time)
 		self.SmallFrame.SpellFrame:Push(Spell)
 		self.PlayerFrame.SpellFrame:Push(Spell)
 		self.VictimFrame.SpellFrame:Push(Spell)
+
+		local ClassCooldowns = self.Parent.Data.ClassSpellInfo[self.Class]
+		if ClassCooldowns then
+			if (ClassCooldowns[Spell] == true) or (type(ClassCooldowns[Spell]) == 'table') then
+				self:RequestCooldown(Spell)
+			end
+		end
 	end
 
 	local IsCastState = self.Parent.Data.CastInfo[Time] ~= nil
@@ -470,11 +477,16 @@ end
 
 
 
-function ezSpectator_PlayerWorker:RequestCooldowns()
-	local ClassCooldowns = self.Parent.Data.ClassSpellInfo[self.Class]
-	if ClassCooldowns then
-		for SpellID, Value in pairs(ClassCooldowns) do
-			SendChatMessage('.spectate cooldown ' .. self.Nickname .. ' ' .. SpellID, 'GUILD')
+function ezSpectator_PlayerWorker:RequestCooldown(Value)
+	if not Value then
+		local ClassCooldowns = self.Parent.Data.ClassSpellInfo[self.Class]
+		if ClassCooldowns then
+			for SpellID, Value in pairs(ClassCooldowns) do
+				SendChatMessage('.spectate cooldown ' .. self.Nickname .. ' ' .. SpellID, 'GUILD')
+			end
 		end
+	else
+		print('.spectate cooldown ' .. self.Nickname .. ' ' .. Value)
+		SendChatMessage('.spectate cooldown ' .. self.Nickname .. ' ' .. Value, 'GUILD')
 	end
 end
