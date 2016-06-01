@@ -30,7 +30,6 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.MainFrame:SetSize(1, 1)
 	self.MainFrame:SetPoint(Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
 
-
 	self.HealthBar = CreateFrame('Frame', nil, self.MainFrame)
 	self.HealthBar:SetFrameLevel(4 + self.Parent.Data.NamePlateLevel)
 	self.HealthBar:SetFrameStrata('BACKGROUND')
@@ -198,7 +197,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 		end
 	end)
 
-	self.Parent.Data.NamePlateLevel = self.Parent.Data.NamePlateLevel + 8
+	self.Parent.Data.NamePlateLevel = self.Parent.Data.NamePlateLevel + 1
 	return self
 end
 
