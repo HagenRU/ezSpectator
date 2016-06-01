@@ -5,8 +5,9 @@ function ezSpectator_CooldownFrame:Create(Parent, ParentFrame, IsLeft)
     local self = {}
     setmetatable(self, ezSpectator_CooldownFrame)
 
-    self.MaxCount = 13
+    self.MaxCount = 20
     self.IconSize = 22
+    self.TextureSize = self.IconSize * 0.70
     self.OffsetX = 10 * _ezSpectatorScale
     self.OffsetY = 1 * _ezSpectatorScale
 
@@ -30,10 +31,12 @@ function ezSpectator_CooldownFrame:Create(Parent, ParentFrame, IsLeft)
     self.CooldownIcons = {}
     for Index = 1, self.MaxCount, 1 do
         if self.IsLeft then
-            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'none', self.IconSize, 'BOTTOMLEFT', self.MainFrame, 'BOTTOMLEFT', (Index - 1) * self.IconSize, 0)
+            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'mild-yellow', self.IconSize, 'BOTTOMLEFT', self.MainFrame, 'BOTTOMLEFT', (Index - 1) * self.IconSize, 0)
         else
-            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'none', self.IconSize, 'BOTTOMRIGHT', self.MainFrame, 'BOTTOMRIGHT', (Index - 1) * -self.IconSize, 0)
+            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'mild-green', self.IconSize, 'BOTTOMRIGHT', self.MainFrame, 'BOTTOMRIGHT', (Index - 1) * -self.IconSize, 0)
         end
+
+        self.CooldownIcons[Index].IsFree = true
     end
 
     return self
@@ -49,10 +52,27 @@ end
 
 function ezSpectator_CooldownFrame:Hide()
     self.MainFrame:Hide()
+
+    for Index = 1, self.MaxCount, 1 do
+        self.CooldownIcons[Index]:SetTexture(EMPTY_TEXTURE, self.TextureSize, false)
+
+        self.CooldownIcons[Index].IsFree = true
+    end
 end
 
 
 
 function ezSpectator_CooldownFrame:Push(Spell, Cooldown)
-    print(Spell, Cooldown)
+    if Cooldown >= 0 then
+        for Index = 1, self.MaxCount, 1 do
+            if self.CooldownIcons[Index].IsFree then
+                local SpellTexture = select(3, GetSpellInfo(Spell))
+                self.CooldownIcons[Index]:SetTexture(SpellTexture, self.TextureSize, true)
+                self.CooldownIcons[Index]:SetCooldown(GetTime(), Cooldown)
+
+                self.CooldownIcons[Index].IsFree = false
+                break
+            end
+        end
+    end
 end
