@@ -44,7 +44,23 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	elseif Style == 'silver' then
 		self.Textures:ClickIcon_Normal_Silver(self.Normal)
 		self.Textures:ClickIcon_Highlight_Silver(self.Highlight)
-		
+
+		--noinspection UnusedDef
+		SizeMod = 0.5
+	elseif Style == 'mild-green' then
+		self.Backdrop.texture:SetTexture(EMPTY_TEXTURE)
+		self.Textures:Nameplate_Castborder(self.Normal)
+		self.Textures:Nameplate_Castborder(self.Highlight)
+		self.Highlight.texture:SetVertexColor(0, 1, 0, 1)
+
+		--noinspection UnusedDef
+		SizeMod = 0.5
+	elseif Style == 'mild-yellow' then
+		self.Backdrop.texture:SetTexture(EMPTY_TEXTURE)
+		self.Textures:Nameplate_Castborder(self.Normal)
+		self.Textures:Nameplate_Castborder(self.Highlight)
+		self.Highlight.texture:SetVertexColor(1, 1, 0, 1)
+
 		SizeMod = 0.5
 	elseif Style == 'clear' then
 		self.Backdrop.texture:SetTexture(EMPTY_TEXTURE)
