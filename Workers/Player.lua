@@ -451,9 +451,6 @@ end
 
 function ezSpectator_PlayerWorker:SetCooldown(Spell, Value)
 	if self.IsTeamSet then
-		--TODO remove abs after fix on serverside will be applied
-		Value = math.abs(Value)
-
 		self.TeamFrame:SetCooldown(Spell, Value)
 	end
 end
