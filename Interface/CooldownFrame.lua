@@ -27,6 +27,7 @@ function ezSpectator_CooldownFrame:Create(Parent, ParentFrame, IsLeft)
         self.MainFrame:SetPoint('RIGHT', UIParent, 'BOTTOM', -self.OffsetX, self.OffsetY)
     end
 
+    self.CooldownLinks = {}
 
     self.CooldownIcons = {}
     for Index = 1, self.MaxCount, 1 do
@@ -58,20 +59,26 @@ function ezSpectator_CooldownFrame:Hide()
 
         self.CooldownIcons[Index].IsFree = true
     end
+    self.CooldownLinks = {}
 end
 
 
 
 function ezSpectator_CooldownFrame:Push(Spell, Cooldown)
     if Cooldown >= 0 then
-        for Index = 1, self.MaxCount, 1 do
-            if self.CooldownIcons[Index].IsFree then
-                local SpellTexture = select(3, GetSpellInfo(Spell))
-                self.CooldownIcons[Index]:SetTexture(SpellTexture, self.TextureSize, true)
-                self.CooldownIcons[Index]:SetCooldown(GetTime(), Cooldown)
+        if self.CooldownLinks[Spell] then
+            self.CooldownLinks[Spell]:SetCooldown(GetTime(), Cooldown)
+        else
+            for Index = 1, self.MaxCount, 1 do
+                if self.CooldownIcons[Index].IsFree then
+                    local SpellTexture = select(3, GetSpellInfo(Spell))
+                    self.CooldownIcons[Index]:SetTexture(SpellTexture, self.TextureSize, true)
+                    self.CooldownIcons[Index]:SetCooldown(GetTime(), Cooldown)
 
-                self.CooldownIcons[Index].IsFree = false
-                break
+                    self.CooldownIcons[Index].IsFree = false
+                    self.CooldownLinks[Spell] = self.CooldownIcons[Index]
+                    break
+                end
             end
         end
     end
