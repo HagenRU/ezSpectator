@@ -36,8 +36,9 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	self.Highlight:SetScale(_ezSpectatorScale)
 	self.Highlight:SetPoint(...)
 	self.Highlight:Hide()
-	
-	local SizeMod = 0
+
+	local OffsetX = 0
+	local OffsetY = 0
 	if Style == 'gold' then
 		self.Textures:ClickIcon_Normal_Gold(self.Normal)
 		self.Textures:ClickIcon_Highlight_Gold(self.Highlight)
@@ -46,7 +47,7 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 		self.Textures:ClickIcon_Highlight_Silver(self.Highlight)
 
 		--noinspection UnusedDef
-		SizeMod = 0.5
+		OffsetY = 0.5
 	elseif Style == 'mild-green' then
 		self.Backdrop.texture:SetTexture(EMPTY_TEXTURE)
 		self.Textures:Nameplate_Castborder(self.Normal)
@@ -54,14 +55,17 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 		self.Highlight.texture:SetVertexColor(0, 1, 0, 1)
 
 		--noinspection UnusedDef
-		SizeMod = 0.5
+		OffsetX = -0.5
+		--noinspection UnusedDef
+		OffsetY = 0.5
 	elseif Style == 'mild-yellow' then
 		self.Backdrop.texture:SetTexture(EMPTY_TEXTURE)
 		self.Textures:Nameplate_Castborder(self.Normal)
 		self.Textures:Nameplate_Castborder(self.Highlight)
 		self.Highlight.texture:SetVertexColor(1, 1, 0, 1)
 
-		SizeMod = 0.5
+		OffsetX = -0.5
+		OffsetY = 0.5
 	elseif Style == 'clear' then
 		self.Backdrop.texture:SetTexture(EMPTY_TEXTURE)
 	end
@@ -72,13 +76,13 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	self.Icon:SetSize(Size, Size)
 	self.Icon:SetScale(_ezSpectatorScale)
 	
-	self.Icon:SetPoint('CENTER', self.Normal, 'CENTER', 0, SizeMod)
+	self.Icon:SetPoint('CENTER', self.Normal, 'CENTER', OffsetX, OffsetY)
 	
 	self.Cooldown = CreateFrame('Cooldown', nil, self.Icon)
 	self.Cooldown:SetFrameLevel(3)
 	self.Cooldown:SetFrameStrata('HIGH')
 	self.Cooldown:SetSize(Size, Size)
-	self.Cooldown:SetPoint('CENTER', self.Normal, 'CENTER', 0, SizeMod)
+	self.Cooldown:SetPoint('CENTER', self.Normal, 'CENTER', OffsetX, OffsetY)
 
 	self.TextFrame = CreateFrame('Frame', nil, self.ParentFrame)
 	self.TextFrame:SetFrameStrata('TOOLTIP')
