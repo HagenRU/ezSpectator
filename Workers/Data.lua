@@ -132,13 +132,15 @@ function ezSpectator_DataWorker:Create()
             --Длань жертвенности (Общий)
             [6940] = true,
             --Молот правосудия (Общий)
-            [10308] = true,
+            [10308] = false,
             --Гнев карателя (Общий)
             [31884] = true,
             --Длань свободы (Общий)
             [1044] = false,
             --Святая клятва (Общий)
-            [54428] = true,
+            [54428] = false,
+            --Мастер аур (Свет)
+            [31821] = true,
             --Покаяние (Воздаяние)
             [20066] = true,
             --Священная жертва (Защита)
@@ -502,4 +504,14 @@ function ezSpectator_DataWorker:SafeSize(Value)
     --end
 
     return Value
+end
+
+
+
+function ezSpectator_DataWorker:IsCooldownTracked(Class, Value)
+    if self.ClassSpellInfo[Class] then
+        return (self.ClassSpellInfo[Class][Value] == true) or (type(self.ClassSpellInfo[Class][Value]) == 'table')
+    else
+        return false
+    end
 end
