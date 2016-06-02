@@ -112,14 +112,16 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	end)
 	self.Reactor:SetScript('OnUpdate', function()
 		if self.IsTextInteractive then
-			local OffsetX, OffsetY, Width, Height = self.Normal:GetBoundsRect()
-			OffsetX = OffsetX + 237
-			OffsetY = OffsetY + 194
+			local OffsetX, OffsetY, Width, Height = self.Icon:GetBoundsRect()
+			OffsetX = OffsetX * 1.5 / UIParent:GetEffectiveScale()
+			OffsetY = OffsetY * 1.5 / UIParent:GetEffectiveScale()
 
 			local CenterX = OffsetX + Width / 2
 			local CenterY = OffsetY + Height / 2
 
 			local CursorX, CursorY =  GetCursorPosition()
+			local CursorX = CursorX / UIParent:GetEffectiveScale()
+			local CursorY = CursorY / UIParent:GetEffectiveScale()
 
 			local DiffX = abs(CenterX - CursorX)
 			local DiffY = abs(CenterY - CursorY)
