@@ -73,18 +73,23 @@ function ezSpectator_CooldownFrame:Hide()
 
     for Index = 1, self.MaxCount, 1 do
         self.CooldownIcons[Index]:SetTexture(EMPTY_TEXTURE, self.TextureSize, false)
-
         self.CooldownIcons[Index].IsFree = true
+        self.CooldownIcons[Index]:Hide()
     end
     self.CooldownLinks = {}
 end
 
 
 
-function ezSpectator_CooldownFrame:Push(Spell, Cooldown)
+function ezSpectator_CooldownFrame:Push(Nickname, Spell, Cooldown)
     if Cooldown >= 0 then
-        if self.CooldownLinks[Spell] then
-            self.CooldownLinks[Spell]:SetCooldown(GetTime(), Cooldown)
+        if not self.CooldownLinks[Nickname] then
+            self.CooldownLinks[Nickname] = {}
+        end
+
+        if self.CooldownLinks[Nickname][Spell] then
+            self.CooldownLinks[Nickname][Spell]:SetCooldown(GetTime(), Cooldown)
+            self.CooldownLinks[Nickname][Spell]:SetText(Cooldown)
         else
             for Index = 1, self.MaxCount, 1 do
                 if self.CooldownIcons[Index].IsFree then
@@ -96,7 +101,7 @@ function ezSpectator_CooldownFrame:Push(Spell, Cooldown)
                     self.CooldownIcons[Index].IsFree = false
                     self.CooldownIcons[Index]:Show()
 
-                    self.CooldownLinks[Spell] = self.CooldownIcons[Index]
+                    self.CooldownLinks[Nickname][Spell] = self.CooldownIcons[Index]
                     break
                 end
             end

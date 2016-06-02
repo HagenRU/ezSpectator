@@ -68,6 +68,6 @@ end
 
 
 
-function ezSpectator_TeamFrame:SetCooldown(Spell, Value)
-	self.SpellCooldown:Push(Spell, Value)
+function ezSpectator_TeamFrame:SetCooldown(Nickname, Spell, Value)
+	self.SpellCooldown:Push(Nickname, Spell, Value)
 end
