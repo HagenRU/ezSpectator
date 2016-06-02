@@ -100,7 +100,8 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	self.Reactor:SetSize(Size, Size)
 	self.Reactor:SetScale(_ezSpectatorScale)
 	self.Reactor:SetPoint(...)
-	
+
+	self.Reactor.Parent = self
 	self.Reactor:EnableMouse(true)
 	self.Reactor:SetScript('OnEnter', function()
 		if self.Backdrop:IsShown() then

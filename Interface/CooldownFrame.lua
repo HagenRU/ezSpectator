@@ -37,7 +37,15 @@ function ezSpectator_CooldownFrame:Create(Parent, ParentFrame, IsLeft)
             self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'mild-green', self.IconSize, 'BOTTOMRIGHT', self.MainFrame, 'BOTTOMRIGHT', (Index - 1) * -self.IconSize, 0)
         end
 
-        self.CooldownIcons[Index].IsFree = true
+
+        self.CooldownIcons[Index].Spell = nil
+
+        self.CooldownIcons[Index].Reactor:SetScript('OnMouseUp', function(self)
+            if self.Parent.Backdrop:IsShown() then
+                self.Parent.Parent.Tooltip:ShowSpell(self, self.Parent.Spell)
+            end
+        end)
+
         self.CooldownIcons[Index]:SetTextAlignTop()
         self.CooldownIcons[Index]:SetTextInteractive(true)
         self.CooldownIcons[Index]:Hide()
@@ -73,7 +81,7 @@ function ezSpectator_CooldownFrame:Hide()
 
     for Index = 1, self.MaxCount, 1 do
         self.CooldownIcons[Index]:SetTexture(EMPTY_TEXTURE, self.TextureSize, false)
-        self.CooldownIcons[Index].IsFree = true
+        self.CooldownIcons[Index].IsFree = nil
         self.CooldownIcons[Index]:Hide()
     end
     self.CooldownLinks = {}
@@ -92,13 +100,13 @@ function ezSpectator_CooldownFrame:Push(Nickname, Spell, Cooldown)
             self.CooldownLinks[Nickname][Spell]:SetText(Cooldown)
         else
             for Index = 1, self.MaxCount, 1 do
-                if self.CooldownIcons[Index].IsFree then
+                if self.CooldownIcons[Index].Spell == nil then
                     local SpellTexture = select(3, GetSpellInfo(Spell))
                     self.CooldownIcons[Index]:SetTexture(SpellTexture, self.TextureSize, true)
                     self.CooldownIcons[Index]:SetCooldown(GetTime(), Cooldown)
                     self.CooldownIcons[Index]:SetText(Cooldown)
 
-                    self.CooldownIcons[Index].IsFree = false
+                    self.CooldownIcons[Index].Spell = Spell
                     self.CooldownIcons[Index]:Show()
 
                     self.CooldownLinks[Nickname][Spell] = self.CooldownIcons[Index]
@@ -113,7 +121,7 @@ end
 
 function ezSpectator_CooldownFrame:Update()
     for Index = 1, self.MaxCount, 1 do
-        if not self.CooldownIcons[Index].IsFree then
+        if self.CooldownIcons[Index].Spell then
             local Time
             local Text = self.CooldownIcons[Index]:GetText()
 
