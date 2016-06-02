@@ -83,6 +83,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.HealthBar.Effect:SetSize(self.Width, self.Height)
 	self.HealthBar.Effect:SetPoint('TOPLEFT', self.HealthBar, 'TOPLEFT', 0, 0)
 	self.Textures:Nameplate_Effect(self.HealthBar.Effect)
+	self.HealthBar.Effect.texture:SetVertexColor(1, 0, 0)
 
 	self.CastBar = CreateFrame('Frame', nil, self.MainFrame)
 	self.CastBar:SetFrameLevel(4 + self.Parent.Data.NamePlateLevel)
@@ -483,22 +484,23 @@ function ezSpectator_Nameplate:SetTeam(Value)
 	if Value then
 		if Value == 1 then
 			self.Nickname:SetTextColor(0, 0.75, 0)
-			self.HealthBar.texture:SetVertexColor(0, 0.5, 0)
-			self.HealthBar.Glow.texture:SetVertexColor(0, 0.5, 0, 0.5)
-			self.HealthBar.Effect.texture:SetVertexColor(0, 0.5, 0)
+			self.HealthBar.texture:SetVertexColor(0, 0.75, 0)
+			self.HealthBar.Glow.texture:SetVertexColor(0, 0.75, 0, 0.5)
 		end
 		
 		if Value == 2 then
 			self.Nickname:SetTextColor(0.9, 0.9, 0)
 			self.HealthBar.texture:SetVertexColor(0.9, 0.9, 0)
 			self.HealthBar.Glow.texture:SetVertexColor(0.9, 0.9, 0, 0.5)
-			self.HealthBar.Effect.texture:SetVertexColor(0.9, 0.9, 0)
 		end
-		
-		--self.HealthBar.Glow:Show()
-		--self.HealthBar.Effect:Show()
-		self.HealthBar.Glow:Hide()
-		self.HealthBar.Effect:Hide()
+
+		self.HealthBar.Glow:Show()
+		if self.IsTarget then
+			self.HealthBar.Effect:Show()
+		else
+			self.HealthBar.Effect:Hide()
+		end
+
 		self.CastBar.Glow:Hide()
 		self.CastBar.Effect:Hide()
 	else
