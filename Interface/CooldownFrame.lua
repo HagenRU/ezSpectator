@@ -81,7 +81,7 @@ function ezSpectator_CooldownFrame:Hide()
 
     for Index = 1, self.MaxCount, 1 do
         self.CooldownIcons[Index]:SetTexture(EMPTY_TEXTURE, self.TextureSize, false)
-        self.CooldownIcons[Index].IsFree = nil
+        self.CooldownIcons[Index].Spell = nil
         self.CooldownIcons[Index]:Hide()
     end
     self.CooldownLinks = {}
