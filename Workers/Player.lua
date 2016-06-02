@@ -208,7 +208,7 @@ function ezSpectator_PlayerWorker:SetCast(Spell, Time)
 		return true
 	end
 
-	if Time == 99997 then
+	if Time == self.Parent.Data.CAST_SUCCESS then
 		self.SmallFrame.SpellFrame:Push(Spell)
 		self.PlayerFrame.SpellFrame:Push(Spell)
 		self.VictimFrame.SpellFrame:Push(Spell)

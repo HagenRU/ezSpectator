@@ -26,6 +26,8 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.Height = 12
 	self.CastSize = 36
 
+	self.IsCastFree = true
+
 	self.MainFrame = CreateFrame('Frame', nil, ParentFrame)
 	self.MainFrame:SetSize(1, 1)
 	self.MainFrame:SetPoint(Point, RelativeFrame, RelativePoint, OffsetX, OffsetY)
@@ -51,6 +53,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.HealthBar.Glow:SetSize(self.Width + 14, self.Height + 14)
 	self.HealthBar.Glow:SetPoint('TOPLEFT', self.HealthBar.Backdrop, 'TOPLEFT', -6, 6)
 	self.Textures:Nameplate_Glow(self.HealthBar.Glow)
+	self.HealthBar.Glow.texture:SetVertexColor(0.2, 0.2, 0.2, 0)
 
 	if self.IsLayerAnimated then
 		self.HealthBar.AnimationDownBar = CreateFrame('Frame', nil, self.HealthBar)
@@ -108,6 +111,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.CastBar.Glow:SetSize(self.Width + 14, self.Height + 14)
 	self.CastBar.Glow:SetPoint('TOPLEFT', self.CastBar.Backdrop, 'TOPLEFT', -6, 6)
 	self.Textures:Nameplate_Glow(self.CastBar.Glow)
+	self.CastBar.Glow:SetAlpha(0)
 
 	self.CastBar.Overlay = CreateFrame('Frame', nil, self.CastBar)
 	self.CastBar.Overlay:SetFrameLevel(6 + self.Parent.Data.NamePlateLevel)
@@ -152,32 +156,6 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.Nickname:SetShadowOffset(1, -1)
 	self.Nickname:SetPoint('CENTER', 0, 0)
 	
-	self.UpdateFrame = CreateFrame('Frame', nil, self.MainFrame)
-	self.UpdateFrame.Parent = self
-	
-	self.AnimationDownCycle = 0
-	self.IsAnimatingDown = false
-	
-	self.AnimationUpCycle = 0
-	self.IsAnimatingUp = false
-
-	self.UpdateFrame.ElapsedTick = 0
-	self.UpdateFrame:SetScript('OnUpdate', function(self, Elapsed)
-		self.ElapsedTick = self.ElapsedTick + Elapsed
-		
-		if self.ElapsedTick > 0.03 then
-			if self.Parent.IsAnimatingDown then
-				self.Parent:DecAnimatedValue()
-			end
-			
-			if self.Parent.IsAnimatingUp then
-				self.Parent:IncAnimatedValue()
-			end
-			
-			self.ElapsedTick = 0
-		end
-	end)
-
 	self.CastUpdateFrame = CreateFrame('Frame', nil, nil)
 	self.CastUpdateFrame.Parent = self
 
@@ -195,6 +173,47 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 
 				self.ElapsedTick = 0
 			end
+		end
+	end)
+
+	self.UpdateFrame = CreateFrame('Frame', nil, self.MainFrame)
+	self.UpdateFrame.Parent = self
+
+	self.AnimationDownCycle = 0
+	self.IsAnimatingDown = false
+
+	self.AnimationUpCycle = 0
+	self.IsAnimatingUp = false
+
+	self.UpdateFrame.ElapsedTick = 0
+	self.UpdateFrame:SetScript('OnUpdate', function(self, Elapsed)
+		self.ElapsedTick = self.ElapsedTick + Elapsed
+
+		if self.ElapsedTick > 0.03 then
+			if self.Parent.IsAnimatingDown then
+				self.Parent:DecAnimatedValue()
+			end
+
+			if self.Parent.IsAnimatingUp then
+				self.Parent:IncAnimatedValue()
+			end
+
+			local Alpha = self.Parent.CastBar.Glow:GetAlpha()
+			if Alpha > 0 then
+				Alpha = Alpha - 0.03
+				if Alpha < 0 then
+					self.Parent.IsCastFree = not self.Parent.CastUpdateFrame.IsProgressMode
+					Alpha = 0
+				end
+
+				self.Parent.CastBar.Glow:SetAlpha(Alpha)
+			end
+
+			self.ElapsedTick = 0
+		end
+
+		if self.Parent.IsCastFree then
+			self.Parent.CastBar:Hide()
 		end
 	end)
 
@@ -485,13 +504,11 @@ function ezSpectator_Nameplate:SetTeam(Value)
 		if Value == 1 then
 			self.Nickname:SetTextColor(0, 0.75, 0)
 			self.HealthBar.texture:SetVertexColor(0, 0.75, 0)
-			self.HealthBar.Glow.texture:SetVertexColor(0, 0.75, 0, 0.5)
 		end
 		
 		if Value == 2 then
 			self.Nickname:SetTextColor(0.9, 0.9, 0)
 			self.HealthBar.texture:SetVertexColor(0.9, 0.9, 0)
-			self.HealthBar.Glow.texture:SetVertexColor(0.9, 0.9, 0, 0.5)
 		end
 
 		self.HealthBar.Glow:Show()
@@ -501,14 +518,12 @@ function ezSpectator_Nameplate:SetTeam(Value)
 			self.HealthBar.Effect:Hide()
 		end
 
-		self.CastBar.Glow:Hide()
 		self.CastBar.Effect:Hide()
 	else
 		self.Nickname:SetTextColor(1, 1, 1)
 		self.HealthBar.texture:SetVertexColor(1, 1, 1)
 		self.HealthBar.Glow:Hide()
 		self.HealthBar.Effect:Hide()
-		self.CastBar.Glow:Hide()
 		self.CastBar.Effect:Hide()
 	end
 end
@@ -551,12 +566,21 @@ function ezSpectator_Nameplate:SetCast(Spell, Time, Shift)
 			self.CastUpdateFrame.ElapsedTick = 0
 			self.CastUpdateFrame.ElapsedTotal = Shift
 
+			self.IsCastFree = false
 			self.CastUpdateFrame.IsProgressMode = self.Parent.Data.CastInfo[Time] == nil
 			if  self.CastUpdateFrame.IsProgressMode then
 				self:SetCastMaxValue(Time)
 				self.CastBar:Show()
 			else
-				self.CastBar:Hide()
+				if Time == self.Parent.Data.CAST_SUCCESS then
+					self:SetCastValue(Time)
+				end
+
+				local CastInfo = self.Parent.Data.CastInfo[Time]
+				if CastInfo then
+					self.CastBar.Glow.texture:SetVertexColor(CastInfo.r, CastInfo.g, CastInfo.b)
+					self.CastBar.Glow:SetAlpha(1)
+				end
 			end
 		end
 	end
