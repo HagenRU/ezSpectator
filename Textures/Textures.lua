@@ -321,3 +321,12 @@ function ezSpectator_Textures:StatusBar_Spark(Frame)
 	Texture:SetAllPoints(Frame)
 	Frame.texture = Texture
 end
+
+
+
+function ezSpectator_Textures:AlphaPlus(Frame)
+	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\AlphaPlus.tga')
+	Texture:SetTexCoord(0, 1, 0, 1)
+	Texture:SetAllPoints(Frame)
+	Frame.texture = Texture
+end

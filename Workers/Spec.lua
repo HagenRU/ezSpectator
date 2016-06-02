@@ -38,6 +38,7 @@ function ezSpectator_SpecWorker:GetData(Class, Talents)
 
 	local SpecText
 	local SpecIcon = ''
+	local IsHealer = false
 
 	if MaxTreeVal < 44 then
 		SpecText = 'Гибрид'
@@ -45,8 +46,9 @@ function ezSpectator_SpecWorker:GetData(Class, Talents)
 		if MaxTree then
 			SpecText = self.Parent.Data.ClassTreeInfo[Class][MaxTree][1]
 			SpecIcon = select(3, GetSpellInfo(self.Parent.Data.ClassTreeInfo[Class][MaxTree][2]))
+			IsHealer = self.Parent.Data.ClassTreeInfo[Class][MaxTree][3]
 		end
 	end
 	
-	return SpecText, SpecIcon
+	return SpecText, SpecIcon, IsHealer
 end

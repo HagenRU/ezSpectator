@@ -139,6 +139,13 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.Icon.Icon:SetFrameLevel(1 + self.Parent.Data.NamePlateLevel)
 	self.Icon.Icon:SetFrameStrata('BACKGROUND')
 
+	self.HealerIcon = ezSpectator_ClickIcon:Create(self.Parent, self.Castborder, 'clear', self.CastSize, 'CENTER', 10, 11)
+	self.HealerIcon.Icon:SetFrameLevel(8 + self.Parent.Data.NamePlateLevel)
+	self.HealerIcon.Icon:SetFrameStrata('BACKGROUND')
+	self.HealerIcon:SetIcon('Plus')
+	self.HealerIcon.Icon.texture:SetVertexColor(0, 1, 0, 1)
+	self.HealerIcon:Hide()
+
 	self.ControlWorker = ezSpectator_ControlWorker:Create(self.Parent)
 	self.ControlWorker:BindIcon(self.Icon)
 
@@ -545,6 +552,12 @@ function ezSpectator_Nameplate:SetClass(Value)
 		if not Value then
 			self.Icon:Hide()
 		else
+			if self.PlayerWorker.IsHealer then
+				self.HealerIcon:Show()
+			else
+				self.HealerIcon:Hide()
+			end
+
 			if not self.Icon:IsShown() then
 				self.Icon:Show()
 			end

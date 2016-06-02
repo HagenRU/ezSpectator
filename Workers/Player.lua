@@ -7,6 +7,7 @@ function ezSpectator_PlayerWorker:Create(Parent)
 	setmetatable(self, ezSpectator_PlayerWorker)
 	
 	self.Parent = Parent
+	self.IsHealer = false
 	
 	self.SpecWorker = ezSpectator_SpecWorker:Create(self.Parent)
 	
@@ -377,7 +378,9 @@ function ezSpectator_PlayerWorker:SetSpec(Value)
 		return
 	end
 	
-	local SpecName, SpecIcon = self.SpecWorker:GetData(self.Class, Value)
+	local SpecName, SpecIcon, IsHealer = self.SpecWorker:GetData(self.Class, Value)
+	self.IsHealer = IsHealer
+
 	self.SmallFrame.HealthBar:SetDescription(SpecName)
 	self.PlayerFrame.HealthBar:SetDescription(SpecName)
 	self.VictimFrame.HealthBar:SetDescription(SpecName)
