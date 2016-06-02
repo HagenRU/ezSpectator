@@ -176,6 +176,7 @@ function ezSpectator_Nameplates:ProcessNameplate(SkipAnimation, Healthbar, Threa
 			end
 		else
 			HealthBorder.ezSpectator_Nameplate:SetAlpha(1)
+			HealthBorder.ezSpectator_Nameplate.IsTarget = false
 		end
 	else
 		if Healthbar.IsHidden then
