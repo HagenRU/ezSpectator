@@ -36,7 +36,7 @@ function ezSpectator_TooltipWorker:ShowSpell(ParentFrame, SpellID)
     end)
     self.ReactorFrame:Show()
 
-    local IsLeft = select(1, GetCursorPosition()) < GetScreenWidth() / 2;
+    local IsLeft = select(1, GetCursorPosition()) < GetScreenWidth() * UIParent:GetEffectiveScale() / 2
     if IsLeft then
         self.TooltipFrame:SetOwner(ParentFrame, 'ANCHOR_BOTTOMLEFT')
     else
