@@ -38,7 +38,24 @@ function ezSpectator_CooldownFrame:Create(Parent, ParentFrame, IsLeft)
         end
 
         self.CooldownIcons[Index].IsFree = true
+        self.CooldownIcons[Index]:SetTextAlignTop()
+        self.CooldownIcons[Index]:SetTextInteractive(true)
+        self.CooldownIcons[Index]:Hide()
     end
+
+    self.UpdateFrame = CreateFrame('Frame', nil, nil)
+    self.UpdateFrame.Parent = self
+
+    self.UpdateFrame.ElapsedTick = 0
+    self.UpdateFrame:SetScript('OnUpdate', function(self, Elapsed)
+        self.ElapsedTick = self.ElapsedTick + Elapsed
+
+        if self.ElapsedTick > 1 then
+            self.Parent:Update()
+
+            self.ElapsedTick = 0
+        end
+    end)
 
     return self
 end
@@ -74,10 +91,35 @@ function ezSpectator_CooldownFrame:Push(Spell, Cooldown)
                     local SpellTexture = select(3, GetSpellInfo(Spell))
                     self.CooldownIcons[Index]:SetTexture(SpellTexture, self.TextureSize, true)
                     self.CooldownIcons[Index]:SetCooldown(GetTime(), Cooldown)
+                    self.CooldownIcons[Index]:SetText(Cooldown)
 
                     self.CooldownIcons[Index].IsFree = false
+                    self.CooldownIcons[Index]:Show()
+
                     self.CooldownLinks[Spell] = self.CooldownIcons[Index]
                     break
+                end
+            end
+        end
+    end
+end
+
+
+
+function ezSpectator_CooldownFrame:Update()
+    for Index = 1, self.MaxCount, 1 do
+        if not self.CooldownIcons[Index].IsFree then
+            local Time
+            local Text = self.CooldownIcons[Index]:GetText()
+
+            if Text then
+                Time = tonumber(Text)
+
+                Time = Time - 1
+                if Time > 0 then
+                    self.CooldownIcons[Index]:SetText(Time)
+                else
+                    self.CooldownIcons[Index]:SetText(0)
                 end
             end
         end

@@ -231,6 +231,12 @@ end
 
 
 
+function ezSpectator_ClickIcon:GetText(Value)
+	return self.Text:GetText(Value)
+end
+
+
+
 function ezSpectator_ClickIcon:SetTextAlignTop()
 	self.TextFrame:ClearAllPoints()
 	self.TextFrame:SetPoint('BOTTOM', self.Normal, 'TOP', 0, 2)
