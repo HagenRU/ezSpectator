@@ -56,6 +56,7 @@ end
 function ezSpectator_InterfaceWorker:SetMode(Value)
 	if Value == 0 then
 		self.IsRunning = false
+        self.IsTournament = false
 
 		UIParent:Show()
 
@@ -69,6 +70,7 @@ function ezSpectator_InterfaceWorker:SetMode(Value)
 		self:Reset()
 	else
 		self.IsRunning = true
+        self.IsTournament = Value > 1
 
 		self.TopFrame:Show()
 		

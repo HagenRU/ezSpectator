@@ -40,7 +40,9 @@ function ezSpectator_TopFrame:Create(Parent)
 			local Time = math.floor(self.Parent.MatchTime)
 			self.Parent.Time:SetText(string.format('%.2d:%.2d', Time / 60 % 60, Time % 60))
 
-			self.Parent.EnrageOrb:SetTime(Time)
+            if self.Parent.Parent.Interface.IsTournament then
+			    self.Parent.EnrageOrb:SetTime(Time)
+            end
 		end
 	end)
 
@@ -104,7 +106,9 @@ function ezSpectator_TopFrame:Show()
 	self.MainFrame:Show()
 	self.LeftTeam:Show()
 	self.RightTeam:Show()
-	self.EnrageOrb:Show()
+    if self.Parent.Interface.IsTournament then
+	    self.EnrageOrb:Show()
+    end
 end
 
 
