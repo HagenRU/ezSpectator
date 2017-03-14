@@ -39,7 +39,6 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.HealthBar:SetFrameStrata('BACKGROUND')
 	self.HealthBar:SetSize(self.Width, self.Height)
 	self.HealthBar:SetScale(self.Scale)
-	self.HealthBar:SetPoint('CENTER', self.CastSize / 2, 0)
 	self.Textures:Nameplate_Normal(self.HealthBar)
 
 	self.HealthBar.Backdrop = CreateFrame('Frame', nil, self.HealthBar)
@@ -559,6 +558,8 @@ function ezSpectator_Nameplate:UpdateStyle(IsPlayer)
             self.MainFrame:SetFrameStrata('LOW');
 
 			self.HealthBar:SetScale(self.Scale)
+            self.HealthBar:SetPoint('CENTER', self.CastSize / 2, 0)
+
             self.Castborder:Show()
 
 			self.Nickname:SetFont('Interface\\Addons\\IsengardSpectator\\Fonts\\DejaVuSans.ttf', 12)
@@ -567,6 +568,8 @@ function ezSpectator_Nameplate:UpdateStyle(IsPlayer)
             self.MainFrame:SetFrameStrata('BACKGROUND');
 
 			self.HealthBar:SetScale(self.SecondaryScale)
+            self.HealthBar:SetPoint('CENTER', 0, 0)
+
             self.Castborder:Hide()
 
 			self.Nickname:SetFont('Interface\\Addons\\IsengardSpectator\\Fonts\\DejaVuSans.ttf', 10)
