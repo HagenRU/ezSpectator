@@ -35,6 +35,7 @@ function ezSpectator_InterfaceWorker:Create(Parent)
 	end)
 	
 	self.Nameplates = ezSpectator_Nameplates:Create(self.Parent)
+	self.Data = ezSpectator_DataWorker:Create()
 	
 	self:Reset()
 	return self
@@ -130,6 +131,12 @@ function ezSpectator_InterfaceWorker:SetTeamScore(TeamID, Value)
 		self.Teams[TeamID].Score = Value
 		self.TopFrame.RightTeam:SetScore(Value)
 	end
+end
+
+
+
+function ezSpectator_InterfaceWorker:SetStage(Value)
+	self.TopFrame.Stage:SetText(self.Data.TournamentStages[Value])
 end
 
 

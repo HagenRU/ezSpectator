@@ -23,12 +23,12 @@ function ezSpectator_TopFrame:Create(Parent)
 
 	self.EnrageOrb = ezSpectator_EnrageOrb:Create(self.Parent, 170, 22, 'TOP', self.MainFrame, 'BOTTOM', 0, -10 * _ezSpectatorScale)
 
-	self.TextFrame = CreateFrame('Frame', nil, self.MainFrame)
-	self.TextFrame:SetFrameStrata('TOOLTIP')
-	self.TextFrame:SetSize(1, 1)
-	self.TextFrame:SetPoint('CENTER', self.MainFrame, 'CENTER', 0, 0)
+	self.TimeTextFrame = CreateFrame('Frame', nil, self.MainFrame)
+	self.TimeTextFrame:SetFrameStrata('TOOLTIP')
+	self.TimeTextFrame:SetSize(1, 1)
+	self.TimeTextFrame:SetPoint('CENTER', self.MainFrame, 'CENTER', 0, 0)
 
-	self.Time = self.TextFrame:CreateFontString(nil, 'BACKGROUND', 'SystemFont_Shadow_Huge1')
+	self.Time = self.TimeTextFrame:CreateFontString(nil, 'BACKGROUND', 'SystemFont_Shadow_Huge1')
 	self.Time:SetPoint('CENTER', 0, 0)
 	
 	self.UpdateFrame = CreateFrame('Frame', nil, nil)
@@ -43,7 +43,15 @@ function ezSpectator_TopFrame:Create(Parent)
 			self.Parent.EnrageOrb:SetTime(Time)
 		end
 	end)
-	
+
+	self.StageTextFrame = CreateFrame('Frame', nil, self.MainFrame)
+	self.StageTextFrame:SetFrameStrata('TOOLTIP')
+	self.StageTextFrame:SetSize(1, 1)
+	self.StageTextFrame:SetPoint('CENTER', self.MainFrame, 'CENTER', 0, -48)
+
+	self.Stage = self.StageTextFrame:CreateFontString(nil, 'BACKGROUND', 'SystemFont_Outline')
+	self.Stage:SetPoint('CENTER', 0, 0)
+
 	self.ShowUI = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'gold', 34 / _ezSpectatorScale, 'LEFT', self.MainFrame, 'LEFT', 0, 0)
 	self.ShowUI:SetIcon('Eye_Normal')
 	self.ShowUI:SetAction(function()
@@ -87,6 +95,7 @@ function ezSpectator_TopFrame:Hide()
 	self.LeftTeam:Hide()
 	self.RightTeam:Hide()
 	self.EnrageOrb:Hide()
+	self.Stage:SetText('')
 end
 
 

@@ -122,6 +122,8 @@ function ezSpectator_MessageHandler:ProcessCommand(Target, Prefix, ...)
 		self.Parent.Interface:SetTeamScore(TeamID, Value)
 	elseif Prefix == 'CDN' then
 		self.Parent.Interface.Players[Target]:SetCooldown(tonumber(strsub(Value, 1, strfind(Value, ',') - 1)), tonumber(strsub(Value, strfind(Value, ',') + 1)))
+	elseif Prefix == 'STAGE' then
+		self.Parent.Interface:SetStage(Value)
 	elseif Prefix == 'ENB' then
 		self.Parent.Interface:SetMode(tonumber(Value))
 	else
