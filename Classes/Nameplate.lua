@@ -566,6 +566,8 @@ function ezSpectator_Nameplate:SetClass(Value)
 				self.ControlWorker:SetClass(Value, (self.CastSize + 2) * self.Scale / _ezSpectatorScale - (_ezSpectatorScale - 1) * (self.CastSize / 2))
 			end
 		end
+	else
+		self.HealerIcon:Hide()
 	end
 end
 
