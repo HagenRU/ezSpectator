@@ -8,6 +8,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 
 	self.Parent = Parent
 	self.PlayerWorker = nil
+    self.IsPlayerStyle = nil
 
 	self.AnimationStartSpeed = 0
 	self.AnimationProgress = 10
@@ -19,6 +20,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.TargetValue = 0
 	
 	self.Scale = 0.66 * _ezSpectatorScale
+	self.SecondaryScale = 0.50 * _ezSpectatorScale
 	self.ParentFrame = ParentFrame
 	self.Textures = ezSpectator_Textures:Create()
 	
@@ -154,7 +156,6 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.TextFrame:SetFrameStrata('BACKGROUND')
 	self.TextFrame:SetSize(1, 1)
 	self.TextFrame:SetScale(1)
-	self.TextFrame:SetPoint('BOTTOM', self.HealthBar.Backdrop, 'TOP', -self.CastSize / 4, 8)
 	
 	self.Nickname = self.TextFrame:CreateFontString(nil, 'OVERLAY')
 	self.Nickname:SetFont('Interface\\Addons\\IsengardSpectator\\Fonts\\DejaVuSans.ttf', 12)
@@ -540,9 +541,38 @@ end
 function ezSpectator_Nameplate:SetPlayer(Value)
 	self.PlayerWorker = Value
 
-	if self:IsValid() then
+    local IsValid = self:IsValid()
+
+    self:UpdateStyle(IsValid)
+
+	if IsValid then
 		self:SetAura()
 	end
+end
+
+
+
+function ezSpectator_Nameplate:UpdateStyle(IsPlayer)
+    if self.IsPlayerStyle ~= IsPlayer then
+        self.IsPlayerStyle = IsPlayer
+        if (IsPlayer) then
+            self.MainFrame:SetFrameStrata('LOW');
+
+			self.HealthBar:SetScale(self.Scale)
+            self.Castborder:Show()
+
+			self.Nickname:SetFont('Interface\\Addons\\IsengardSpectator\\Fonts\\DejaVuSans.ttf', 12)
+            self.TextFrame:SetPoint('BOTTOM', self.HealthBar.Backdrop, 'TOP', -self.CastSize / 4, 8)
+        else
+            self.MainFrame:SetFrameStrata('BACKGROUND');
+
+			self.HealthBar:SetScale(self.SecondaryScale)
+            self.Castborder:Hide()
+
+			self.Nickname:SetFont('Interface\\Addons\\IsengardSpectator\\Fonts\\DejaVuSans.ttf', 10)
+            self.TextFrame:SetPoint('BOTTOM', self.HealthBar.Backdrop, 'TOP', 0, 8)
+        end
+    end
 end
 
 
