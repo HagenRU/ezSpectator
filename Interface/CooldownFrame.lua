@@ -90,7 +90,7 @@ end
 
 
 function ezSpectator_CooldownFrame:Push(Nickname, Spell, Cooldown)
-    if Cooldown >= 0 then
+    if Cooldown and Cooldown >= 0 then
         if not self.CooldownLinks[Nickname] then
             self.CooldownLinks[Nickname] = {}
         end
