@@ -42,7 +42,7 @@ function ezSpectator_InterfaceWorker:Create(Parent)
     self.EventFrame:RegisterEvent('PLAYER_ENTERING_WORLD')
     self.EventFrame.Parent = self;
     self.EventFrame:SetScript('OnEvent', function(self)
-        if self.IsSpectating then
+        if self.Parent.IsSpectating then
            self.Parent:SetMode(0)
         end
     end);
