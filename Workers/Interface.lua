@@ -53,6 +53,21 @@ end
 
 
 
+function ezSpectator_InterfaceWorker:CheckVersion(Value)
+	local Major, Minor, Build, Revision = Value:split('.')
+
+	local IsActual = (Major == self.Data.Version.Major) and
+				(Minor == self.Data.Version.Minor) and
+				(Build == self.Data.Version.Build) and
+				(Revision == self.Data.Version.Revision)
+
+	if not IsActual then
+		self.UpdateFrame = ezSpectator_UpdateFrame:Create()
+	end
+end
+
+
+
 function ezSpectator_InterfaceWorker:SetMode(Value)
 	if Value == 0 then
 		self.IsRunning = false

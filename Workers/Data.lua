@@ -5,6 +5,13 @@ function ezSpectator_DataWorker:Create()
     local self = {}
     setmetatable(self, ezSpectator_DataWorker)
 
+    self.Version = {
+        ['major'] = 1,
+        ['minor'] = 0,
+        ['build'] = 11,
+        ['revision'] = 128
+    }
+
     self.NamePlateLevel = 0
 
     self.ViewpointAlpha = 0.33
