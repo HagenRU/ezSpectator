@@ -54,12 +54,12 @@ end
 
 
 function ezSpectator_InterfaceWorker:CheckVersion(Value)
-	local Major, Minor, Build, Revision = Value:split('.')
+	local Major, Minor, Build, Revision = strsplit('.', Value, 4)
 
-	local IsActual = (Major == self.Data.Version.Major) and
-				(Minor == self.Data.Version.Minor) and
-				(Build == self.Data.Version.Build) and
-				(Revision == self.Data.Version.Revision)
+	local IsActual = (tonumber(Major) == self.Data.Version.Major) and
+				(tonumber(Minor) == self.Data.Version.Minor) and
+				(tonumber(Build) == self.Data.Version.Build) and
+				(tonumber(Revision) == self.Data.Version.Revision)
 
 	if not IsActual then
 		self.UpdateFrame = ezSpectator_UpdateFrame:Create()

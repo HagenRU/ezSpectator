@@ -6,10 +6,10 @@ function ezSpectator_DataWorker:Create()
     setmetatable(self, ezSpectator_DataWorker)
 
     self.Version = {
-        ['major'] = 1,
-        ['minor'] = 0,
-        ['build'] = 11,
-        ['revision'] = 128
+        ['Major'] = 1,
+        ['Minor'] = 0,
+        ['Build'] = 11,
+        ['Revision'] = 128
     }
 
     self.NamePlateLevel = 0
