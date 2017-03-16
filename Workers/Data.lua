@@ -571,7 +571,7 @@ function ezSpectator_DataWorker:SafeTexCoord(Value)
         Value = 1
     end
 
-    if Value < 0 then
+    if Value < 0 or Value ~= Value then
         Value = 0
     end
 
