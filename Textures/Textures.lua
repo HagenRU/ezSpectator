@@ -330,3 +330,12 @@ function ezSpectator_Textures:AlphaPlus(Frame)
 	Texture:SetAllPoints(Frame)
 	Frame.texture = Texture
 end
+
+
+
+function ezSpectator_Textures:Isengard_Logo(Frame)
+	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\Isengard_Logo.tga')
+	Texture:SetTexCoord(0, 1, 0, 1)
+	Texture:SetAllPoints(Frame)
+	Frame.texture = Texture
+end

@@ -18,6 +18,14 @@ function ezSpectator_TopFrame:Create(Parent)
 	self.MainFrame:SetScale(_ezSpectatorScale)
 	self.MainFrame:SetPoint('TOP', 0, 0)
 
+	self.Ezlogo = CreateFrame('Frame', nil,  self.MainFrame)
+	self.Ezlogo:SetFrameStrata('TOOLTIP')
+	self.Ezlogo:SetPoint('BOTTOMRIGHT', UIParent, 'BOTTOMRIGHT', 0, 0)
+	self.Ezlogo:SetSize(128, 32)
+	self.Ezlogo:SetScale(_ezSpectatorScale)
+	self.Textures:Isengard_Logo(self.Ezlogo)
+	self.Ezlogo.texture:SetVertexColor(0.5, 0.5, 0.5, 0.33)
+
 	self.LeftTeam = ezSpectator_TeamFrame:Create(self.Parent, true, 'TOP', -290, -1)
 	self.RightTeam = ezSpectator_TeamFrame:Create(self.Parent, false, 'TOP', 290, -1)
 
@@ -97,6 +105,7 @@ function ezSpectator_TopFrame:Hide()
 	self.LeftTeam:Hide()
 	self.RightTeam:Hide()
 	self.EnrageOrb:Hide()
+	self.Ezlogo:Hide()
 	self.Stage:SetText('')
 end
 
@@ -106,6 +115,7 @@ function ezSpectator_TopFrame:Show()
 	self.MainFrame:Show()
 	self.LeftTeam:Show()
 	self.RightTeam:Show()
+	self.Ezlogo:Show()
     if self.Parent.Interface.IsTournament then
 	    self.EnrageOrb:Show()
     end
