@@ -10,6 +10,7 @@ function ezSpectator_InterfaceWorker:Create(Parent)
 	self.Parent = Parent
 
 	self.IsRunning = false
+	self.IsSpectating = false
 	self.Viewpoint = nil
 
 	self.TopFrame = ezSpectator_TopFrame:Create(self.Parent)
@@ -41,7 +42,7 @@ function ezSpectator_InterfaceWorker:Create(Parent)
     self.EventFrame:RegisterEvent('PLAYER_ENTERING_WORLD')
     self.EventFrame.Parent = self;
     self.EventFrame:SetScript('OnEvent', function(self)
-        if not UIParent:IsShown() then
+        if self.IsSpectating then
            self.Parent:SetMode(0)
         end
     end);
@@ -80,6 +81,7 @@ end
 function ezSpectator_InterfaceWorker:SetMode(Value)
 	if Value == 0 then
 		self.IsRunning = false
+		self.IsSpectating = false
         self.IsTournament = false
 
 		UIParent:Show()
@@ -94,6 +96,7 @@ function ezSpectator_InterfaceWorker:SetMode(Value)
 		self:Reset()
 	else
 		self.IsRunning = true
+		self.IsSpectating = true
         self.IsTournament = Value > 1
 
 		self.TopFrame:Show()
