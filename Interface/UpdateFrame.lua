@@ -41,7 +41,7 @@ function ezSpectator_UpdateFrame:Create()
     self.Line3:SetFont('Interface\\Addons\\IsengardSpectator\\Fonts\\DejaVuSansCondensed.ttf', 9, 'OUTLINE')
     self.Line3:SetTextColor(1, 1, 1, 1)
     self.Line3:SetPoint('TOP', self.Line2, 'BOTTOM', 0, -5)
-    self.Line3:SetText('сообщением постоянно - вплоть до до перезахода на персонажа.')
+    self.Line3:SetText('сообщением постоянно - вплоть до перезахода на персонажа.')
 
     self.Line4 = self.MainFrame:CreateFontString(nil, 'OVERLAY')
     self.Line4:SetFont('Interface\\Addons\\IsengardSpectator\\Fonts\\DejaVuSansCondensed.ttf', 9, 'OUTLINE')
