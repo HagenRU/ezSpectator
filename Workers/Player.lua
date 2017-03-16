@@ -481,10 +481,20 @@ function ezSpectator_PlayerWorker:RequestCooldown(Value)
 	if not Value then
 		local ClassCooldowns = self.Parent.Data.ClassSpellInfo[self.Class]
 		if ClassCooldowns then
+			local Prefix = '.spectate cooldown ' .. self.Nickname
+			local Request = ''
 			for SpellID, Value in pairs(ClassCooldowns) do
 				if self.Parent.Data:IsCooldownTracked(self.Class, SpellID) then
-					SendChatMessage('.spectate cooldown ' .. self.Nickname .. ' ' .. SpellID, 'GUILD')
+					Request = Request .. ' ' .. SpellID
+					if string.len(Request) > 240 then
+						SendChatMessage(Prefix .. Request, 'GUILD')
+						Request = ''
+					end
 				end
+			end
+
+			if string.len(Request) > 0 then
+				SendChatMessage(Prefix .. Request, 'GUILD')
 			end
 		end
 	else
