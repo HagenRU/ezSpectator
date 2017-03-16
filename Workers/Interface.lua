@@ -36,7 +36,16 @@ function ezSpectator_InterfaceWorker:Create(Parent)
 	
 	self.Nameplates = ezSpectator_Nameplates:Create(self.Parent)
 	self.Data = ezSpectator_DataWorker:Create()
-	
+
+    self.EventFrame = CreateFrame('Frame', nil, nil);
+    self.EventFrame:RegisterEvent('PLAYER_ENTERING_WORLD')
+    self.EventFrame.Parent = self;
+    self.EventFrame:SetScript('OnEvent', function(self)
+        if self.Parent.IsRunning then
+           self.Parent:SetMode(0)
+        end
+    end);
+
 	self:Reset()
 	return self
 end
