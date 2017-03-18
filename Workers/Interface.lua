@@ -36,7 +36,6 @@ function ezSpectator_InterfaceWorker:Create(Parent)
 	end)
 	
 	self.Nameplates = ezSpectator_Nameplates:Create(self.Parent)
-	self.Data = ezSpectator_DataWorker:Create()
 
     self.EventFrame = CreateFrame('Frame', nil, nil);
     self.EventFrame:RegisterEvent('PLAYER_ENTERING_WORLD')
@@ -165,7 +164,15 @@ end
 
 
 function ezSpectator_InterfaceWorker:SetStage(Value)
-	self.TopFrame.Stage:SetText(self.Data.TournamentStages[Value])
+	self.TopFrame:SetStage(Value)
+    self.TopFrame:UpdateTournamentTextFrame()
+end
+
+
+
+function ezSpectator_InterfaceWorker:SetBOX(Value)
+    self.TopFrame:SetBOX(Value)
+    self.TopFrame:UpdateTournamentTextFrame()
 end
 
 

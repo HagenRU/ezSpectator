@@ -9,6 +9,8 @@ function ezSpectator_TopFrame:Create(Parent)
 	self.Parent = Parent
 	
 	self.MatchTime = nil
+	self.TournamentStage = nil
+	self.TournamentBOX = nil
 	self.Textures = ezSpectator_Textures:Create()
 	
 	self.MainFrame = CreateFrame('Frame', nil, nil)
@@ -56,13 +58,13 @@ function ezSpectator_TopFrame:Create(Parent)
 		end
 	end)
 
-	self.StageTextFrame = CreateFrame('Frame', nil, self.MainFrame)
-	self.StageTextFrame:SetFrameStrata('TOOLTIP')
-	self.StageTextFrame:SetSize(1, 1)
-	self.StageTextFrame:SetPoint('CENTER', self.MainFrame, 'CENTER', 0, -48)
+	self.TournamentTextFrame = CreateFrame('Frame', nil, self.MainFrame)
+	self.TournamentTextFrame:SetFrameStrata('TOOLTIP')
+	self.TournamentTextFrame:SetSize(1, 1)
+	self.TournamentTextFrame:SetPoint('CENTER', self.MainFrame, 'CENTER', 0, -48)
 
-	self.Stage = self.StageTextFrame:CreateFontString(nil, 'BACKGROUND', 'SystemFont_Outline')
-	self.Stage:SetPoint('CENTER', 0, 0)
+	self.TournamentInfo = self.TournamentTextFrame:CreateFontString(nil, 'BACKGROUND', 'SystemFont_Outline')
+	self.TournamentInfo:SetPoint('CENTER', 0, 0)
 
 	self.ShowUI = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'gold', 34 / _ezSpectatorScale, 'LEFT', self.MainFrame, 'LEFT', 0, 0)
 	self.ShowUI:SetIcon('Eye_Normal')
@@ -108,7 +110,7 @@ function ezSpectator_TopFrame:Hide()
 	self.RightTeam:Hide()
 	self.EnrageOrb:Hide()
 	self.Ezlogo:Hide()
-	self.Stage:SetText('')
+	self.TournamentInfo:SetText('')
 end
 
 
@@ -120,6 +122,8 @@ function ezSpectator_TopFrame:Show()
 	self.Ezlogo:Show()
     if self.Parent.Interface.IsTournament then
 	    self.EnrageOrb:Show()
+		self.TournamentStage = nil
+		self.TournamentBOX = nil
     end
 
     self:StartTimer()
@@ -133,4 +137,24 @@ function ezSpectator_TopFrame:StartTimer(Value)
     else
         self.MatchTime = nil
     end
+end
+
+
+
+function ezSpectator_TopFrame:SetStage(Value)
+	self.TournamentStage = self.Parent.Data.TournamentStages[Value]
+end
+
+
+
+function ezSpectator_TopFrame:SetBOX(Value)
+	self.TournamentBOX = Value
+end
+
+
+
+function ezSpectator_TopFrame:UpdateTournamentTextFrame()
+	if self.TournamentStage and self.TournamentBOX then
+		self.TournamentInfo:SetText(self.TournamentStage .. ' (BO' .. self.TournamentBOX .. ')')
+	end
 end
