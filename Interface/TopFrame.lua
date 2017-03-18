@@ -51,6 +51,8 @@ function ezSpectator_TopFrame:Create(Parent)
             if self.Parent.Parent.Interface.IsTournament then
 			    self.Parent.EnrageOrb:SetTime(Time)
             end
+        else
+            self.Parent.Time:SetText('00:00')
 		end
 	end)
 
@@ -119,10 +121,16 @@ function ezSpectator_TopFrame:Show()
     if self.Parent.Interface.IsTournament then
 	    self.EnrageOrb:Show()
     end
+
+    self:StartTimer()
 end
 
 
 
 function ezSpectator_TopFrame:StartTimer(Value)
-	self.MatchTime = tonumber(Value)
+    if Value then
+        self.MatchTime = tonumber(Value)
+    else
+        self.MatchTime = nil
+    end
 end

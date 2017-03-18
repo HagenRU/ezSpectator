@@ -105,6 +105,17 @@ function ezSpectator_EnrageOrb:Create(Parent, Width, Height, ...)
 	self.Glow:SetPoint('TOPLEFT', self.Backdrop, 'TOPLEFT', 20, -5)
 	self.Textures:PillowBar_Glow(self.Glow)
 
+	self.PrepareTextFrame = CreateFrame('Frame', nil, self.MainFrame)
+	self.PrepareTextFrame:SetFrameStrata('TOOLTIP')
+	self.PrepareTextFrame:SetSize(1, 1)
+	self.PrepareTextFrame:SetScale(_ezSpectatorScale * 0.5)
+	self.PrepareTextFrame:SetPoint('CENTER', self.MainFrame, 'CENTER', 0, 0)
+
+	self.PrepareText = self.PrepareTextFrame:CreateFontString(nil, 'BACKGROUND', 'SystemFont_Shadow_Huge1')
+	self.PrepareText:SetPoint('CENTER', 0, 0)
+	self.PrepareText:SetText('ПОДГОТОВКА')
+	self.PrepareText:Hide()
+
 	self.UpdateFrame = CreateFrame('Frame', nil, nil)
 	self.UpdateFrame.Parent = self
 
@@ -178,6 +189,10 @@ function ezSpectator_EnrageOrb:Show()
 
 	self.Sections:Hide()
 	self.StackFrame:Hide()
+
+	self:SetMaxValue(self.Parent.Data.EnrageStartAt)
+	self:SetProgressValue(self.Parent.Data.EnrageStartAt, true)
+	self:SetTime()
 end
 
 
@@ -222,16 +237,26 @@ function ezSpectator_EnrageOrb:SetTime(Time)
 		return
 	end
 
-	local SoundName = self.Parent.Data.TimeWarnings[self.Parent.Data.EnrageStartAt - Time]
-	if SoundName and (GetTime() - (self.SoundLast[SoundName] or 0) > 3) then
-		self.SoundLast[SoundName] = GetTime()
-		self.Parent.Sound:Play(SoundName, 5)
-	end
+	if Time then
+		if self.PrepareText:IsShown() then
+			self.Parent.Sound:Play('Play', 5)
+		end
 
-	if Time < self.Parent.Data.EnrageStartAt then
-		self:SetProgressValue(Time)
+		self.PrepareText:Hide()
+
+		local SoundName = self.Parent.Data.TimeWarnings[self.Parent.Data.EnrageStartAt - Time]
+		if SoundName and (GetTime() - (self.SoundLast[SoundName] or 0) > 3) then
+			self.SoundLast[SoundName] = GetTime()
+			self.Parent.Sound:Play(SoundName, 5)
+		end
+
+		if Time < self.Parent.Data.EnrageStartAt then
+			self:SetProgressValue(Time)
+		else
+			self:SetStackCount(Time)
+		end
 	else
-		self:SetStackCount(Time)
+		self.PrepareText:Show()
 	end
 end
 
@@ -249,7 +274,7 @@ end
 
 
 function ezSpectator_EnrageOrb:SetProgressValue(Value, IsInnerCall)
-	if not self.MaxValue or (self.MaxValue == 0) then
+	if not self.MaxValue or self.MaxValue == 0 then
 		return
 	end
 
