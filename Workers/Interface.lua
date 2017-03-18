@@ -65,10 +65,10 @@ end
 function ezSpectator_InterfaceWorker:CheckVersion(Value)
 	local Major, Minor, Build, Revision = strsplit('.', Value, 4)
 
-	local IsActual = (tonumber(Major) == self.Data.Version.Major) and
-				(tonumber(Minor) == self.Data.Version.Minor) and
-				(tonumber(Build) == self.Data.Version.Build) and
-				(tonumber(Revision) == self.Data.Version.Revision)
+	local IsActual = (tonumber(Major) == self.Parent.Data.Version.Major) and
+				(tonumber(Minor) == self.Parent.Data.Version.Minor) and
+				(tonumber(Build) == self.Parent.Data.Version.Build) and
+				(tonumber(Revision) == self.Parent.Data.Version.Revision)
 
 	if not IsActual then
 		self.UpdateFrame = ezSpectator_UpdateFrame:Create()
@@ -96,7 +96,7 @@ function ezSpectator_InterfaceWorker:SetMode(Value)
 	else
 		self.IsRunning = true
 		self.IsSpectating = true
-        self.IsTournament = Value > 1
+        self.IsTournament = Value >= 1
 
 		self.TopFrame:Show()
 		
