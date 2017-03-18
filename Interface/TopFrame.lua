@@ -24,7 +24,7 @@ function ezSpectator_TopFrame:Create(Parent)
 	self.Ezlogo:SetSize(128, 32)
 	self.Ezlogo:SetScale(_ezSpectatorScale)
 	self.Textures:Isengard_Logo(self.Ezlogo)
-	self.Ezlogo.texture:SetVertexColor(0.5, 0.5, 0.5, 0.33)
+	self.Ezlogo.texture:SetVertexColor(1, 1, 1, 0.5)
 
 	self.LeftTeam = ezSpectator_TeamFrame:Create(self.Parent, true, 'TOP', -290, -1)
 	self.RightTeam = ezSpectator_TeamFrame:Create(self.Parent, false, 'TOP', 290, -1)
