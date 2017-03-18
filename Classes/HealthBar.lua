@@ -336,7 +336,7 @@ end
 
 
 function ezSpectator_HealthBar:SetValue(Value, IsInnerCall)
-	if not self.MaxValue or (self.MaxValue == 0) then
+	if not self.MaxValue or self.MaxValue == 0 then
 		return
 	end
 	
