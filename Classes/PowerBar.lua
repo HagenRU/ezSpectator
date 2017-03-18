@@ -38,11 +38,10 @@ function ezSpectator_PowerBar:Create(Parent, Width, Height, Scale, Point, Relati
 	self.Textures:HealthBar_Normal(self.ProgressBar)
 	self.ProgressBar.texture:SetVertexColor(1, 0, 0)
 	
-	self.Spark = CreateFrame('Frame', nil, nil)
+	self.Spark = CreateFrame('Frame', nil, self.ProgressBar)
 	self.Spark:SetFrameLevel(1)
 	self.Spark:SetFrameStrata('FULLSCREEN')
 	self.Spark:SetSize(128, Height - 2)
-	self.Spark:SetScale(Scale)
 	self.Spark:SetAlpha(0.75)
 	self.Spark:SetPoint('TOP', self.ProgressBar, 'TOPRIGHT', 0, 0)
 	self.Textures:StatusBar_Spark(self.Spark)
@@ -195,7 +194,7 @@ function ezSpectator_PowerBar:Hide()
 	self.Backdrop:Hide()
 	self.ProgressBar:Hide()
 	self.Spark:Hide()
-	
+
 	if self.IsLayerAnimated then
 		self.AnimationUpBar:Hide()
 		self.AnimationDownBar:Hide()
@@ -388,11 +387,7 @@ function ezSpectator_PowerBar:SetValue(Value, IsInnerCall)
 	if SparkWidth <= 65 then
 		self.Spark:Hide()
 	else
-		if self.Backdrop:IsShown() then
-			self.Spark:Show()
-        else
-			self.Spark:Hide()
-		end
+		self.Spark:Show()
 	end
 	
 	self.CurrentValue = Value
@@ -405,5 +400,5 @@ function ezSpectator_PowerBar:SetValue(Value, IsInnerCall)
 		self.Value:SetText(Value)
 	else
 		self.Value:SetText(0)
-	end
+    end
 end
