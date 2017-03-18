@@ -238,7 +238,7 @@ function ezSpectator_EnrageOrb:SetTime(Time)
 	end
 
 	if Time then
-		if self.PrepareText:IsShown() then
+		if self.PrepareText:IsShown() and Time < 1 then
 			self.Parent.Sound:Play('Play', 5)
 		end
 

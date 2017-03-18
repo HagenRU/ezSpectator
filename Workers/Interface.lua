@@ -96,7 +96,7 @@ function ezSpectator_InterfaceWorker:SetMode(Value)
 	else
 		self.IsRunning = true
 		self.IsSpectating = true
-        self.IsTournament = Value >= 1
+        self.IsTournament = Value > 1
 
 		self.TopFrame:Show()
 		
