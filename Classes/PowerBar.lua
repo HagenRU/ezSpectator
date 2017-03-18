@@ -263,23 +263,20 @@ end
 
 
 function ezSpectator_PowerBar:SetMaxValue(Value)
-    if Value > 0 then
-        self.MaxValue = Value
+    self.MaxValue = Value
+    self.Weight = self.Width / self.MaxValue
 
-        self.Weight = self.Width / self.MaxValue
-
-        if self.CurrentValue then
-            self:SetValue(self.CurrentValue, true)
-        end
+    if self.CurrentValue then
+        self:SetValue(self.CurrentValue, true)
     end
 end
 
 
 
 function ezSpectator_PowerBar:SetValue(Value, IsInnerCall)
-	if not self.MaxValue then
-		return
-	end
+    if not self.MaxValue or self.MaxValue == 0 then
+        return
+    end
 	
 	if Value == 0 then
 		Value = -1
@@ -387,13 +384,13 @@ function ezSpectator_PowerBar:SetValue(Value, IsInnerCall)
 		self.Spark:ClearAllPoints()
 		self.Spark:SetPoint('TOP', self.ProgressBar, 'TOPRIGHT', 0, 0)
 	end
-	
+
 	if SparkWidth <= 65 then
 		self.Spark:Hide()
 	else
 		if self.Backdrop:IsShown() then
 			self.Spark:Show()
-		else
+        else
 			self.Spark:Hide()
 		end
 	end
