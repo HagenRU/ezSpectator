@@ -75,7 +75,7 @@ end
 
 
 function ezSpectator_TargetFrame:Update(LockAnimation)
-	if self.Parent.Interface.Viewpoint and self.Parent.Interface.IsRunning then
+	if self.Parent.Interface.Viewpoint and self.Parent.Interface.Viewpoint.CurrentTarget and self.Parent.Interface.IsRunning then
 		self.Parent.Interface.Viewpoint.CurrentTarget.SmallFrame:SetAlpha(self.Parent.Data.ViewpointAlpha)
 	end
 
