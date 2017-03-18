@@ -17,7 +17,7 @@ function ezSpectator_DataWorker:Create()
     self.ViewpointAlpha = 0.33
     self.ViewpointNameplateAlpha = 0.50
 
-    self.EnrageStartAt = 420
+    self.EnrageStartAt = 480
     self.EnrageStackInterval = 30
     self.EnrageStackMax = 10
 
