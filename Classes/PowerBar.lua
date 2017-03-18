@@ -263,12 +263,15 @@ end
 
 
 function ezSpectator_PowerBar:SetMaxValue(Value)
-	self.MaxValue = Value
-	self.Weight = self.Width / self.MaxValue
-	
-	if self.CurrentValue then
-		self:SetValue(self.CurrentValue, true)
-	end
+    if Value > 0 then
+        self.MaxValue = Value
+
+        self.Weight = self.Width / self.MaxValue
+
+        if self.CurrentValue then
+            self:SetValue(self.CurrentValue, true)
+        end
+    end
 end
 
 
@@ -358,7 +361,7 @@ function ezSpectator_PowerBar:SetValue(Value, IsInnerCall)
 	if self.IsSparkAnimated and self.CurrentValue and (IsInnerCall ~= true) then
 		return true
 	end
-	
+
 	self.ProgressBar:SetWidth(ProgressWidth)
 	self.ProgressBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width), 0, 1)
 
