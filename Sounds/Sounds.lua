@@ -16,7 +16,8 @@ end
 
 
 function ezSpectator_Sounds:Play(Filename, Multiplyer)
-    Multiplyer = Multiplyer or self.Mult
+    --Multiplyer = Multiplyer or self.Mult
+    Multiplyer = 1
 
     --noinspection UnusedDef
     for Loop = 1, Multiplyer, 1 do
