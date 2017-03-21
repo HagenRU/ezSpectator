@@ -213,10 +213,6 @@ function ezSpectator_PlayerWorker:SetCast(Spell, Time)
 		self.SmallFrame.SpellFrame:Push(Spell)
 		self.PlayerFrame.SpellFrame:Push(Spell)
 		self.VictimFrame.SpellFrame:Push(Spell)
-
-		if self.Parent.Data:IsCooldownTracked(self.Class, Spell) then
-			self:RequestCooldown(Spell)
-		end
 	end
 
 	local IsCastState = self.Parent.Data.CastInfo[Time] ~= nil
@@ -457,7 +453,7 @@ end
 
 
 function ezSpectator_PlayerWorker:SetCooldown(Spell, Value)
-	if self.IsTeamSet then
+	if self.IsTeamSet and self.Parent.Data:IsCooldownTracked(self.Class, Spell) then
 		self.TeamFrame:SetCooldown(self.Nickname, Spell, Value)
 	end
 end
@@ -473,31 +469,4 @@ function ezSpectator_PlayerWorker:BindViewpoint()
 
 	self.PlayerFrame:Show()
 	self:SetTarget(nil)
-end
-
-
-
-function ezSpectator_PlayerWorker:RequestCooldown(Value)
-	if not Value then
-		local ClassCooldowns = self.Parent.Data.ClassSpellInfo[self.Class]
-		if ClassCooldowns then
-			local Prefix = '.spectate cooldown ' .. self.Nickname
-			local Request = ''
-			for SpellID, Value in pairs(ClassCooldowns) do
-				if self.Parent.Data:IsCooldownTracked(self.Class, SpellID) then
-					Request = Request .. ' ' .. SpellID
-					if string.len(Request) > 240 then
-						SendChatMessage(Prefix .. Request, 'GUILD')
-						Request = ''
-					end
-				end
-			end
-
-			if string.len(Request) > 0 then
-				SendChatMessage(Prefix .. Request, 'GUILD')
-			end
-		end
-	else
-		SendChatMessage('.spectate cooldown ' .. self.Nickname .. ' ' .. Value, 'GUILD')
-	end
 end
