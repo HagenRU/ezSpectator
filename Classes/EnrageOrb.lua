@@ -219,7 +219,7 @@ function ezSpectator_EnrageOrb:SetStackCount(Time)
 				self.Stacks[StackIndex].Cooldown:SetCooldown(0, 0)
 
 				if StackIndex == 1 then
-					self.Parent.Sound:Play('Berzerk', 7)
+					self.Parent.Sound:Play('Berzerk', 2)
 				end
 			end
 
@@ -239,7 +239,7 @@ function ezSpectator_EnrageOrb:SetTime(Time)
 
 	if Time then
 		if self.PrepareText:IsShown() and Time < 1 then
-			self.Parent.Sound:Play('Play', 5)
+			self.Parent.Sound:Play('Play', 1)
 		end
 
 		self.PrepareText:Hide()
@@ -247,7 +247,7 @@ function ezSpectator_EnrageOrb:SetTime(Time)
 		local SoundName = self.Parent.Data.TimeWarnings[self.Parent.Data.EnrageStartAt - Time]
 		if SoundName and (GetTime() - (self.SoundLast[SoundName] or 0) > 3) then
 			self.SoundLast[SoundName] = GetTime()
-			self.Parent.Sound:Play(SoundName, 5)
+			self.Parent.Sound:Play(SoundName, 1)
 		end
 
 		if Time < self.Parent.Data.EnrageStartAt then

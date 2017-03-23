@@ -244,7 +244,7 @@ function ezSpectator_InterfaceWorker:ProcessWinner(Value, Mode)
 		SoundName = SoundName[math.random(#SoundName)]
 	end
 
-	self.Parent.Sound:Play(SoundName, 5)
+	self.Parent.Sound:Play(SoundName, 2)
 end
 
 

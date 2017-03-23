@@ -7,7 +7,7 @@ function ezSpectator_Sounds:Create(Parent)
 
     self.Parent = Parent
 
-    self.Mult = 3
+    self.Mult = 1
     self.Path = 'Interface\\Addons\\IsengardSpectator\\Sounds\\'
 
     return self
