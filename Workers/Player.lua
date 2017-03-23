@@ -453,7 +453,7 @@ end
 
 
 function ezSpectator_PlayerWorker:SetCooldown(Spell, Value)
-	if self.IsTeamSet and self.Parent.Data:IsCooldownTracked(self.Class, Spell) then
+	if self.IsTeamSet then
 		self.TeamFrame:SetCooldown(self.Nickname, Spell, Value)
 	end
 end
