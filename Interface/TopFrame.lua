@@ -125,15 +125,13 @@ function ezSpectator_TopFrame:Show()
 		self.TournamentStage = nil
 		self.TournamentBOX = nil
     end
-
-    self:StartTimer()
 end
 
 
 
 function ezSpectator_TopFrame:StartTimer(Value)
-    if Value then
-        self.MatchTime = tonumber(Value)
+    if Value and Value >= 0 then
+        self.MatchTime = Value
     else
         self.MatchTime = nil
     end

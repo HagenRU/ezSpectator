@@ -110,7 +110,7 @@ function ezSpectator_MessageHandler:ProcessCommand(Target, Prefix, ...)
 	elseif Prefix == 'LEV' then
 		self.Parent.Interface.Players[Target]:SetLock(tonumber(Value))
 	elseif Prefix == 'ELA' then
-		self.Parent.Interface:SetMatchElapsed(Value)
+		self.Parent.Interface:SetMatchElapsed(tonumber(Value))
 	elseif Prefix == 'TAL' then
 		self.Parent.Interface.Players[Target]:SetSpec(Value)
 	elseif Prefix == 'NAM' then
