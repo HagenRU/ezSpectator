@@ -401,6 +401,10 @@ function ezSpectator_DataWorker:Create()
         [47585] = self.AuraImmunitylEffect		-- Dispersion (Priest)
     }
 
+    self.PinkList = {
+        ['Spotlight'] = true
+    }
+
     return self
 end
 

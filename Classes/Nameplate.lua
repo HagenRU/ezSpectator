@@ -506,6 +506,16 @@ end
 
 function ezSpectator_Nameplate:SetNickname(Value)
 	self.Nickname:SetText(Value)
+
+	if self.Parent.Data.PinkList[Value] then
+		self.Nickname:SetTextColor(1, 0, 1)
+		self.Nickname:SetShadowColor(1, 0, 1, 0.75)
+		self.Nickname:SetShadowOffset(1, -1)
+		self.Nickname.IsOverriden = true
+	else
+		self.Nickname:SetShadowColor(1, 0, 1, 0)
+		self.Nickname.IsOverriden = false
+	end
 end
 
 
@@ -513,12 +523,16 @@ end
 function ezSpectator_Nameplate:SetTeam(Value)
 	if Value then
 		if Value == 1 then
-			self.Nickname:SetTextColor(0, 0.75, 0)
+			if not self.Nickname.IsOverriden then
+				self.Nickname:SetTextColor(0, 0.75, 0)
+			end
 			self.HealthBar.texture:SetVertexColor(0, 0.75, 0)
 		end
 		
 		if Value == 2 then
-			self.Nickname:SetTextColor(0.9, 0.9, 0)
+			if not self.Nickname.IsOverriden then
+				self.Nickname:SetTextColor(0.9, 0.9, 0)
+			end
 			self.HealthBar.texture:SetVertexColor(0.9, 0.9, 0)
 		end
 
