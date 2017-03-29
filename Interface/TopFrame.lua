@@ -22,7 +22,7 @@ function ezSpectator_TopFrame:Create(Parent)
 
 	self.Ezlogo = CreateFrame('Frame', nil,  self.MainFrame)
 	self.Ezlogo:SetFrameStrata('TOOLTIP')
-	self.Ezlogo:SetPoint('BOTTOMRIGHT', UIParent, 'BOTTOMRIGHT', 0, 0)
+	self.Ezlogo:SetPoint('TOPRIGHT', UIParent, 'TOPRIGHT', 0, 0)
 	self.Ezlogo:SetSize(128, 32)
 	self.Ezlogo:SetScale(_ezSpectatorScale)
 	self.Textures:Isengard_Logo(self.Ezlogo)
