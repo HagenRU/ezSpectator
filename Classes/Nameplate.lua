@@ -364,18 +364,22 @@ end
 
 
 function ezSpectator_Nameplate:SetMaxValue(Value)
-	self.MaxValue = Value
-	self.Weight = self.Width / self.MaxValue
+	if Value == 0 then
+		self:SetValue(0, true)
+	else
+		self.MaxValue = Value
+		self.Weight = self.Width / self.MaxValue
 	
-	if self.CurrentValue then
-		self:SetValue(self.CurrentValue, true)
+		if self.CurrentValue then
+			self:SetValue(self.CurrentValue, true)
+		end
 	end
 end
 
 
 
 function ezSpectator_Nameplate:SetValue(Value, IsInnerCall)
-	if not self.MaxValue or (self.MaxValue == 0) then
+	if not self.MaxValue then
 		return
 	end
 	

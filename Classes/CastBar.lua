@@ -95,11 +95,13 @@ end
 
 
 function ezSpectator_CastBar:SetMaxValue(Value)
-	self.MaxValue = Value
-	self.Weight = self.Width / self.MaxValue
-	
-	if self.CurrentValue then
-		self:SetValue(self.CurrentValue)
+	if Value ~= 0 then
+		self.MaxValue = Value
+		self.Weight = self.Width / self.MaxValue
+
+		if self.CurrentValue then
+			self:SetValue(self.CurrentValue)
+		end
 	end
 end
 
