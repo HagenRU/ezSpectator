@@ -5,11 +5,13 @@ function ezSpectator_CooldownFrame:Create(Parent, ParentFrame, IsLeft)
     local self = {}
     setmetatable(self, ezSpectator_CooldownFrame)
 
-    self.MaxCount = 20
-    self.IconSize = 22
+    self.MaxCount = 22
+    self.IconSize = 27
+    self.IconOffsetX = -6
+    self.ClassOffsetX = 0
     self.TextureSize = self.IconSize * 0.70
-    self.OffsetX = 10 * _ezSpectatorScale
-    self.OffsetY = 1 * _ezSpectatorScale
+    self.OffsetX = 20 * _ezSpectatorScale
+    self.OffsetY = 2 * _ezSpectatorScale
 
     self.Parent = Parent
     self.ParentFrame = ParentFrame
@@ -27,16 +29,18 @@ function ezSpectator_CooldownFrame:Create(Parent, ParentFrame, IsLeft)
         self.MainFrame:SetPoint('RIGHT', UIParent, 'BOTTOM', -self.OffsetX, self.OffsetY)
     end
 
+    self.LastNickname = nil
     self.CooldownLinks = {}
 
     self.CooldownIcons = {}
+    local AlignFrame = self.MainFrame
     for Index = 1, self.MaxCount, 1 do
         if self.IsLeft then
-            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'mild-yellow', self.IconSize, 'BOTTOMLEFT', self.MainFrame, 'BOTTOMLEFT', (Index - 1) * self.IconSize, 0)
+            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'mild', self.IconSize, 'BOTTOMLEFT', AlignFrame, 'BOTTOMRIGHT', self.IconOffsetX, 0)
         else
-            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'mild-green', self.IconSize, 'BOTTOMRIGHT', self.MainFrame, 'BOTTOMRIGHT', (Index - 1) * -self.IconSize, 0)
+            self.CooldownIcons[Index] = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'mild', self.IconSize, 'BOTTOMRIGHT', AlignFrame, 'BOTTOMLEFT', -self.IconOffsetX, 0)
         end
-
+        AlignFrame = self.CooldownIcons[Index].Backdrop
 
         self.CooldownIcons[Index].Spell = nil
 
@@ -46,7 +50,6 @@ function ezSpectator_CooldownFrame:Create(Parent, ParentFrame, IsLeft)
             end
         end)
 
-        self.CooldownIcons[Index]:SetTextAlignTop()
         self.CooldownIcons[Index]:SetTextInteractive(true)
         self.CooldownIcons[Index]:Hide()
     end
@@ -80,11 +83,20 @@ function ezSpectator_CooldownFrame:Hide()
     self.MainFrame:Hide()
 
     for Index = 1, self.MaxCount, 1 do
+        if Index > 1 then
+            if self.IsLeft then
+                self.CooldownIcons[Index]:SetPoint('BOTTOMLEFT', self.CooldownIcons[Index - 1].Backdrop, 'BOTTOMRIGHT', self.IconOffsetX, 0)
+            else
+                self.CooldownIcons[Index]:SetPoint('BOTTOMRIGHT', self.CooldownIcons[Index - 1].Backdrop, 'BOTTOMLEFT', -self.IconOffsetX, 0)
+            end
+        end
+
         self.CooldownIcons[Index]:SetTexture(EMPTY_TEXTURE, self.TextureSize, false)
         self.CooldownIcons[Index].Spell = nil
         self.CooldownIcons[Index]:Hide()
     end
     self.CooldownLinks = {}
+    self.LastNickname = nil
 end
 
 
@@ -97,14 +109,26 @@ function ezSpectator_CooldownFrame:Push(Nickname, Spell, Cooldown)
 
         if self.CooldownLinks[Nickname][Spell] then
             self.CooldownLinks[Nickname][Spell]:SetCooldown(GetTime(), Cooldown)
-            self.CooldownLinks[Nickname][Spell]:SetText(Cooldown)
+            self.CooldownLinks[Nickname][Spell]:SetTime(Cooldown)
         else
             for Index = 1, self.MaxCount, 1 do
                 if self.CooldownIcons[Index].Spell == nil then
+                    if Nickname ~= self.LastNickname and Index > 1 then
+                        if self.IsLeft then
+                            self.CooldownIcons[Index]:SetPoint('BOTTOMLEFT', self.CooldownIcons[Index - 1].Backdrop, 'BOTTOMRIGHT', self.ClassOffsetX, 0)
+                        else
+                            self.CooldownIcons[Index]:SetPoint('BOTTOMRIGHT', self.CooldownIcons[Index - 1].Backdrop, 'BOTTOMLEFT', self.ClassOffsetX, 0)
+                        end
+                    end
+
+                    self.LastNickname = Nickname
+
+                    self.CooldownIcons[Index]:SetBorderClassColor(self.Parent.Interface.Players[Nickname].Class)
+
                     local SpellTexture = select(3, GetSpellInfo(Spell))
                     self.CooldownIcons[Index]:SetTexture(SpellTexture, self.TextureSize, true)
                     self.CooldownIcons[Index]:SetCooldown(GetTime(), Cooldown)
-                    self.CooldownIcons[Index]:SetText(Cooldown)
+                    self.CooldownIcons[Index]:SetTime(Cooldown)
 
                     self.CooldownIcons[Index].Spell = Spell
                     self.CooldownIcons[Index]:Show()
@@ -122,19 +146,10 @@ end
 function ezSpectator_CooldownFrame:Update()
     for Index = 1, self.MaxCount, 1 do
         if self.CooldownIcons[Index].Spell then
-            local Time
-            local Text = self.CooldownIcons[Index]:GetText()
+            local Minutes, Seconds = strsplit(':', self.CooldownIcons[Index]:GetText())
+            local Time = (tonumber(Minutes) or 0) * 60 + (tonumber(Seconds) or 0) - 1
 
-            if Text then
-                Time = tonumber(Text)
-
-                Time = Time - 1
-                if Time > 0 then
-                    self.CooldownIcons[Index]:SetText(Time)
-                else
-                    self.CooldownIcons[Index]:SetText(0)
-                end
-            end
+            self.CooldownIcons[Index]:SetTime(Time)
         end
     end
 end

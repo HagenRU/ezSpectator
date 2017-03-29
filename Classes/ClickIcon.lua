@@ -21,7 +21,7 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	self.Backdrop:SetScale(_ezSpectatorScale)
 	self.Backdrop:SetPoint(...)
 	self.Textures:ClickIcon_Backdrop(self.Backdrop)
-	
+
 	self.Normal = CreateFrame('Frame', nil, self.ParentFrame)
 	self.Normal:SetFrameLevel(4)
 	self.Normal:SetFrameStrata('HIGH')
@@ -48,28 +48,17 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 
 		--noinspection UnusedDef
 		OffsetY = 0.5
-	elseif Style == 'mild-green' then
+	elseif Style == 'mild' then
 		self.Backdrop.texture:SetTexture(EMPTY_TEXTURE)
-		self.Textures:Nameplate_Castborder(self.Normal)
-		self.Textures:Nameplate_Castborder(self.Highlight)
-		self.Highlight.texture:SetVertexColor(0, 1, 0, 1)
-
-		--noinspection UnusedDef
-		OffsetX = -0.5
-		--noinspection UnusedDef
-		OffsetY = 0.5
-	elseif Style == 'mild-yellow' then
-		self.Backdrop.texture:SetTexture(EMPTY_TEXTURE)
-		self.Textures:Nameplate_Castborder(self.Normal)
-		self.Textures:Nameplate_Castborder(self.Highlight)
-		self.Highlight.texture:SetVertexColor(1, 1, 0, 1)
+		self.Textures:ClickIcon_Normal_Mild(self.Normal)
+		self.Textures:ClickIcon_Highlight_Mild(self.Highlight)
 
 		OffsetX = -0.5
 		OffsetY = 0.5
 	elseif Style == 'clear' then
 		self.Backdrop.texture:SetTexture(EMPTY_TEXTURE)
 	end
-	
+
 	self.Icon = CreateFrame('Frame', nil, self.Backdrop)
 	self.Icon:SetFrameLevel(2)
 	self.Icon:SetFrameStrata('HIGH')
@@ -83,16 +72,18 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	self.Cooldown:SetFrameStrata('HIGH')
 	self.Cooldown:SetSize(Size, Size)
 	self.Cooldown:SetPoint('CENTER', self.Normal, 'CENTER', OffsetX, OffsetY)
+    self.Cooldown:SetDrawEdge(true)
 
 	self.TextFrame = CreateFrame('Frame', nil, self.ParentFrame)
 	self.TextFrame:SetFrameStrata('TOOLTIP')
 	self.TextFrame:SetSize(1, 1)
+    self.TextFrame:SetPoint('TOP', self.Normal, 'BOTTOM', 0, 5)
 
 	self.Text = self.TextFrame:CreateFontString(nil, 'OVERLAY')
-	self.Text:SetFont('Interface\\Addons\\IsengardSpectator\\Fonts\\DejaVuSans.ttf', 8)
-	self.Text:SetTextColor(1, 1, 1, 0.75)
+	self.Text:SetFont('Interface\\Addons\\IsengardSpectator\\Fonts\\DejaVuSans.ttf', 8, 'OUTLINE')
+	self.Text:SetTextColor(1, 1, 1, 1)
 	self.Text:SetShadowColor(0, 0, 0, 0.75)
-	self.Text:SetShadowOffset(1, -1)
+	self.Text:SetShadowOffset(0, 1)
 	self.Text:SetPoint('CENTER', 0, 1)
 
 	self.Reactor = CreateFrame('Frame', nil, self.ParentFrame)
@@ -104,13 +95,13 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	self.Reactor.Parent = self
 	self.Reactor:EnableMouse(true)
 	self.Reactor:SetScript('OnEnter', function()
-		if self.Backdrop:IsShown() then
+		if self.Backdrop:IsShown() and not self.IsTextInteractive then
 			self.Normal:Hide()
 			self.Highlight:Show()
 		end
 	end)
 	self.Reactor:SetScript('OnLeave', function()
-		if self.Backdrop:IsShown() then
+		if self.Backdrop:IsShown() and not self.IsTextInteractive then
 			self.Highlight:Hide()
 			self.Normal:Show()
 		end
@@ -133,7 +124,7 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 
 			local Distance = math.sqrt(DiffX * DiffX + DiffY * DiffY)
 
-			self.TextFrame:SetAlpha(1 - Distance / 200)
+			self.TextFrame:SetAlpha(math.max(1 - Distance / 200, 0.66))
 		end
 	end)
 	
@@ -176,6 +167,25 @@ function ezSpectator_ClickIcon:SetAlpha(Value)
 	self.Normal:SetAlpha(Value)
 	self.Highlight:SetAlpha(Value)
 	self.TextFrame:SetAlpha(Value)
+end
+
+
+
+function ezSpectator_ClickIcon:SetPoint(...)
+	self.Backdrop:SetPoint(...)
+	self.Normal:SetPoint(...)
+	self.Highlight:SetPoint(...)
+	self.Reactor:SetPoint(...)
+end
+
+
+
+function ezSpectator_ClickIcon:SetBorderClassColor(Value)
+	local Class = self.Parent.Data.ClassTextEng[Value]
+	local Color = RAID_CLASS_COLORS[Class]
+
+	self.Normal.texture:SetVertexColor(Color.r, Color.g, Color.b, 1)
+    self.Highlight.texture:SetVertexColor(Color.r, Color.g, Color.b, 1)
 end
 
 
@@ -226,28 +236,22 @@ end
 
 
 
-function ezSpectator_ClickIcon:SetText(Value)
-	self.Text:SetText(Value)
+function ezSpectator_ClickIcon:SetTime(Value)
+    if Value > 0 then
+        self.Normal:Show()
+        self.Highlight:Hide()
+	    self.Text:SetText(self.Parent.Data:SecondsToTime(Value, true))
+    else
+        self.Normal:Hide()
+        self.Highlight:Show()
+        self.Text:SetText('')
+    end
 end
 
 
 
 function ezSpectator_ClickIcon:GetText(Value)
-	return self.Text:GetText(Value)
-end
-
-
-
-function ezSpectator_ClickIcon:SetTextAlignTop()
-	self.TextFrame:ClearAllPoints()
-	self.TextFrame:SetPoint('BOTTOM', self.Normal, 'TOP', 0, 2)
-end
-
-
-
-function ezSpectator_ClickIcon:SetTextAlignBottom()
-	self.TextFrame:ClearAllPoints()
-	self.TextFrame:SetPoint('TOP', self.Normal, 'BOTTOM', 0, -2)
+	return self.Text:GetText() or '00:00'
 end
 
 

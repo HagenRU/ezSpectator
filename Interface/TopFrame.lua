@@ -46,9 +46,8 @@ function ezSpectator_TopFrame:Create(Parent)
 	self.UpdateFrame:SetScript('OnUpdate', function(self, Elapsed)
 		if self.Parent.MatchTime ~= nil and self.Parent.Parent.Interface.IsRunning then
 			self.Parent.MatchTime = self.Parent.MatchTime + Elapsed
-			
-			local Time = math.floor(self.Parent.MatchTime)
-			self.Parent.Time:SetText(string.format('%.2d:%.2d', Time / 60 % 60, Time % 60))
+
+			self.Parent.Time:SetText(self.Parent.Parent.Data:SecondsToTime(self.Parent.MatchTime))
 
             if self.Parent.Parent.Interface.IsTournament then
 			    self.Parent.EnrageOrb:SetTime(Time)

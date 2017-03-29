@@ -287,6 +287,23 @@ function ezSpectator_Textures:ClickIcon_Normal_Gold(Frame)
 end
 
 
+function ezSpectator_Textures:ClickIcon_Normal_Silver(Frame)
+	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\ClickIcon_Normal_Silver.tga')
+	Texture:SetTexCoord(0.15625, 0.859375, 0.15625, 0.859375)
+	Texture:SetAllPoints(Frame)
+	Frame.texture = Texture
+end
+
+
+
+function ezSpectator_Textures:ClickIcon_Normal_Mild(Frame)
+	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\ClickIcon_Normal_Mild.tga')
+	Texture:SetTexCoord(0.140625, 0.890625, 0.140625, 0.890625)
+	Texture:SetAllPoints(Frame)
+	Frame.texture = Texture
+end
+
+
 
 function ezSpectator_Textures:ClickIcon_Highlight_Gold(Frame)
 	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\ClickIcon_Highlight_Gold.tga')
@@ -297,8 +314,8 @@ end
 
 
 
-function ezSpectator_Textures:ClickIcon_Normal_Silver(Frame)
-	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\ClickIcon_Normal_Silver.tga')
+function ezSpectator_Textures:ClickIcon_Highlight_Silver(Frame)
+	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\ClickIcon_Highlight_Silver.tga')
 	Texture:SetTexCoord(0.15625, 0.859375, 0.15625, 0.859375)
 	Texture:SetAllPoints(Frame)
 	Frame.texture = Texture
@@ -306,9 +323,9 @@ end
 
 
 
-function ezSpectator_Textures:ClickIcon_Highlight_Silver(Frame)
-	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\ClickIcon_Highlight_Silver.tga')
-	Texture:SetTexCoord(0.15625, 0.859375, 0.15625, 0.859375)
+function ezSpectator_Textures:ClickIcon_Highlight_Mild(Frame)
+	local Texture = self:Load(Frame, 'Interface\\Addons\\IsengardSpectator\\Textures\\ClickIcon_Highlight_Mild.tga')
+	Texture:SetTexCoord(0.140625, 0.890625, 0.140625, 0.890625)
 	Texture:SetAllPoints(Frame)
 	Frame.texture = Texture
 end

@@ -427,3 +427,19 @@ function ezSpectator_DataWorker:SafeSize(Value)
 
     return Value
 end
+
+
+
+function ezSpectator_DataWorker:SecondsToTime(Value, IsShort)
+    if Value then
+        local Time = math.floor(Value)
+
+        if IsShort then
+            return string.format('%.1d:%.2d', Time / 60 % 60, Time % 60)
+        else
+            return string.format('%.2d:%.2d', Time / 60 % 60, Time % 60)
+        end
+    else
+        return ''
+    end
+end
