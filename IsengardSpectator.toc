@@ -36,6 +36,7 @@ Interface\UpdateFrame.lua
 Handlers\Message.lua
 
 Workers\Control.lua
+Workers\Cast.lua
 Workers\Spec.lua
 Workers\Interface.lua
 Workers\Player.lua
