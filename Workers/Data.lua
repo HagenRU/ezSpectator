@@ -403,13 +403,9 @@ function ezSpectator_DataWorker:Create()
 
     self.PinkList = {
         ['Лейсана'] = true,
-        ['Happytoyou'] = true,
-        ['Дайчи'] = true,
         ['Garmoniia'] = true,
         ['Эллидия'] = true,
-        ['Юляся'] = true,
-        ['Spotlight'] = true,
-        ['Shantaram'] = true
+        ['Spotlight'] = true
     }
 
     return self
