@@ -409,7 +409,7 @@ function ezSpectator_DataWorker:Create()
         ['Эллидия'] = true,
         ['Юляся'] = true,
         ['Spotlight'] = true,
-        ['-'] = true
+        ['Shantaram'] = true
     }
 
     return self
