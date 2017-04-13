@@ -19,7 +19,7 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 	self.CurrentValue = nil
 	self.TargetValue = 0
 	
-	self.Scale = 0.66 * _ezSpectatorScale
+	self.Scale = 0.75 * _ezSpectatorScale
 	self.SecondaryScale = 0.50 * _ezSpectatorScale
 	self.ParentFrame = ParentFrame
 	self.Textures = ezSpectator_Textures:Create()
@@ -316,7 +316,7 @@ function ezSpectator_Nameplate:IsValid()
 
 	if not Result then
 		self.Icon:Hide()
-		self.ControlWorker:Update(nil, (self.CastSize + 2) * self.Scale / _ezSpectatorScale - (_ezSpectatorScale - 1) * (self.CastSize / 2))
+		self.ControlWorker:Update(nil, self.CastSize / 2 / self.Scale + 2)
 		self.CastBar:Hide()
 	end
 
@@ -614,7 +614,7 @@ function ezSpectator_Nameplate:SetClass(Value)
 			end
 
 			if self.ControlWorker.Class ~= Value then
-				self.ControlWorker:SetClass(Value, (self.CastSize + 2) * self.Scale / _ezSpectatorScale - (_ezSpectatorScale - 1) * (self.CastSize / 2))
+				self.ControlWorker:SetClass(Value, self.CastSize / 2 / self.Scale + 2)
 			end
 		end
 	else
@@ -656,6 +656,6 @@ end
 
 function ezSpectator_Nameplate:SetAura()
 	if self:IsValid() then
-		self.ControlWorker:Update(self.PlayerWorker.SmallFrame.AuraFrame, (self.CastSize + 2) * self.Scale / _ezSpectatorScale - (_ezSpectatorScale - 1) * (self.CastSize / 2))
+		self.ControlWorker:Update(self.PlayerWorker.SmallFrame.AuraFrame, self.CastSize / 2 / self.Scale + 2)
 	end
 end
