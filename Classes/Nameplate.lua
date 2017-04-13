@@ -66,10 +66,10 @@ function ezSpectator_Nameplate:Create(Parent, ParentFrame, Point, RelativeFrame,
 		self.HealthBar.AnimationDownBar.texture:SetVertexColor(1, 0, 0)
 		
 		self.HealthBar.AnimationUpBar = CreateFrame('Frame', nil, self.HealthBar)
-		self.HealthBar.AnimationUpBar:SetFrameLevel(5 + self.Parent.Data.NamePlateLevel)
+		self.HealthBar.AnimationUpBar:SetFrameLevel(3 + self.Parent.Data.NamePlateLevel)
 		self.HealthBar.AnimationUpBar:SetFrameStrata('BACKGROUND')
-		self.HealthBar.AnimationUpBar:SetSize(0, self.Height - 2)
-		self.HealthBar.AnimationUpBar:SetPoint('RIGHT', self.HealthBar, 'RIGHT', 0, 0)
+		self.HealthBar.AnimationUpBar:SetSize(0, self.Height)
+        self.HealthBar.AnimationUpBar:SetPoint('TOPLEFT', self.HealthBar, 'TOPLEFT', 0, 0)
 		self.Textures:HealthBar_Normal(self.HealthBar.AnimationUpBar)
 		self.HealthBar.AnimationUpBar.texture:SetVertexColor(0, 1, 0)
 	end
@@ -232,20 +232,20 @@ end
 
 function ezSpectator_Nameplate:DecAnimatedValue()
 	if self.IsLayerAnimated then
-		self.AnimationDownCycle = self.AnimationDownCycle + self.AnimationProgress
-		local AnimateWidth = self.HealthBar.AnimationDownBar:GetWidth() - self.Weight * self.AnimationDownCycle
-		
-		if AnimateWidth <= 0 then
-			self.HealthBar.AnimationDownBar:Hide()
-		else
-			if self.MainFrame:IsVisible() then
-				self.HealthBar.AnimationDownBar:Show()
-			end
-		end
-		self.HealthBar.AnimationDownBar:SetWidth(self.Parent.Data:SafeSize(AnimateWidth))
-		self.HealthBar.AnimationDownBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(AnimateWidth / self.Width), 0, 1)
-		
-		self.IsAnimatingDown = self.HealthBar.AnimationDownBar:GetWidth() >= self.HealthBar:GetWidth()
+        self.AnimationDownCycle = self.AnimationDownCycle + self.AnimationProgress
+        local AnimateWidth = self.HealthBar.AnimationDownBar:GetWidth() - self.Weight * self.AnimationDownCycle
+
+        if AnimateWidth <= 0 then
+            self.HealthBar.AnimationDownBar:Hide()
+        else
+            if self.MainFrame:IsVisible() then
+                self.HealthBar.AnimationDownBar:Show()
+            end
+        end
+        self.HealthBar.AnimationDownBar:SetWidth(self.Parent.Data:SafeSize(AnimateWidth))
+        self.HealthBar.AnimationDownBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(AnimateWidth / self.Width), 0, 1)
+
+        self.IsAnimatingDown = self.HealthBar.AnimationDownBar:GetWidth() >= self.HealthBar:GetWidth()
 	end
 	
 	if self.IsSparkAnimated then
@@ -264,39 +264,20 @@ end
 
 
 function ezSpectator_Nameplate:IncAnimatedValue()
-	if self.IsLayerAnimated then
-		self.AnimationUpCycle = self.AnimationUpCycle + self.AnimationProgress
-		local AnimateWidth = self.HealthBar.AnimationUpBar:GetWidth() - self.Weight * self.AnimationUpCycle
-		
-		if AnimateWidth <= 0 then
-			self.HealthBar.AnimationUpBar:Hide()
-		else
-			if self.MainFrame:IsVisible() then
-				self.HealthBar.AnimationUpBar:Show()
-			end
-		end
-		self.HealthBar.AnimationUpBar:SetWidth(self.Parent.Data:SafeSize(AnimateWidth))
-		self.HealthBar.AnimationUpBar.texture:SetTexCoord(
-			self.Parent.Data:SafeTexCoord((self.Width - (self.Width - self.HealthBar:GetWidth()) - self.HealthBar.AnimationUpBar:GetWidth()) / self.Width),
-			self.Parent.Data:SafeTexCoord(self.HealthBar:GetWidth() / self.Width),
-			0,
-			1
-		)
-		
-		self.IsAnimatingUp = self.HealthBar.AnimationUpBar:GetWidth() > 0
-	end
-	
-	if self.IsSparkAnimated then
-		self.AnimationUpCycle = self.AnimationUpCycle + self.AnimationProgress
-		local AnimateValue = self.CurrentValue + self.AnimationUpCycle
-		
-		if AnimateValue > self.TargetValue then
-			self.IsAnimatingUp = false
-			AnimateValue = self.TargetValue
-		end
-		
-		self:SetValue(AnimateValue, true)
-	end
+    self.AnimationUpCycle = self.AnimationUpCycle + self.AnimationProgress
+    local AnimateValue = self.CurrentValue + self.AnimationUpCycle
+
+    if AnimateValue > self.TargetValue then
+        self.IsAnimatingUp = false
+        AnimateValue = self.TargetValue
+        self.HealthBar.AnimationUpBar:Hide()
+    else
+        if self.MainFrame:IsVisible() then
+            self.HealthBar.AnimationUpBar:Show()
+        end
+    end
+
+    self:SetValue(AnimateValue, true)
 end
 
 
@@ -312,7 +293,7 @@ function ezSpectator_Nameplate:IsValid()
 		end
 	else
 		Result = false
-	end
+    end
 
 	if not Result then
 		self.Icon:Hide()
@@ -396,20 +377,18 @@ function ezSpectator_Nameplate:SetValue(Value, IsInnerCall)
 	if self.CurrentValue and (IsInnerCall ~= true) then
 		if Value > self.CurrentValue then
 			if self.IsLayerAnimated then
-				local AnimationWidth = self.HealthBar.AnimationUpBar:GetWidth() + ProgressWidth - self.HealthBar:GetWidth()
-				
-				self.HealthBar.AnimationUpBar:SetWidth(self.Parent.Data:SafeSize(AnimationWidth))
-				self.HealthBar.AnimationUpBar.texture:SetTexCoord(
-					self.Parent.Data:SafeTexCoord((self.Width - (self.Width - ProgressWidth) - self.HealthBar.AnimationUpBar:GetWidth()) / self.Width),
-					self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width),
-					0,
-					1
-				)
+                self.TargetValue = Value
+
+                self.HealthBar.AnimationUpBar:SetWidth(ProgressWidth)
+                self.HealthBar.AnimationUpBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width), 0, 1)
 				
 				if not self.IsAnimatingUp then
 					self.AnimationUpCycle = self.AnimationStartSpeed
 					self.IsAnimatingUp = true
-				end
+                end
+
+                self.IsAnimatingDown = false
+                self.HealthBar.AnimationDownBar:Hide()
 			end
 			
 			if self.IsSparkAnimated then
@@ -426,23 +405,23 @@ function ezSpectator_Nameplate:SetValue(Value, IsInnerCall)
 			end
 		else
 			if self.IsLayerAnimated then
-				local AnimationWidth = self.HealthBar.AnimationUpBar:GetWidth() + ProgressWidth - self.HealthBar:GetWidth()
+                local AnimationUpBarWidth = 0
+                if self.HealthBar.AnimationUpBar:IsVisible() then
+                    AnimationUpBarWidth = self.HealthBar.AnimationUpBar:GetWidth()
+                end
 
-				self.HealthBar.AnimationUpBar:SetWidth(self.Parent.Data:SafeSize(AnimationWidth))
-				self.HealthBar.AnimationUpBar.texture:SetTexCoord(
-					self.Parent.Data:SafeTexCoord((self.Width - (self.Width - ProgressWidth) - self.HealthBar.AnimationUpBar:GetWidth()) / self.Width),
-					self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width),
-					0,
-					1
-				)
+				local AnimationWidth = math.max(self.HealthBar:GetWidth(), AnimationUpBarWidth)
 				
 				if not self.IsAnimatingDown then
-					self.HealthBar.AnimationDownBar:SetWidth(self.HealthBar:GetWidth())
-					self.HealthBar.AnimationDownBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(self.HealthBar:GetWidth() / self.Width), 0, 1)
+					self.HealthBar.AnimationDownBar:SetWidth(AnimationWidth)
+					self.HealthBar.AnimationDownBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(AnimationWidth / self.Width), 0, 1)
 					
 					self.AnimationDownCycle = self.AnimationStartSpeed
 					self.IsAnimatingDown = true
-				end
+                end
+
+                self.IsAnimatingUp = false
+                self.HealthBar.AnimationUpBar:Hide()
 			end
 			
 			if self.IsSparkAnimated then
@@ -460,10 +439,10 @@ function ezSpectator_Nameplate:SetValue(Value, IsInnerCall)
 		end
 	end
 	
-	if self.IsSparkAnimated and self.CurrentValue and (IsInnerCall ~= true) then
+	if (self.IsSparkAnimated or self.IsAnimatingUp) and self.CurrentValue and (IsInnerCall ~= true) then
 		return true
 	end
-	
+
 	self.HealthBar:SetWidth(ProgressWidth)
 	self.HealthBar.texture:SetTexCoord(0, self.Parent.Data:SafeTexCoord(ProgressWidth / self.Width), 0, 1)
 	
@@ -525,13 +504,17 @@ function ezSpectator_Nameplate:SetTeam(Value)
 		if Value == 1 then
 			if not self.Nickname.IsOverriden then
 				self.Nickname:SetTextColor(0, 0.75, 0)
+                self.Nickname:SetShadowColor(0, 0.25, 0, 0.75)
+                self.Nickname:SetShadowOffset(1, -1)
 			end
-			self.HealthBar.texture:SetVertexColor(0, 0.75, 0)
+			self.HealthBar.texture:SetVertexColor(0, 0.5, 0)
 		end
 		
 		if Value == 2 then
 			if not self.Nickname.IsOverriden then
 				self.Nickname:SetTextColor(0.9, 0.9, 0)
+                self.Nickname:SetShadowColor(0.65, 0.65, 0, 0.75)
+                self.Nickname:SetShadowOffset(1, -1)
 			end
 			self.HealthBar.texture:SetVertexColor(0.9, 0.9, 0)
 		end
@@ -546,6 +529,8 @@ function ezSpectator_Nameplate:SetTeam(Value)
 		self.CastBar.Effect:Hide()
 	else
 		self.Nickname:SetTextColor(1, 1, 1)
+        self.Nickname:SetShadowColor(0, 0, 0, 0.75)
+        self.Nickname:SetShadowOffset(1, -1)
 		self.HealthBar.texture:SetVertexColor(1, 1, 1)
 		self.HealthBar.Glow:Hide()
 		self.HealthBar.Effect:Hide()

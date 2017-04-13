@@ -20,6 +20,7 @@ end
 
 _ezSpectator = ezSpectator:Create()
 
+plate, worker = nil, nil
 
 
 function ezSpectator_Demo()
@@ -27,10 +28,21 @@ function ezSpectator_Demo()
 	_ezSpectator.Interface.TopFrame:Show()
 	_ezSpectator.Interface.TopFrame:StartTimer(235)
 
-	local SoundName = _ezSpectator.Data.MatchEndings['DEFAULT']
-	if type(SoundName) == 'table' then
-		SoundName = SoundName[math.random(#SoundName)]
-	end
+	worker = ezSpectator_PlayerWorker:Create(_ezSpectator)
+	worker:SetNickname('Test')
+	worker:SetClass(1)
+	worker:SetPowerType(1)
+	worker:SetMaxHealth(30000)
+	worker:SetMaxPower(100)
 
-	_ezSpectator.Sound:Play(SoundName, 5)
+	plate = ezSpectator_Nameplate:Create(_ezSpectator, _ezSpectator.Interface.TopFrame.MainFrame, 'CENTER', _ezSpectator.Interface.TopFrame.MainFrame, 'CENTER', 0, -100)
+	worker:SetNameplate(plate)
+	plate:SetPlayer(worker)
+	plate:SetMaxValue(30000)
+	plate:SetValue(15000)
+	plate:SetNickname('Test')
+	plate:SetTeam(1)
+	plate:SetClass(1)
+	plate:SetAlpha(1)
+	plate:Show()
 end
