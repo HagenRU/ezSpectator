@@ -50,7 +50,7 @@ function ezSpectator_TopFrame:Create(Parent)
 			self.Parent.Time:SetText(self.Parent.Parent.Data:SecondsToTime(self.Parent.MatchTime))
 
             if self.Parent.Parent.Interface.IsTournament then
-			    self.Parent.EnrageOrb:SetTime(Time)
+			    self.Parent.EnrageOrb:SetTime(self.Parent.MatchTime)
             end
         else
             self.Parent.Time:SetText('00:00')
