@@ -1,6 +1,7 @@
 ezSpectator_UpdateFrame = {}
 ezSpectator_UpdateFrame.__index = ezSpectator_UpdateFrame
 
+--noinspection LuaOverlyLongMethod
 function ezSpectator_UpdateFrame:Create()
     local self = {}
     setmetatable(self, ezSpectator_UpdateFrame)

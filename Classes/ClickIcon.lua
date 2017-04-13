@@ -250,7 +250,7 @@ end
 
 
 
-function ezSpectator_ClickIcon:GetText(Value)
+function ezSpectator_ClickIcon:GetText()
 	return self.Text:GetText() or '00:00'
 end
 
