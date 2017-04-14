@@ -42,5 +42,6 @@ Workers\Interface.lua
 Workers\Player.lua
 Workers\Data.lua
 Workers\Tooltip.lua
+Workers\Gossip.lua
 
 IsengardSpectator.lua

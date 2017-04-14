@@ -15,6 +15,8 @@ function ezSpectator:Create()
 
 	self.Tooltip = ezSpectator_TooltipWorker:Create(self)
 
+    self.Gossip = ezSpectator_GossipWorker:Create(self)
+
 	return self
 end
 

@@ -409,6 +409,13 @@ function ezSpectator_DataWorker:Create()
         ['Spotlight'] = true
     }
 
+    self.ClientLocale = GetLocale()
+    self.Strings = {
+        ['ruRU'] = {
+            ['GOSSIP_SPECTATOR_TEXT'] = 'В данном меню вы можете наблюдать за чужими боями на арене.'
+        }
+    }
+
     return self
 end
 
@@ -447,6 +454,16 @@ function ezSpectator_DataWorker:SecondsToTime(Value, IsShort)
         else
             return string.format('%.2d:%.2d', Time / 60 % 60, Time % 60)
         end
+    else
+        return ''
+    end
+end
+
+
+
+function ezSpectator_DataWorker:GetString(Value)
+    if self.Strings[self.ClientLocale] and self.Strings[self.ClientLocale][Value] then
+        return self.Strings[self.ClientLocale][Value]
     else
         return ''
     end
