@@ -175,8 +175,8 @@ function ezSpectator_GossipWorker:ParseMatch(Data, Index)
 
         local IsParsed = false
         if not Result.Time then
-            IsParsed = true
-            Result.Time = string.sub(Parameter, 1, -3)
+            Result.Time = string.sub(Parameter, 1, 5)
+            Parameter = string.sub(Parameter, 8, -1)
         end
 
         if string.find(Parameter, 'Interface/GLUES/CHARACTERCREATE/UI') then
@@ -185,7 +185,7 @@ function ezSpectator_GossipWorker:ParseMatch(Data, Index)
         end
 
         if string.find(Parameter, 'началось %d+ минут.* назад') then
-            IsParsed = true
+            Parameter = string.gsub(Parameter, 'началось %d+ минут.* назад', '')
         end
 
         if Parameter == 'FFFF0000VS' then
@@ -195,7 +195,7 @@ function ezSpectator_GossipWorker:ParseMatch(Data, Index)
 
         if not IsParsed then
             --noinspection StringConcatenationInLoops
-            Result['info' .. PlayerTeam] = Result['info' .. PlayerTeam] .. Parameter
+            Result['info' .. PlayerTeam] = Result['info' .. PlayerTeam] .. string.gsub(Parameter, '[\(\)]', '')
         end
     end
 
