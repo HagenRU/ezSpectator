@@ -412,7 +412,9 @@ function ezSpectator_DataWorker:Create()
     self.ClientLocale = GetLocale()
     self.Strings = {
         ['ruRU'] = {
-            ['GOSSIP_SPECTATOR_TEXT'] = 'В данном меню вы можете наблюдать за чужими боями на арене.'
+            ['GOSSIP_SPECTATOR_TEXT'] = 'В данном меню вы можете наблюдать за чужими боями на арене.',
+            ['GOSSIP_SPECTATOR_SUBSCRIBE'] = 'Я хочу подписаться на анонсы турнира',
+            ['GOSSIP_SPECTATOR_UNSUBSCRIBE'] = 'Я хочу отписаться от анонсов турнира',
         }
     }
 

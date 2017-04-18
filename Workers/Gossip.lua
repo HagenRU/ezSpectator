@@ -15,6 +15,7 @@ function ezSpectator_GossipWorker:Create(Parent)
     self.MatchList = {}
     self.LockEvent = 0
     self.SelectedMatch = nil
+    self.IsSubscribed = nil
 
     self.Textures = ezSpectator_Textures:Create()
 
@@ -38,6 +39,12 @@ function ezSpectator_GossipWorker:Create(Parent)
     self.MainFrame.Leave:SetIcon('Logout')
     self.MainFrame.Leave:SetAction(function()
         _ezSpectator.Gossip:Hide()
+    end)
+
+    self.MainFrame.Subscribe = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'gold', 36, 'TOPRIGHT', self.MainFrame, 'TOPRIGHT', -33, -3)
+    self.MainFrame.Subscribe:SetIcon('Eye_Normal')
+    self.MainFrame.Subscribe:SetAction(function()
+        _ezSpectator.Gossip:SubscribeClick()
     end)
 
     self.MainFrame.Line1 = self.MainFrame:CreateFontString(nil, 'BACKGROUND', 'SystemFont_Outline')
@@ -86,10 +93,33 @@ end
 function ezSpectator_GossipWorker:Hide()
     self.IsSpectatorGossip = false
     self.SelectedMatch = nil
+    self.IsSubscribed = nil
     self.MainFrame:Hide()
     self:ClearMatches()
     self.UpdateStage = -1
     self.LockEvent = time()
+end
+
+
+
+function ezSpectator_GossipWorker:SubscribeClick()
+    if self.IsSubscribed == true then
+        SendChatMessage('.tour subs off')
+
+        self.MainFrame.Subscribe:SetIcon('Eye_Normal')
+
+        self.IsSubscribed = false
+        return
+    end
+
+    if self.IsSubscribed == false then
+        SendChatMessage('.tour subs on')
+
+        self.MainFrame.Subscribe:SetIcon('Eye_Stroked')
+
+        self.IsSubscribed = true
+        return
+    end
 end
 
 
@@ -248,8 +278,36 @@ end
 
 
 function ezSpectator_GossipWorker:ParseGossip()
-    if self.UpdateStage >= 0 then
-        local GossipOptions = {GetGossipOptions()}
+    local GossipOptions = {GetGossipOptions()}
+
+    if self.SelectedMatch == nil then
+        GossipFrame:Hide()
+    end
+
+    if self.UpdateStage == -1 then
+        local IsInitSuccess = false
+
+        for _, Value in pairs(GossipOptions) do
+            if Value == self.Parent.Data:GetString('GOSSIP_SPECTATOR_SUBSCRIBE') then
+                self.IsSubscribed = false
+                self.MainFrame.Subscribe:SetIcon('Eye_Normal')
+                IsInitSuccess = true
+            end
+
+            if Value == self.Parent.Data:GetString('GOSSIP_SPECTATOR_UNSUBSCRIBE') then
+                self.IsSubscribed = true
+                self.MainFrame.Subscribe:SetIcon('Eye_Stroked')
+                IsInitSuccess = true
+            end
+        end
+
+        if IsInitSuccess then
+            self.IsSpectatorGossip = true
+            self.MainFrame:Show()
+        else
+            SendChatMessage('.i s', 'GUILD')
+        end
+    else
         local SelectedMatchIndex
 
         self:DeactualizeMatches()
@@ -275,6 +333,7 @@ function ezSpectator_GossipWorker:ParseGossip()
 
         if SelectedMatchIndex ~=nil then
             SelectGossipOption(SelectedMatchIndex)
+            self:Hide()
         else
             if self.SelectedMatch ~= nil then
                 self.SelectedMatch = nil
@@ -448,14 +507,6 @@ function ezSpectator_GossipWorker:onGossipShow()
     if GetGossipText() == self.Parent.Parent.Data:GetString('GOSSIP_SPECTATOR_TEXT') then
         if self.Parent.LockEvent < time() then
             self.Parent:ParseGossip()
-
-            if self.Parent.SelectedMatch == nil then
-                self.Parent.IsSpectatorGossip = true
-                GossipFrame:Hide()
-                self.Parent.MainFrame:Show()
-            else
-                self.Parent:Hide()
-            end
         else
             GossipFrame:Hide()
         end
