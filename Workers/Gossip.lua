@@ -19,7 +19,7 @@ function ezSpectator_GossipWorker:Create(Parent)
     self.Textures = ezSpectator_Textures:Create()
 
     self.MainFrame = CreateFrame('Frame', nil, nil)
-    self.MainFrame:SetSize(400, 400)
+    self.MainFrame:SetSize(420, 400)
     self.MainFrame:SetPoint('TOPLEFT', GossipFrame, 'TOPLEFT', 0, 0)
     self.MainFrame:SetBackdrop({
         bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
@@ -311,7 +311,7 @@ end
 function ezSpectator_GossipWorker:ShowMatch(Match)
     if not Match.MainFrame then
         Match.MainFrame = CreateFrame('Frame', nil, self.MainFrame)
-        Match.MainFrame:SetSize(390, 35)
+        Match.MainFrame:SetSize(410, 35)
         Match.MainFrame:SetBackdrop({
             bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
             edgeFile = 'Interface\\AddOns\\IsengardSpectator\\Textures\\TooltipEdge',
@@ -347,18 +347,22 @@ function ezSpectator_GossipWorker:ShowMatch(Match)
 
         Match.MainFrame.CentralFrame = CreateFrame('Frame', nil, Match.MainFrame)
         Match.MainFrame.CentralFrame:SetSize(1, 1)
-        Match.MainFrame.CentralFrame:SetPoint('CENTER', Match.MainFrame, 'LEFT', 195, -1)
+        Match.MainFrame.CentralFrame:SetPoint('CENTER', Match.MainFrame, 'LEFT', 210, -1)
         Match.MainFrame.CentralFrame:SetFrameStrata('HIGH')
 
         Match.MainFrame.CentralFrame.VersusText = Match.MainFrame.CentralFrame:CreateFontString(nil, 'BACKGROUND', 'GameFontRedLarge')
-        Match.MainFrame.CentralFrame.VersusText:SetPoint('CENTER', Match.MainFrame.CentralFrame, 'LEFT', 1, 0)
+        Match.MainFrame.CentralFrame.VersusText:SetPoint('CENTER', Match.MainFrame.CentralFrame, 'LEFT', 0, 0)
         Match.MainFrame.CentralFrame.VersusText:SetText('VS')
 
-        Match.MainFrame.CentralFrame.Info1 = Match.MainFrame.CentralFrame:CreateFontString(nil, 'BACKGROUND', 'SystemFont_Outline')
+        Match.MainFrame.CentralFrame.Info1 = Match.MainFrame.CentralFrame:CreateFontString(nil, 'BACKGROUND')
+        Match.MainFrame.CentralFrame.Info1:SetFont('Interface\\Addons\\IsengardSpectator\\Fonts\\RobotoCondensed-Regular.ttf', 14, 'OUTLINE')
+        Match.MainFrame.CentralFrame.Info1:SetTextColor(1, 1, 1, 1)
         Match.MainFrame.CentralFrame.Info1:SetPoint('RIGHT', Match.MainFrame.CentralFrame, 'LEFT', -10, 0)
         Match.MainFrame.CentralFrame.Info1:SetText(Match['info1'])
 
-        Match.MainFrame.CentralFrame.Info2 = Match.MainFrame.CentralFrame:CreateFontString(nil, 'BACKGROUND', 'SystemFont_Outline')
+        Match.MainFrame.CentralFrame.Info2 = Match.MainFrame.CentralFrame:CreateFontString(nil, 'BACKGROUND')
+        Match.MainFrame.CentralFrame.Info2:SetFont('Interface\\Addons\\IsengardSpectator\\Fonts\\RobotoCondensed-Regular.ttf', 14, 'OUTLINE')
+        Match.MainFrame.CentralFrame.Info2:SetTextColor(1, 1, 1, 1)
         Match.MainFrame.CentralFrame.Info2:SetPoint('LEFT', Match.MainFrame.CentralFrame, 'LEFT', 10, 0)
         Match.MainFrame.CentralFrame.Info2:SetText(Match['info2'])
 
@@ -370,9 +374,9 @@ function ezSpectator_GossipWorker:ShowMatch(Match)
                 Match[IconName]:SetFrameStrata('MEDIUM')
                 Match[IconName]:SetAlpha(0.5)
                 if Team == 1 then
-                    Match[IconName]:SetPoint('RIGHT', Match.MainFrame, 'LEFT', 182 - (Index - 1) * 29, 0)
+                    Match[IconName]:SetPoint('RIGHT', Match.MainFrame.CentralFrame, 'LEFT', -10 - (Index - 1) * 29, 0)
                 else
-                    Match[IconName]:SetPoint('LEFT', Match.MainFrame, 'LEFT', 208 + (Index - 1) * 29, 0)
+                    Match[IconName]:SetPoint('LEFT', Match.MainFrame.CentralFrame, 'LEFT', 10 + (Index - 1) * 29, 0)
                 end
 
                 local OffsetTable = self.Parent.Data.ClassIconOffset[Class]
