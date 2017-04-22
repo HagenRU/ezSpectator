@@ -78,6 +78,8 @@ end
 
 
 function ezSpectator_InterfaceWorker:SetMode(Value)
+	self:ResetViewpoint()
+
 	if Value == 0 then
 		self.IsRunning = false
 		self.IsSpectating = false
@@ -102,8 +104,6 @@ function ezSpectator_InterfaceWorker:SetMode(Value)
 		
 		UIParent:Hide()
 	end
-
-	self:ResetViewpoint()
 end
 
 
