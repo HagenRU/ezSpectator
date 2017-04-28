@@ -71,12 +71,15 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	end
 
 	self.Icon = CreateFrame('Frame', nil, self.Backdrop)
-	self.Icon:SetFrameLevel(2)
-	self.Icon:SetFrameStrata('HIGH')
-	self.Icon:SetSize(Size, Size)
-	self.Icon:SetScale(_ezSpectatorScale)
-	
-	self.Icon:SetPoint('CENTER', self.Normal, 'CENTER', OffsetX, OffsetY)
+    self.Icon:SetFrameLevel(2)
+    self.Icon:SetFrameStrata('HIGH')
+    self.Icon:SetSize(Size, Size)
+    self.Icon:SetScale(_ezSpectatorScale)
+    self.Icon:SetPoint('CENTER', self.Normal, 'CENTER', OffsetX, OffsetY)
+
+    self.TextIcon = self.Backdrop:CreateFontString(nil, 'BACKGROUND', 'PVPInfoTextFont')
+    self.TextIcon:SetSize(Size, Size)
+    self.TextIcon:SetPoint('CENTER', self.Normal, 'CENTER', 0.5, -0.5)
 	
 	self.Cooldown = CreateFrame('Cooldown', nil, self.Icon)
 	self.Cooldown:SetFrameLevel(3)
@@ -275,6 +278,12 @@ function ezSpectator_ClickIcon:SetIcon(Name)
 		Texture:SetAllPoints(self.Icon)
 		self.Icon.texture = Texture
 	end
+end
+
+
+
+function ezSpectator_ClickIcon:SetFontIcon(Name)
+    self.TextIcon:SetText(Name)
 end
 
 
