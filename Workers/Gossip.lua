@@ -40,6 +40,10 @@ function ezSpectator_GossipWorker:Create(Parent)
     })
     self.MainFrame:SetBackdropColor(0, 0, 0, 1)
 
+    self.MainFrame.MainAlignFrame = CreateFrame('Frame', nil, self.MainFrame)
+    self.MainFrame.MainAlignFrame:SetSize(1, 1)
+    self.MainFrame.MainAlignFrame:SetPoint('TOP', self.MainFrame, 'TOP', 0, -41)
+
     self.MainFrame.Leave = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'gold', 36, 'TOPRIGHT', self.MainFrame, 'TOPRIGHT', -3, -3)
     self.MainFrame.Leave:SetIcon('Logout')
     self.MainFrame.Leave:SetAction(function()
@@ -393,6 +397,16 @@ end
 
 
 
+function ezSpectator_GossipWorker:SetMatchFramePoint(Frame, IsFirst, AlignFrame)
+    if IsFirst then
+        Frame:SetPoint('TOP', AlignFrame or self.MainFrame.MainAlignFrame, 'TOP', 0, 0)
+    else
+        Frame:SetPoint('TOP', AlignFrame or self.LastMatch.MainFrame, 'BOTTOM', 0, -3)
+    end
+end
+
+
+
 function ezSpectator_GossipWorker:ShowMatch(Match)
     if not self.StageVisibility[Match['type']] then
         return
@@ -489,10 +503,10 @@ function ezSpectator_GossipWorker:ShowMatch(Match)
             Match.PrevMatch = self.LastMatch
             self.LastMatch.NextMatch = Match
 
-            Match.MainFrame:SetPoint('TOPLEFT', self.LastMatch.MainFrame, 'BOTTOMLEFT', 0, -3)
+            self:SetMatchFramePoint(Match.MainFrame, false)
         else
             Match.PrevMatch = nil
-            Match.MainFrame:SetPoint('TOPLEFT', self.MainFrame, 'TOPLEFT', 5, -41)
+            self:SetMatchFramePoint(Match.MainFrame, true)
         end
 
         self.LastMatch =  Match
@@ -504,10 +518,10 @@ function ezSpectator_GossipWorker:ShowMatch(Match)
                 Match.PrevMatch = self.LastMatch
                 self.LastMatch.NextMatch = Match
 
-                Match.MainFrame:SetPoint('TOPLEFT', self.LastMatch.MainFrame, 'BOTTOMLEFT', 0, -3)
+                self:SetMatchFramePoint(Match.MainFrame, false)
             else
                 Match.PrevMatch = nil
-                Match.MainFrame:SetPoint('TOPLEFT', self.MainFrame, 'TOPLEFT', 5, -41)
+                self:SetMatchFramePoint(Match.MainFrame, true)
             end
 
             self.LastMatch =  Match
@@ -517,26 +531,56 @@ end
 
 
 
-function ezSpectator_GossipWorker:HideMatch(Match)
+function ezSpectator_GossipWorker:HideMatch(Match, IsCleanupAllowed)
     if Match.MainFrame then
-        Match.MainFrame:Hide()
-        if self.LastMatch == Match then
-            self.LastMatch = Match.PrevMatch
-        end
+        if IsCleanupAllowed then
+            Match.MainFrame:Hide()
 
-        if Match.NextMatch then
-            if Match.PrevMatch then
-                Match.NextMatch.MainFrame:SetPoint('TOPLEFT', Match.PrevMatch.MainFrame, 'BOTTOMLEFT', 0, -3)
-                Match.PrevMatch.NextMatch = Match.NextMatch
-            else
-                Match.NextMatch.MainFrame:SetPoint('TOPLEFT', self.MainFrame, 'TOPLEFT', 5, -41)
+            if self.LastMatch == Match then
+                self.LastMatch = Match.PrevMatch
             end
 
-            Match.NextMatch.PrevMatch = Match.PrevMatch
-        end
+            if Match.NextMatch then
+                if Match.PrevMatch then
+                    self:SetMatchFramePoint(Match.NextMatch.MainFrame, false, Match.PrevMatch.MainFrame)
+                    Match.PrevMatch.NextMatch = Match.NextMatch
+                else
+                    self:SetMatchFramePoint(Match.NextMatch.MainFrame, true)
+                end
 
-        Match.NextMatch = nil
-        Match.PrevMatch = nil
+                Match.NextMatch.PrevMatch = Match.PrevMatch
+            end
+
+            Match.NextMatch = nil
+            Match.PrevMatch = nil
+        else
+            Match.MainFrame:SetAlpha(0.75)
+
+            Match.MainFrame.ElapsedTick = 0
+            Match.MainFrame:SetScript('OnUpdate', function(self, Elapsed)
+                self.ElapsedTick = self.ElapsedTick + Elapsed
+
+                if self.ElapsedTick > 0.05 then
+                    self.ElapsedTick = 0
+
+                    local Alpha = self:GetAlpha()
+                    Alpha = Alpha - ((0.75 - Alpha) * 0.01) - 0.01
+                    if Alpha > 0 then
+                        self:SetAlpha(Alpha)
+                    else
+                        self:SetAlpha(0)
+                    end
+
+
+                    local Scale = self:GetScale() - 0.01
+                    if Scale > 0 then
+                        self:SetScale(Scale)
+                    else
+                        self.Parent:HideMatch(self.Match, true)
+                    end
+                end
+            end)
+        end
     end
 end
 
@@ -550,7 +594,7 @@ function ezSpectator_GossipWorker:SetStageVisibility(Stage, IsVisible)
             if IsVisible then
                 self:ShowMatch(Value)
             else
-                self:HideMatch(Value)
+                self:HideMatch(Value, true)
             end
         end
     end
