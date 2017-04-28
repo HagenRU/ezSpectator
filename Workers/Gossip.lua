@@ -13,6 +13,11 @@ function ezSpectator_GossipWorker:Create(Parent)
     self.Parent = Parent
     self.IsSpectatorGossip = false
     self.MatchList = {}
+    self.StageVisibility = {
+        [0] = true, --tournament
+        [1] = true, --soloq
+        [2] = true  --2x2
+    }
     self.LockEvent = 0
     self.SelectedMatch = nil
     self.IsSubscribed = nil
@@ -47,13 +52,34 @@ function ezSpectator_GossipWorker:Create(Parent)
         _ezSpectator.Gossip:SubscribeClick()
     end)
 
+    self.MainFrame.Filter2 = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'gold|toggle', 36, 'TOPRIGHT', self.MainFrame, 'TOPRIGHT', -63, -3)
+    self.MainFrame.Filter2:SetFontIcon('2')
+    self.MainFrame.Filter2:SetToggleDown()
+    self.MainFrame.Filter2:SetAction(function(ClickIcon)
+        ClickIcon.Parent.Gossip:SetStageVisibility(2, not ClickIcon.IsToggleUp)
+    end)
+
+    self.MainFrame.FilterS = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'gold|toggle', 36, 'TOPRIGHT', self.MainFrame, 'TOPRIGHT', -93, -3)
+    self.MainFrame.FilterS:SetFontIcon('S')
+    self.MainFrame.FilterS:SetToggleDown()
+    self.MainFrame.FilterS:SetAction(function(ClickIcon)
+        ClickIcon.Parent.Gossip:SetStageVisibility(1, not ClickIcon.IsToggleUp)
+    end)
+
+    self.MainFrame.FilterT = ezSpectator_ClickIcon:Create(self.Parent, self.MainFrame, 'gold|toggle', 36, 'TOPRIGHT', self.MainFrame, 'TOPRIGHT', -123, -3)
+    self.MainFrame.FilterT:SetFontIcon('T')
+    self.MainFrame.FilterT:SetToggleDown()
+    self.MainFrame.FilterT:SetAction(function(ClickIcon)
+        ClickIcon.Parent.Gossip:SetStageVisibility(0, not ClickIcon.IsToggleUp)
+    end)
+
     self.MainFrame.Line1 = self.MainFrame:CreateFontString(nil, 'BACKGROUND', 'SystemFont_Outline')
     self.MainFrame.Line1:SetPoint('TOPLEFT', self.MainFrame, 'TOPLEFT', 10, -8)
-    self.MainFrame.Line1:SetText('Isengard Spectator версия ' .. self.Parent.Data.Version.Major .. '.' .. self.Parent.Data.Version.Minor .. '.' .. self.Parent.Data.Version.Build .. '.' .. self.Parent.Data.Version.Revision)
+    self.MainFrame.Line1:SetText('Isengard Spectator ' .. self.Parent.Data.Version.Major .. '.' .. self.Parent.Data.Version.Minor .. '.' .. self.Parent.Data.Version.Build .. '.' .. self.Parent.Data.Version.Revision)
 
     self.MainFrame.Line2 = self.MainFrame:CreateFontString(nil, 'BACKGROUND', 'SystemFont_Outline')
     self.MainFrame.Line2:SetPoint('TOPLEFT', self.MainFrame.Line1, 'BOTTOMLEFT', 0, -3)
-    self.MainFrame.Line2:SetText('Список матчей обновляется автоматически!')
+    self.MainFrame.Line2:SetText('Матчи обновляются автоматически!')
 
     self.MainFrame:Hide()
 
@@ -368,6 +394,10 @@ end
 
 
 function ezSpectator_GossipWorker:ShowMatch(Match)
+    if not self.StageVisibility[Match['type']] then
+        return
+    end
+
     if not Match.MainFrame then
         Match.MainFrame = CreateFrame('Frame', nil, self.MainFrame)
         Match.MainFrame:SetSize(410, 35)
@@ -455,7 +485,6 @@ function ezSpectator_GossipWorker:ShowMatch(Match)
             end
         end
 
-
         if self.LastMatch then
             Match.PrevMatch = self.LastMatch
             self.LastMatch.NextMatch = Match
@@ -467,6 +496,22 @@ function ezSpectator_GossipWorker:ShowMatch(Match)
         end
 
         self.LastMatch =  Match
+    else
+        if not Match.MainFrame:IsVisible() then
+            Match.MainFrame:Show()
+
+            if self.LastMatch then
+                Match.PrevMatch = self.LastMatch
+                self.LastMatch.NextMatch = Match
+
+                Match.MainFrame:SetPoint('TOPLEFT', self.LastMatch.MainFrame, 'BOTTOMLEFT', 0, -3)
+            else
+                Match.PrevMatch = nil
+                Match.MainFrame:SetPoint('TOPLEFT', self.MainFrame, 'TOPLEFT', 5, -41)
+            end
+
+            self.LastMatch =  Match
+        end
     end
 end
 
@@ -488,6 +533,25 @@ function ezSpectator_GossipWorker:HideMatch(Match)
             end
 
             Match.NextMatch.PrevMatch = Match.PrevMatch
+        end
+
+        Match.NextMatch = nil
+        Match.PrevMatch = nil
+    end
+end
+
+
+
+function ezSpectator_GossipWorker:SetStageVisibility(Stage, IsVisible)
+    self.StageVisibility[Stage] = IsVisible
+
+    for Index, Value in pairs(self.MatchList) do
+        if Value['type'] == Stage then
+            if IsVisible then
+                self:ShowMatch(Value)
+            else
+                self:HideMatch(Value)
+            end
         end
     end
 end
