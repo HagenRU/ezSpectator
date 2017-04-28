@@ -37,26 +37,37 @@ function ezSpectator_ClickIcon:Create(Parent, ParentFrame, Style, Size, ...)
 	self.Highlight:SetPoint(...)
 	self.Highlight:Hide()
 
+	local StyleColor, StyleMode = strsplit('|', Style)
+	if not StyleColor then
+		StyleColor = Style
+	end
+
 	local OffsetX = 0
 	local OffsetY = 0
-	if Style == 'gold' then
+	if StyleColor == 'gold' then
 		self.Textures:ClickIcon_Normal_Gold(self.Normal)
 		self.Textures:ClickIcon_Highlight_Gold(self.Highlight)
-	elseif Style == 'silver' then
+	elseif StyleColor == 'silver' then
 		self.Textures:ClickIcon_Normal_Silver(self.Normal)
 		self.Textures:ClickIcon_Highlight_Silver(self.Highlight)
 
 		--noinspection UnusedDef
 		OffsetY = 0.5
-	elseif Style == 'mild' then
+	elseif StyleColor == 'mild' then
 		self.Backdrop.texture:SetTexture(EMPTY_TEXTURE)
 		self.Textures:ClickIcon_Normal_Mild(self.Normal)
 		self.Textures:ClickIcon_Highlight_Mild(self.Highlight)
 
 		OffsetX = -0.5
 		OffsetY = 0.5
-	elseif Style == 'clear' then
+	elseif StyleColor == 'clear' then
 		self.Backdrop.texture:SetTexture(EMPTY_TEXTURE)
+	end
+
+	self.IsToggleMode = StyleMode == 'toggle'
+	self.IsToggleUp = nil
+	if self.IsToggleMode then
+		self.IsToggleUp = true
 	end
 
 	self.Icon = CreateFrame('Frame', nil, self.Backdrop)
@@ -190,6 +201,38 @@ end
 
 
 
+function ezSpectator_ClickIcon:SetToggleDown()
+	if self.Backdrop:IsShown() then
+		self.Backdrop:SetFrameStrata('DIALOG')
+		self.Icon:SetFrameStrata('FULLSCREEN')
+		self.Icon:SetAlpha(0.5)
+	end
+
+	self.IsToggleUp = false
+
+	if self.Action then
+		self.Action(self)
+	end
+end
+
+
+
+function ezSpectator_ClickIcon:SetToggleUp()
+	if self.Backdrop:IsShown() then
+		self.Backdrop:SetFrameStrata('LOW')
+		self.Icon:SetFrameStrata('MEDIUM')
+		self.Icon:SetAlpha(1)
+	end
+
+	self.IsToggleUp = true
+
+	if self.Action then
+		self.Action(self)
+	end
+end
+
+
+
 function ezSpectator_ClickIcon:SetCooldown(Time, Duration)
 	self.Cooldown:SetCooldown(Time, Duration)
 end
@@ -269,20 +312,28 @@ end
 function ezSpectator_ClickIcon:SetAction(Action)
 	if not self.Action then
 		self.Reactor:SetScript('OnMouseDown', function()
-			if self.Backdrop:IsShown() then
+			if self.Backdrop:IsShown() and not self.IsToggleMode then
 				self.Backdrop:SetFrameStrata('DIALOG')
 				self.Icon:SetFrameStrata('FULLSCREEN')
 				self.Icon:SetAlpha(0.75)
 			end
 		end)
 		self.Reactor:SetScript('OnMouseUp', function()
-			if self.Backdrop:IsShown() then
+			if self.Backdrop:IsShown() and not self.IsToggleMode then
 				self.Backdrop:SetFrameStrata('LOW')
 				self.Icon:SetFrameStrata('MEDIUM')
 				self.Icon:SetAlpha(1)
-				
+			end
+
+			if self.IsToggleMode then
+				if self.IsToggleUp then
+					self:SetToggleDown()
+				else
+					self:SetToggleUp()
+				end
+			else
 				if self.Action then
-					self.Action()
+					self.Action(self)
 				end
 			end
 		end)
