@@ -8,9 +8,9 @@ function ezSpectator_DataWorker:Create()
 
     self.Version = {
         ['Major'] = 1,
-        ['Minor'] = 0,
-        ['Build'] = 14,
-        ['Revision'] = 142
+        ['Minor'] = 1,
+        ['Build'] = 15,
+        ['Revision'] = 187
     }
 
     self.NamePlateLevel = 0
